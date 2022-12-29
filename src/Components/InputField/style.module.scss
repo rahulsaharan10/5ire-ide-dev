@@ -1,0 +1,17 @@
+@import '../../styles/__vars.scss';
+.inputSimple {
+    background-color: $inputBg;
+    border-radius: 28px;
+    padding: 13px 16px;
+    border: 0;
+    input {
+        background-color: transparent;
+        font-size: 14px;
+        font-weight: normal;
+        color: $baseColor-Text;
+
+        &::placeholder {
+            color: $baseColor-Text;
+        }
+    }
+}
