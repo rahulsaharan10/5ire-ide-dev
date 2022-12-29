@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import "./App.scss";
+import FixWidthLayout from "./Layout/FixWidthLayout";
+import WelcomeLayout from "./Layout/WelcomeLayout";
+import Wallet from "./Pages/Wallet/Wallet";
+import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
+import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
+import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="" element={<WelcomeLayout />}>
+          <Route index path="/" element={<WelcomeScreen />} />
+          <Route index path="/setPassword" element={<SetPasswordScreen />} />
+
+        </Route>
+        <Route path="" element={<FixWidthLayout />}>
+          <Route index path="/wallet" element={<Wallet />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
