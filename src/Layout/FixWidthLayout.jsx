@@ -1,11 +1,42 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import { Layout } from "antd";
+import React, { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import LogoHorizontal from "../Assets/PNG/LogoHorizontal.png";
+import BalanceDetails from "../Components/BalanceDetails/BalanceDetails";
+import MenuRestofHeaders from "../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
+import MenuFooter from "../Components/MenuFooter/MenuFooter";
+import style from "./style.module.scss";
 
 function FixWidthLayout() {
+  const { Content } = Layout;
+  const getLocation = useLocation();
+  const path = getLocation.pathname.replace("/", "");
   return (
-      <div style={{height: '100vh', backgroundColor: '#EEF3F9'}}>
-        <Outlet/>
+    <div className={`${style.fixedLayout}`}>
+      <div className={style.fixedLayout__inner}>
+        {path === "wallet" && (
+          <div className={style.fixedLayout__inner__walletLayout}>
+            <div style={{ textAlign: "left" }}>
+              <img src={LogoHorizontal} width={155} height={20} />
+              <BalanceDetails />
+            </div>
+          </div>
+        )}
+        {path === "defi" && (
+         <MenuRestofHeaders title={"Defi"} />
+        )}
+         {path === "history" && (
+         <MenuRestofHeaders title={"History"} />
+        )}
+         {path === "setting" && (
+         <MenuRestofHeaders title={"Setting"} />
+        )}
+        <Content className={style.fixedLayout__content}>
+          <Outlet />
+        </Content>
+        <MenuFooter />
       </div>
+    </div>
   );
 }
 

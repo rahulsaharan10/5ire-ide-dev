@@ -1,0 +1,30 @@
+@import '../../styles/__vars.scss';
+.balanceDetails {
+    margin-top: 36px;
+    text-align: center;
+    &__title {
+        font-size: 24px;
+        color: $baseColor-Text;
+        font-weight: 900;
+        margin-bottom: 24px;
+    }
+    &__itemsOuter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 0 28px;
+    }
+    &__items {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: $baseColor-Text;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./style.module.scss";
-import PlusBordredIcon from "../../Assets/PlusBordredIcon.svg";
+import closeXicon from "../../Assets/closeXicon.svg";
 
 function ConfirmSecretPhrase({ children }) {
   const [blankArray, setBlankArray] = useState([]);
@@ -20,9 +20,8 @@ function ConfirmSecretPhrase({ children }) {
   ];
   console.log(blankArray, "asdkjadhskadasd")
   const pushData = (ele) => {
-    console.log(ele, "elelelele")
-    let prev = [...blankArray];
-    let pres = prev.findIndex((elem) => elem == ele);
+    let prev = [...blankArray]; // Previous State update
+    let pres = prev.findIndex((elem) => elem == ele); // Present state's index gets
     if (pres == -1) {
       prev.push(ele);
       setBlankArray(prev);
@@ -44,7 +43,7 @@ function ConfirmSecretPhrase({ children }) {
         <div className={style.setPassword__secretPharse__confirmFieldSBgInner}>
           {blankArray.map((ele, index) => (
             <span  onClick={() => removePhrase(ele)} key={index}>
-              {ele} <img src={PlusBordredIcon} width={8} height={8} />
+              {ele} <img src={closeXicon} width={7} height={7} />
             </span>
           ))}
         </div>

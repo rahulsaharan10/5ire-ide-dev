@@ -123,7 +123,7 @@ function SetPasswordScreen() {
       )}
       {activeTab === "congrats" && (
         <CongratulationsScreen>
-          <ButtonComp onClick={() => navigate("/")} text={"Open Wallet"} />
+          <ButtonComp onClick={() => navigate("/wallet")} text={"Open Wallet"} />
         </CongratulationsScreen>
       )}
     </div>

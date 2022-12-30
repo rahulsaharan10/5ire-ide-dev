@@ -1,0 +1,11 @@
+@import '../../../styles/__vars.scss';
+.restOfHeaders {
+    padding: 24px 29px;
+    border-bottom: 1px solid #D7E0EB;
+    h4 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 0;
+        color: $baseColor-Text;
+    }
+}
