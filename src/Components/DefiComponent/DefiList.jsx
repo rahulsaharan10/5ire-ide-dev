@@ -1,21 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import style from './style.module.scss'
-function DefiList() {
+import React from "react";
+import { Link } from "react-router-dom";
+import style from "./style.module.scss";
+import TickIcon from "../../Assets/TickIcon.svg";
+function DefiList(props) {
+  const { header, stakingHead, desc, bordered } =
+    props;
+
   return (
-      <>
-          <div className='defiList'>
-              <div className='defiList__header'>
-                  <h1>Staking Section</h1>
-                  <Link to="#" >See More</Link>
-              </div>
-              <div className='defiList__stakingList'>
-                 <img src='' /> <div><h2>Pancake Staking</h2><p>It is a long established fact that a reader.....</p></div>
-              </div>
+    <>
+      <div className={` ${style.defiList} ${bordered ? style.defiList__bordered : ""}`}>
+       
+        <div className={style.defiList__stakingList}>
+          <img src={TickIcon} />{" "}
+          <div>
+            <h2>{stakingHead}</h2>
+            <p>{desc}</p>
+          </div>
+        </div>
+        
       </div>
-      
-      </>
-  )
+    </>
+  );
 }
 
-export default DefiList
+export default DefiList;

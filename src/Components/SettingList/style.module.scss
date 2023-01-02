@@ -1,0 +1,19 @@
+@import "../../styles/__vars.scss";
+
+.settingList {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px;
+  border-bottom: 1px solid $border-C4D7F8;
+  &__imgValue {
+    display: flex;
+    gap: 10px;
+    p {
+      white-space: nowrap;
+      color: $baseColor-Text;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+}
