@@ -23,13 +23,13 @@ function FixWidthLayout() {
           </div>
         )}
         {path === "defi" && (
-         <MenuRestofHeaders title={"Defi"} />
+         <MenuRestofHeaders backTo={"/"} title={"DeFi"} />
         )}
          {path === "history" && (
-         <MenuRestofHeaders title={"History"} />
+         <MenuRestofHeaders backTo={"/"} title={"History"} />
         )}
          {path === "setting" && (
-         <MenuRestofHeaders title={"Setting"} />
+         <MenuRestofHeaders backTo={"/"} title={"Setting"} searchTo="/" />
         )}
         <Content className={style.fixedLayout__content}>
           <Outlet />

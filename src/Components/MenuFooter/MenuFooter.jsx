@@ -4,15 +4,17 @@ import WalletIcon from "../../Assets/WalletIcon.svg";
 import DefiIcon from "../../Assets/DefiIcon.svg";
 import SettignIcon from "../../Assets/SettignIcon.svg";
 import HistoryIcon from "../../Assets/HistoryIcon.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 function MenuFooter() {
-  const [activeLink, setactiveLink] = useState("wallet");
+  // const [activeLink, setactiveLink] = useState("wallet");
+  const getLocation = useLocation();
+  const path = getLocation.pathname.replace("/", "");
   return (
     <div className={style.menuItems}>
      <Link to="/wallet"
-        onClick={() => setactiveLink("wallet")}
+        // onClick={() => setactiveLink("wallet")}
         className={`${style.menuItems__items} ${
-          activeLink === "wallet" ? style.menuItems__items__active : ""
+          path === "wallet" ? style.menuItems__items__active : ""
         }`}
       >
         <div className={style.menuItems__items__img}>
@@ -23,9 +25,9 @@ function MenuFooter() {
         </span>
       </Link>
       <Link to="/defi"
-        onClick={() => setactiveLink("defi")}
+        // onClick={() => setactiveLink("defi")}
         className={`${style.menuItems__items} ${
-          activeLink === "defi" ? style.menuItems__items__active : ""
+          path === "defi" ? style.menuItems__items__active : ""
         }`}
       >
         <div className={style.menuItems__items__img}>
@@ -36,9 +38,9 @@ function MenuFooter() {
         </span>
       </Link>
       <Link to="/history"
-        onClick={() => setactiveLink("history")}
+        // onClick={() => setactiveLink("history")}
         className={`${style.menuItems__items} ${
-          activeLink === "history" ? style.menuItems__items__active : ""
+          path === "history" ? style.menuItems__items__active : ""
         }`}
       >
         <div className={style.menuItems__items__img}>
@@ -49,9 +51,9 @@ function MenuFooter() {
         </span>
       </Link>
       <Link to="/setting"
-        onClick={() => setactiveLink("setting")}
+        // onClick={() => setactiveLink("setting")}
         className={`${style.menuItems__items} ${
-          activeLink === "setting" ? style.menuItems__items__active : ""
+          path === "setting" ? style.menuItems__items__active : ""
         }`}
       >
         <div className={style.menuItems__items__img}>

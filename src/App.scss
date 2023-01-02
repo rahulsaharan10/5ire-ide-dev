@@ -12,9 +12,25 @@
   }
   &__logo {
     margin-bottom: 24px;
-    img  {
+    img {
       width: 130px;
       height: 84px;
     }
+  }
+}
+//stickyheader//
+.scrollableCont {
+  height: 100%;
+  overflow: hidden;
+  .stickyHeader {
+    position: sticky;
+    top: 0;
+    background: #eef3f9 0% 0% no-repeat padding-box;
+    z-index: 9;
+  }
+  .flexedContent {
+    padding: 24px 28px 0;
+    overflow-y: auto;
+    height: 100%;
   }
 }

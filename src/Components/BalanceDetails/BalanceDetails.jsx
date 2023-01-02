@@ -10,7 +10,7 @@ function BalanceDetails() {
     <div className={style.balanceDetails}>
       <h3 className={style.balanceDetails__title}>$2,385.60</h3>
       <div className={style.balanceDetails__itemsOuter}>
-      <Link to="" className={style.balanceDetails__items}>
+      <Link to="send" className={style.balanceDetails__items}>
         <div className={style.balanceDetails__items__img}>
           <img src={SendIcon} height={24} width={24} />
         </div>
