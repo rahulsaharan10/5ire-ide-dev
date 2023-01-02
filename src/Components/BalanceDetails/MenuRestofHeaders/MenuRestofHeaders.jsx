@@ -1,8 +1,9 @@
 import React from "react";
 import style from "./style.module.scss";
 import BackArrowIcon from "../../../Assets/BackArrowIcon.svg";
+import SearchIcon from '../../../Assets/SearchIcon.svg'
 import { Link } from "react-router-dom";
-function MenuRestofHeaders({ title, prevBtn, searchTo, backTo }) {
+function MenuRestofHeaders({ title, searchTo, backTo }) {
   return (
     <div className={`${style.restOfHeaders} stickyHeader`}>
       <div>
@@ -16,7 +17,7 @@ function MenuRestofHeaders({ title, prevBtn, searchTo, backTo }) {
       <div>
         {searchTo && (
           <Link to={searchTo}>
-            <img onClick={prevBtn} src={BackArrowIcon} />
+            <img src={SearchIcon} />
           </Link>
         )}
       </div>

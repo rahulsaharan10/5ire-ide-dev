@@ -1,0 +1,27 @@
+@import "../../styles/__vars.scss";
+.wallet {
+  margin-top: 2px;
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 10px;
+    &__text {
+      font-size: 16px;
+      font-weight: 800;
+      color: $baseColor-Text;
+    }
+    &__filter {
+      cursor: pointer;
+    }
+  }
+  &__tableOuter {
+    max-height: 310px;
+    height: 100%;
+    padding: 17px 24px;
+    border-radius: 16px;
+    background-color: $inputBg;
+    overflow: auto;
+  }
+}

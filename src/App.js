@@ -6,9 +6,9 @@ import WelcomeLayout from "./Layout/WelcomeLayout";
 import Defi from "./Pages/Defi/Defi";
 import History from "./Pages/History/History";
 import Send from "./Pages/Send/Send";
+import SendCoins from "./Pages/Send/SendCoins/SendCoins";
 import Setting from "./Pages/Setting/Setting";
 import Wallet from "./Pages/Wallet/Wallet";
-import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
 import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
 import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
 
@@ -26,8 +26,10 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/setting" element={<Setting />} />
         </Route>
-        <Route path="/send" element={<OnlyContent />}>
+        <Route path="/" element={<OnlyContent />}>
           <Route index path="/send" element={<Send />} />
+          <Route index path="/sendCurrency" element={<SendCoins />} />
+
         </Route>
       </Routes>
     </div>

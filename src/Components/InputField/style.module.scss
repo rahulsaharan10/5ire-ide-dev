@@ -1,17 +1,47 @@
-@import '../../styles/__vars.scss';
+@import "../../styles/__vars.scss";
 .inputSimple {
-    background-color: $inputBg;
+  background-color: $inputBg;
+  border-radius: 28px;
+  padding: 13px 16px;
+  border: 0;
+
+  input {
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: normal;
+    color: $baseColor-Text;
+
+    &::placeholder {
+      color: $baseColor-Text;
+    }
+  }
+}
+.inputField {
+  &__input {
+    background-color: $white;
     border-radius: 28px;
     padding: 13px 16px;
     border: 0;
-    input {
-        background-color: transparent;
-        font-size: 14px;
-        font-weight: normal;
-        color: $baseColor-Text;
 
-        &::placeholder {
-            color: $baseColor-Text;
-        }
+    .ant-input-wrapper {
+      padding: 0;
+      border: 0;
     }
+  }
+}
+
+.boxStyle {
+  text-align: left;
+  margin-bottom: 23px;
+  display: flex;
+  flex-direction: column;
+  &__label {
+    color: $black;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
