@@ -1,4 +1,4 @@
-@import './styles/__vars.scss';
+@import "./styles/__vars.scss";
 .App {
   text-align: center;
   height: 100vh;
@@ -41,12 +41,12 @@
   font-weight: bold !important;
 }
 .positiveText {
-color: $green !important;
+  color: $green !important;
 }
 .negitiveText {
   color: $red !important;
-  }
-  // Input Field css//
+}
+// Input Field css//
 .inputField {
   .ant-input.css-dev-only-do-not-override-acm2ia {
     background-color: transparent;
@@ -71,17 +71,58 @@ color: $green !important;
 
 .inputFieldOnly {
   input {
-  background-color: $white;
-  border-radius: 28px;
-  padding: 13px 16px;
-  border: 0;
+    background-color: $white;
+    border-radius: 28px;
+    padding: 13px 16px;
+    border: 0;
   }
 }
 .ant-input-group-wrapper {
   &:focus {
-      border-color: #4096ff;
-  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
-  border-inline-end-width: 1px;
-  outline: 0;
+    border-color: #4096ff;
+    box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+    border-inline-end-width: 1px;
+    outline: 0;
+  }
+}
+
+//Modal Css Full width //
+:where(.css-dev-only-do-not-override-acm2ia).ant-modal-root .ant-modal-mask {
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+  background-color: unset;
+}
+
+.ant-modal.css-dev-only-do-not-override-acm2ia {
+  height: 100%;
+  .ant-modal-content {
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+.modalCustom.ant-modal .ant-modal-content {
+  padding-top: 79px !important;
+  .ant-modal-header {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D7E0EB;
+    color: $baseColor-Text;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+.customClassModal.modalCustom {
+  &.ant-modal {
+    &.css-dev-only-do-not-override-acm2ia {
+      height: auto;
+      background-color: $white;
+      border-radius: 30px;
     }
+    .ant-modal-content {
+      padding-top: 20px !important;
+    }
+  }
 }
