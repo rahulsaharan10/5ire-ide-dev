@@ -3,11 +3,22 @@ import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders
 import AddressNetworkCard from "../../Components/AddressNetworkCard/AddressNetworkCard.jsx";
 function AddresBook() {
   const data = [
-    {heading:"ABC",address:"2ertgbmjbgbnddfnvdfmnd",currency:"ETH (Ethereum)"},
-    {heading:"ABC",address:"2ertgbmjbgbnddfnvdfmnd",currency:"ETH (Ethereum)"},
-    {heading:"ABC",address:"2ertgbmjbgbnddfnvdfmnd",currency:"ETH (Ethereum)"},
-  
-  ]
+    {
+      heading: "ABC",
+      address: "2ertgbmjbgbnddfnvdfmnd",
+      currency: "ETH (Ethereum)",
+    },
+    {
+      heading: "ABC",
+      address: "2ertgbmjbgbnddfnvdfmnd",
+      currency: "ETH (Ethereum)",
+    },
+    {
+      heading: "ABC",
+      address: "2ertgbmjbgbnddfnvdfmnd",
+      currency: "ETH (Ethereum)",
+    },
+  ];
   return (
     <div>
       <div className={`scrollableCont`}>
@@ -17,9 +28,13 @@ function AddresBook() {
           settingTo={"/setting"}
         />
         <div className={`flexedContent`}>
-          {data.map((data) => ( 
-            <AddressNetworkCard heading={data.heading} address={data.address} currency={data.currency} />
-            ))}
+          {data.map((data) => (
+            <AddressNetworkCard
+              heading={data.heading}
+              address={data.address}
+              currency={data.currency}
+            />
+          ))}
         </div>
       </div>
     </div>

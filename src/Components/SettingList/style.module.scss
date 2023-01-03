@@ -11,6 +11,7 @@
   &__imgValue {
     display: flex;
     gap: 10px;
+    align-items: center;
     p {
       white-space: nowrap;
       color: $baseColor-Text;
