@@ -1,29 +1,26 @@
-import Link from 'antd/es/typography/Link';
-import React from 'react'
+// import Link from 'antd/es/typography/Link';
+import { Link } from "react-router-dom";
+import React from "react";
 import ticketcheck from "../../Assets/TickIcon.svg";
-import style from "./style.module.scss"
+import style from "./style.module.scss";
 
 function SettingList(props) {
-    const {
-        setinglist
-    } = props
+  const { setinglist, to } = props;
   return (
-      <>
-          <Link to="#">
+    <>
+      <div className={style.listItems}>
+        <Link to={to}>
           <div className={style.settingList}>
-              <div className={style.settingList__imgValue}>
-                  <img src={ticketcheck} />
-                  <p>{setinglist}</p>
-                  </div>
-                
-                      <img src={ticketcheck} />
-                 
-              </div>
-              </Link>
-      
-      
-      </>
-  )
+            <div className={style.settingList__imgValue}>
+              <img src={ticketcheck} />
+              <p>{setinglist}</p>
+            </div>
+            <img src={ticketcheck} />
+          </div>
+        </Link>
+      </div>
+    </>
+  );
 }
 
-export default SettingList
+export default SettingList;

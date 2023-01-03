@@ -41,11 +41,11 @@ export const InputField = ({
   );
 };
 
-export const InputFieldOnly = ({ placeholder, label }) => {
+export const InputFieldOnly = ({ placeholder, label,minHeight }) => {
   return (
-    <div className={`${style.boxStyle} inputFieldOnly`}>
+    <div className={`${style.boxStyle} inputFieldOnly `}>
       <label className={style.boxStyle__label}>{label}</label>
-      <Input className={style.inputSimple} placeholder={placeholder} />
+      <Input className={style.inputSimple} placeholder={placeholder}  style={{minHeight: minHeight}} />
     </div>
   );
 };

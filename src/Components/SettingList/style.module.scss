@@ -1,5 +1,8 @@
 @import "../../styles/__vars.scss";
-
+.listItems{
+  a{
+    text-decoration: none;
+  }
 .settingList {
   display: flex;
   justify-content: space-between;
@@ -16,4 +19,5 @@
       margin-bottom: 0;
     }
   }
+}
 }

@@ -1,0 +1,11 @@
+@import "../../styles/__vars.scss";
+.input_text{
+    p{
+        color: $gray;
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+    button{
+        margin-top: 13px;
+    }
+}
