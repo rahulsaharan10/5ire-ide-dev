@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
-import TickIcon from "../../Assets/TickIcon.svg";
+// import TickIcon from "../../Assets/TickIcon.svg";
 function DefiList(props) {
-  const { header, stakingHead, desc, bordered } =
+  const { header, stakingHead, desc, bordered,tickIcon } =
     props;
 
   return (
@@ -11,7 +11,7 @@ function DefiList(props) {
       <div className={` ${style.defiList} ${bordered ? style.defiList__bordered : ""}`}>
        
         <div className={style.defiList__stakingList}>
-          <img src={TickIcon} />{" "}
+          <img src={tickIcon} />{" "}
           <div>
             <h2>{stakingHead}</h2>
             <p>{desc}</p>

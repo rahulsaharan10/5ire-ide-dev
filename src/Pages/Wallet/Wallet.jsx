@@ -3,6 +3,7 @@ import style from "./style.module.scss";
 import FilterIcon from "../../Assets/FilterIcon.svg";
 import CoinsTable from "../../Components/CoinsTable/CoinsTable";
 import BTC from "../../Assets/Coins/BTC.png";
+import { Link } from "react-router-dom";
 function Wallet() {
   const data = [
     {
@@ -72,7 +73,7 @@ function Wallet() {
       <div className={style.wallet__heading}>
         <h3 className={style.wallet__heading__text}>Tokens</h3>
         <div className={style.wallet__heading__filter}>
-          <img src={FilterIcon} />
+          <Link to="/manage"><img src={FilterIcon}  /></Link>
         </div>
       </div>
       <div className={style.wallet__tableOuter}>

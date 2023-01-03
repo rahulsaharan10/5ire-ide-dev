@@ -14,6 +14,7 @@ import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
 import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
 import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
 import AddresBook from "./Pages/AddresBook/AddresBook.jsx"
+import Manage from "./Pages/Manage/Manage.jsx";
 function App() {
   return (
     <div className="App">
@@ -37,6 +38,7 @@ function App() {
           <Route path="/import-phrase" element={<ImportPhrase />} />  
           <Route path="/address" element={<AddresBook />} />  
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
+          <Route index path="/manage" element={<Manage />} />
 
         </Route>
       </Routes>

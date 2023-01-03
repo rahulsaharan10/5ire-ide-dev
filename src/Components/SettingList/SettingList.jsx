@@ -5,12 +5,12 @@ import ticketcheck1 from "../../Assets/ArrowRightIcon.svg";
 import style from "./style.module.scss";
 
 function SettingList(props) {
-  const { setinglist, to,ticketcheck } = props;
+  const { setinglist, to,ticketcheck,onClick } = props;
   return (
     <>
       <div className={style.listItems}>
         <Link to={to}>
-          <div className={style.settingList}>
+          <div className={style.settingList} onClick={onClick}>
             <div className={style.settingList__imgValue}>
               <img src={ticketcheck} />
               <p>{setinglist}</p>
