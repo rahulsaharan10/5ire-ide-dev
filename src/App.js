@@ -3,6 +3,7 @@ import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
 import WelcomeLayout from "./Layout/WelcomeLayout";
+import Buy from "./Pages/Buy/Buy";
 import Defi from "./Pages/Defi/Defi";
 import History from "./Pages/History/History";
 import Send from "./Pages/Send/Send";
@@ -38,8 +39,12 @@ function App() {
           <Route path="/import-phrase" element={<ImportPhrase />} />  
           <Route path="/address" element={<AddresBook />} />  
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
+<<<<<<< HEAD
           <Route index path="/manage" element={<Manage />} />
 
+=======
+          <Route index path="/buy" element={<Buy />} />
+>>>>>>> main
         </Route>
       </Routes>
     </div>
