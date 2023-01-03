@@ -7,6 +7,7 @@ import Defi from "./Pages/Defi/Defi";
 import History from "./Pages/History/History";
 import Send from "./Pages/Send/Send";
 import SendCoins from "./Pages/Send/SendCoins/SendCoins";
+import SendConfirm from "./Pages/Send/SendConfirm/SendConfirm";
 import Setting from "./Pages/Setting/Setting";
 import Wallet from "./Pages/Wallet/Wallet";
 import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
@@ -35,6 +36,8 @@ function App() {
           <Route index path="/sendCurrency" element={<SendCoins />} />
           <Route path="/import-phrase" element={<ImportPhrase />} />  
           <Route path="/address" element={<AddresBook />} />  
+          <Route index path="/confirmCurrency" element={<SendConfirm />} />
+
         </Route>
       </Routes>
     </div>

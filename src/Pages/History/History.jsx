@@ -1,6 +1,5 @@
 import React from "react";
 import HistryList from "../../Components/HistryList/HistryList";
-import TickIcon from "../../Assets/TickIcon.svg"
 function History() {
   const data = [
     {

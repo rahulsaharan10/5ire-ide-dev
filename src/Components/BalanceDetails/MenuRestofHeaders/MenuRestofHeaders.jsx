@@ -3,7 +3,8 @@ import style from "./style.module.scss";
 import BackArrowIcon from "../../../Assets/BackArrowIcon.svg";
 import SearchIcon from '../../../Assets/SearchIcon.svg'
 import { Link } from "react-router-dom";
-function MenuRestofHeaders({ title, searchTo, backTo }) {
+import SettignIcon from '../../../Assets/SettignIcon.svg'
+function MenuRestofHeaders({ title, searchTo, backTo,settingTo }) {
   return (
     <div className={`${style.restOfHeaders} stickyHeader`}>
       <div>
@@ -18,6 +19,11 @@ function MenuRestofHeaders({ title, searchTo, backTo }) {
         {searchTo && (
           <Link to={searchTo}>
             <img src={SearchIcon} />
+          </Link>
+        )}
+        {settingTo && (
+          <Link to={settingTo}>
+            <img src={SettignIcon} />
           </Link>
         )}
       </div>
