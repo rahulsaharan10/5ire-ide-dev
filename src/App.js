@@ -3,6 +3,7 @@ import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
 import WelcomeLayout from "./Layout/WelcomeLayout";
+import Buy from "./Pages/Buy/Buy";
 import Defi from "./Pages/Defi/Defi";
 import History from "./Pages/History/History";
 import Send from "./Pages/Send/Send";
@@ -31,7 +32,7 @@ function App() {
           <Route index path="/send" element={<Send />} />
           <Route index path="/sendCurrency" element={<SendCoins />} />
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
-
+          <Route index path="/buy" element={<Buy />} />
         </Route>
       </Routes>
     </div>

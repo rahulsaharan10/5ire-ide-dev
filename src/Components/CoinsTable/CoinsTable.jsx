@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./style.module.scss";
 function CoinsTable({ dataArray }) {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false)
+  const handleClick = (ele) => {
+    let routes = Object.keys(ele).includes("routeTo");
+    if (routes) {
+      navigate(`/${ele.routeTo}`);
+    } else {
+      setOpenModal(ele.openModal());
+    }
+  };
   return (
     <>
       {dataArray.map((ele, index) => (
@@ -12,7 +21,11 @@ function CoinsTable({ dataArray }) {
               <img src={ele.coinIcon} height={30} width={30} />
             </div>
             <div className={style.coinsTable__left__textSec}>
-              <div onClick={()=>navigate("/sendCurrency")} className={style.coinsTable__textTop} style={{cursor: 'pointer'}}>
+              <div
+                onClick={() => handleClick(ele)}
+                className={style.coinsTable__textTop}
+                style={{ cursor: "pointer" }}
+              >
                 {ele.coinName}
                 <div className={`${style.coinsTable__grayText12} textBold`}>
                   /{ele.coinSubName}
@@ -20,7 +33,10 @@ function CoinsTable({ dataArray }) {
               </div>
               <div className={style.coinsTable__grayText12}>
                 ${ele.coinPrice} |
-                <div className={`${style.coinsTable__grayText12} positiveText`} style={{marginLeft: '3px'}}>
+                <div
+                  className={`${style.coinsTable__grayText12} positiveText`}
+                  style={{ marginLeft: "3px" }}
+                >
                   {ele.coinStatus}
                 </div>
               </div>
@@ -28,7 +44,10 @@ function CoinsTable({ dataArray }) {
           </div>
           <div className={style.coinsTable__right}>
             <div className={style.coinsTable__textTop}>{ele.currCryptoBal}</div>
-            <div className={style.coinsTable__grayText12} style={{justifyContent: 'flex-end'}}>
+            <div
+              className={style.coinsTable__grayText12}
+              style={{ justifyContent: "flex-end" }}
+            >
               ${ele.currDollerBal}
             </div>
           </div>

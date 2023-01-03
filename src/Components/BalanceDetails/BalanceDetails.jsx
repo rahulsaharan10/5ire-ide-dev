@@ -40,7 +40,7 @@ function BalanceDetails() {
           </div>
           <span>Receive</span>
         </Link>
-        <Link to="" className={style.balanceDetails__items}>
+        <Link to="/buy" className={style.balanceDetails__items}>
           <div className={style.balanceDetails__items__img}>
             <img src={BuyIcon} height={24} width={24} />
           </div>
