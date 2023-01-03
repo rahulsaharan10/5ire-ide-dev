@@ -5,7 +5,7 @@ import style from "./style.module.scss"
 
 function SettingList(props) {
     const {
-        setinglist,arrowright
+        setinglist
     } = props
   return (
       <>
@@ -15,9 +15,9 @@ function SettingList(props) {
                   <img src={ticketcheck} />
                   <p>{setinglist}</p>
                   </div>
-                  {arrowright ? (
+                
                       <img src={ticketcheck} />
-                  ): null}
+                 
               </div>
               </Link>
       
