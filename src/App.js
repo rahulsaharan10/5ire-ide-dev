@@ -39,12 +39,9 @@ function App() {
           <Route path="/import-phrase" element={<ImportPhrase />} />  
           <Route path="/address" element={<AddresBook />} />  
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
-<<<<<<< HEAD
           <Route index path="/manage" element={<Manage />} />
 
-=======
           <Route index path="/buy" element={<Buy />} />
->>>>>>> main
         </Route>
       </Routes>
     </div>
