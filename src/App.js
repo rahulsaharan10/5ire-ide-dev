@@ -14,11 +14,12 @@ import Wallet from "./Pages/Wallet/Wallet";
 import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
 import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
 import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
-import AddresBook from "./Pages/AddresBook/AddresBook.jsx"
+import AddresBook from "./Pages/AddresBook/AddresBook.jsx";
 import Manage from "./Pages/Manage/Manage.jsx";
 import Swap from "./Pages/Swap/Swap";
 import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
 import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
+import CustomTocken from "./Pages/CustomTocken/CustomTocken.jsx";
 function App() {
   return (
     <div className="App">
@@ -26,28 +27,25 @@ function App() {
         <Route path="" element={<WelcomeLayout />}>
           <Route index path="/" element={<WelcomeScreen />} />
           <Route path="/setPassword" element={<SetPasswordScreen />} />
-
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
           <Route path="/defi" element={<Defi />} />
           <Route path="/history" element={<History />} />
           <Route path="/setting" element={<Setting />} />
-         
-
         </Route>
         <Route path="/" element={<OnlyContent />}>
           <Route index path="/send" element={<Send />} />
           <Route index path="/sendCurrency" element={<SendCoins />} />
-          <Route path="/import-phrase" element={<ImportPhrase />} />  
-          <Route path="/address" element={<AddresBook />} />  
+          <Route path="/import-phrase" element={<ImportPhrase />} />
+          <Route path="/address" element={<AddresBook />} />
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
           <Route index path="/manage" element={<Manage />} />
           <Route index path="/buy" element={<Buy />} />
           <Route index path="/swap" element={<Swap />} />
           <Route index path="/swapDetails" element={<SwapDetails />} />
           <Route index path="/currencyDetails" element={<CurrencyDetails />} />
-
+          <Route index path="/add-token" element={<CustomTocken />} />
         </Route>
       </Routes>
     </div>

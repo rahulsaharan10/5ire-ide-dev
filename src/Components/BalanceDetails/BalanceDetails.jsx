@@ -32,7 +32,7 @@ function BalanceDetails({ className, textLeft, mt0}) {
           className ? className : ""
         }`}
       >
-        <Link to="send" className={style.balanceDetails__items}>
+        <Link to="/send" className={style.balanceDetails__items}>
           <div className={style.balanceDetails__items__img}>
             <img src={SendIcon} height={24} width={24} />
           </div>
