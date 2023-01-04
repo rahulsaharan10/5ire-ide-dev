@@ -27,12 +27,14 @@ export const InputField = ({
   defaultValue,
   label,
   addonAfter,
+  inputSelect,
+  mb0
 }) => {
   return (
-    <div className={`${style.boxStyle} inputField`}>
+    <div className={`${style.boxStyle} inputField ${mb0 ? style.mb0 : ""}`}>
       <label className={style.boxStyle__label}>{label}</label>
       <Input
-        className={style.inputField__input}
+        className={`${style.inputField__input} ${inputSelect ? style.inputField__inputSelect : ""}`}
         addonAfter={addonAfter}
         defaultValue={defaultValue}
         placeholder={placeholder}

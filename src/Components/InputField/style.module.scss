@@ -17,11 +17,17 @@
   }
 }
 .inputField {
+  &__inputSelect {
+    padding: 5px 5px 5px 16px !important;
+  }
   &__input {
     background-color: $white;
     border-radius: 28px;
     padding: 13px 16px;
     border: 0;
+    .ant-input {
+      height: 30px !important;
+    }
 
     .ant-input-wrapper {
       padding: 0;
@@ -44,4 +50,7 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
+.mb0 {
+  margin-bottom: 0;
 }
