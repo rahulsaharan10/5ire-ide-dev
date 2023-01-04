@@ -2,7 +2,7 @@
 .inputSimple {
   background-color: $inputBg;
   border-radius: 28px;
-  padding: 13px 16px;
+  padding: 14px 16px;
   border: 0;
 
   input {
@@ -23,7 +23,7 @@
   &__input {
     background-color: $white;
     border-radius: 28px;
-    padding: 6px 16px;
+    padding: 5px 16px;
     border: 0;
     .ant-input {
       height: 30px !important;
