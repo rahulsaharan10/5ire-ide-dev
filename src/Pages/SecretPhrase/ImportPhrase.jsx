@@ -3,7 +3,11 @@ import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp.jsx";
+import { Input } from 'antd';
+
 function ImportPhrase() {
+const { TextArea } = Input;
+
   return (
     <div>
       <div className={`scrollableCont`}>
@@ -15,10 +19,8 @@ function ImportPhrase() {
         <div className={`flexedContent`}>
           <div className={style.input_text}>
             <p>Paste or type your secret Phrase.</p>
-            <InputFieldOnly
-              placeholder={"Your Secret Phrase"}
-              minHeight={"136px"}
-            />
+           
+             <TextArea rows={4} placeholder="Your Secret Phrase" />
             <ButtonComp text={"Proceed"} maxWidth={"100%"} />
           </div>
         </div>

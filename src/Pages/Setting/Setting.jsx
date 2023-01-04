@@ -11,7 +11,7 @@ import ModalCustom from "../../Components/ModalCustom/ModalCustom.jsx";
 import InputFieldSimple from "../../Components/InputField/InputFieldSimple.jsx";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import style from "./style.module.scss";
-import warning from "../../Assets/PNG/warning.png"
+import warning from "../../Assets/PNG/warning.png";
 function Setting() {
   const [isModalOpen, setOpenmodal] = useState(false);
   const onClick = () => {
@@ -33,20 +33,32 @@ function Setting() {
     },
     {
       setinglist: "Create Account",
-      to: "/import-phrase",
+      // to: "/import-phrase",
       ticketcheck: Useredit,
     },
-    { setinglist: "View Secret Phrases", ticketcheck: Eyes, onClick: onClick },
+    {
+      setinglist: "View Secret Phrases",
+      ticketcheck: Eyes,
+      onClick: onClick
+    },
     {
       setinglist: "Select Default Currency",
-      to: "/import-phrase",
+      // to: "/import-phrase",
       ticketcheck: CurrencyIcons,
     },
-    { setinglist: "Address Book", to: "/address", ticketcheck: Editable },
-    { setinglist: "Select Network", to: "/import-phrase", ticketcheck: Glob },
+    {
+      setinglist: "Address Book",
+      to: "/address",
+      ticketcheck: Editable
+    },
+    {
+      setinglist: "Select Network",
+      // to: "/import-phrase",
+      ticketcheck: Glob
+    },
     {
       setinglist: "Privacy Policy",
-      to: "/import-phrase",
+      // to: "/import-phrase",
       ticketcheck: Security,
     },
   ];
