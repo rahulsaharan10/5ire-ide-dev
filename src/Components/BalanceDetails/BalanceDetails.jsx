@@ -46,7 +46,7 @@ function BalanceDetails() {
           </div>
           <span>Buy</span>
         </Link>
-        <Link to="" className={style.balanceDetails__items}>
+        <Link to="/swap" className={style.balanceDetails__items}>
           <div className={style.balanceDetails__items__img}>
             <img src={SwapIcon} height={24} width={24} />
           </div>

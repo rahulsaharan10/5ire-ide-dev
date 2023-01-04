@@ -16,6 +16,7 @@ import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
 import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
 import AddresBook from "./Pages/AddresBook/AddresBook.jsx"
 import Manage from "./Pages/Manage/Manage.jsx";
+import Swap from "./Pages/Swap/Swap";
 function App() {
   return (
     <div className="App">
@@ -39,12 +40,9 @@ function App() {
           <Route path="/import-phrase" element={<ImportPhrase />} />  
           <Route path="/address" element={<AddresBook />} />  
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
-<<<<<<< HEAD
           <Route index path="/manage" element={<Manage />} />
-
-=======
           <Route index path="/buy" element={<Buy />} />
->>>>>>> main
+          <Route index path="/swap" element={<Swap />} />
         </Route>
       </Routes>
     </div>
