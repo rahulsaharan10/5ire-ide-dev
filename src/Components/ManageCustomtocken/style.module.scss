@@ -5,17 +5,13 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  &:first-child {
-    &__imgcurrency {
-      margin-top: 0px;
-    }
-  }
+ 
   &__imgcurrency {
     display: flex;
     gap: 10px;
     align-items: center;
     margin-top: 20px;
-
+    
     p {
       font-size: 16px;
       font-weight: bold;

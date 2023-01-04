@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./style.module.scss";
-import switchbutton from "../switchbutton/switchbutton.jsx";
+
 import { Switch } from 'antd';
 const onChange = (checked) => {
   console.log(`switch to ${checked}`);

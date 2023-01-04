@@ -4,6 +4,7 @@ import ManageCustom from "../../Components/ManageCustomtocken/ManageCustom";
 import Btc from "../../Assets/Coins/BTC.png"
 import ButtonComp from "../../Components/ButtonComp/ButtonComp.jsx";
 import style from "./style.module.scss";
+import {Link} from "react-router-dom";
 function Manage() {
   const data = [{
     img: Btc,
@@ -40,14 +41,14 @@ function Manage() {
         <MenuRestofHeaders
           backTo={"/wallet"}
           title={"Manage"}
-          searchTo={"/setting"}
+          searchTo
         />
         <div className={`flexedContent`}>
           <div className={style.spacingbtn}>
             {data.map( (data)=>( 
               <ManageCustom currency={data.currency} name={data.name} img={data.img} valuecurrency={data.valuecurrency} />
             ))}
-            <ButtonComp text={"Add Custom Token"} maxWidth={"100%"} />
+            <Link to="/add-token"><ButtonComp text={"Add Custom Token"} maxWidth={"100%"} /></Link>
           </div> 
         </div>
       </div>

@@ -23,7 +23,7 @@
   &__input {
     background-color: $white;
     border-radius: 28px;
-    padding: 13px 16px;
+    padding: 6px 16px;
     border: 0;
     .ant-input {
       height: 30px !important;
@@ -41,6 +41,7 @@
   margin-bottom: 23px;
   display: flex;
   flex-direction: column;
+  position: relative;
   &__label {
     color: $black;
     font-size: 14px;
@@ -49,6 +50,22 @@
   }
   &:last-child {
     margin-bottom: 0;
+  }
+  .scannerText {
+    position: absolute;
+    right: 17px;
+    top: 40px;
+    display: flex;
+    img{
+      margin-right: 13px;
+      cursor: pointer;
+    }
+    p{
+      padding-left: 12px;
+      border-left: 2px solid $gray;
+      cursor: pointer;
+      color: #00AEEF;
+    }
   }
 }
 .mb0 {

@@ -3,7 +3,8 @@ import React from "react";
 import EyeOpenIcon from "../../Assets/EyeOpenIcon.svg";
 import EyeCloseIcon from "../../Assets/EyeCloseIcon.svg";
 import style from "./style.module.scss";
-
+import Scanner from "../../Assets/scanner.svg"
+import { Link } from "react-router-dom";
 function InputFieldSimple({ placeholder }) {
   return (
     <Input.Password
@@ -27,7 +28,7 @@ export const InputField = ({
   defaultValue,
   label,
   addonAfter,
-  inputSelect,
+  inputSelect,scannerText,
   mb0
 }) => {
   return (
@@ -39,6 +40,9 @@ export const InputField = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
       />
+      { scannerText ? (
+        <div className={style.scannerText}><img src={Scanner} /><p><Link to="#"></Link>Paste</p></div>
+        ) : null}
     </div>
   );
 };

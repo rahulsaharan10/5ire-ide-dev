@@ -17,6 +17,7 @@ import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
 import AddresBook from "./Pages/AddresBook/AddresBook.jsx"
 import Manage from "./Pages/Manage/Manage.jsx";
 import Swap from "./Pages/Swap/Swap";
+import CustomTocken from "./Pages/CustomTocken/CustomTocken.jsx";
 function App() {
   return (
     <div className="App">
@@ -44,6 +45,7 @@ function App() {
           <Route index path="/buy" element={<Buy />} />
           {/* <Route index path="/buy" element={<Buy />} /> */}
           <Route index path="/swap" element={<Swap />} />
+          <Route index path="/add-token" element={<CustomTocken />} />
         </Route>
       </Routes>
     </div>
