@@ -9,7 +9,7 @@ import ModalCustom from "../ModalCustom/ModalCustom";
 import BTCicon from "../../Assets/Coins/BTC.png";
 import ScannerImg from "../../Assets/PNG/ScannerImg.png";
 import CopyIconBlue from "../../Assets/CopyIconBlue.svg";
-function BalanceDetails() {
+function BalanceDetails({ className, textLeft, mt0}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -21,9 +21,17 @@ function BalanceDetails() {
     setIsModalOpen(false);
   };
   return (
-    <div className={style.balanceDetails}>
-      <h3 className={style.balanceDetails__title}>$2,385.60</h3>
-      <div className={style.balanceDetails__itemsOuter}>
+    <div className={`${style.balanceDetails} ${mt0 ? mt0 : ""}`}>
+      <h3
+        className={`${style.balanceDetails__title} ${textLeft ? textLeft : ""}`}
+      >
+        $2,385.60
+      </h3>
+      <div
+        className={`${style.balanceDetails__itemsOuter} ${
+          className ? className : ""
+        }`}
+      >
         <Link to="send" className={style.balanceDetails__items}>
           <div className={style.balanceDetails__items__img}>
             <img src={SendIcon} height={24} width={24} />

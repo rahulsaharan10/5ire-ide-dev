@@ -17,6 +17,8 @@ import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
 import AddresBook from "./Pages/AddresBook/AddresBook.jsx"
 import Manage from "./Pages/Manage/Manage.jsx";
 import Swap from "./Pages/Swap/Swap";
+import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
+import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
 function App() {
   return (
     <div className="App">
@@ -43,6 +45,9 @@ function App() {
           <Route index path="/manage" element={<Manage />} />
           <Route index path="/buy" element={<Buy />} />
           <Route index path="/swap" element={<Swap />} />
+          <Route index path="/swapDetails" element={<SwapDetails />} />
+          <Route index path="/currencyDetails" element={<CurrencyDetails />} />
+
         </Route>
       </Routes>
     </div>

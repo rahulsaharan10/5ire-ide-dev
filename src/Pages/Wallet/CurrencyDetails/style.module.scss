@@ -1,0 +1,45 @@
+@import '../../../styles/__vars.scss';
+.currDetails {
+    &__card {
+        padding: 16px 24px;
+        background-color: $white;
+        border-radius: 16px;
+        &__paddingOverride {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        &__textLeft {
+            text-align: left;
+        }
+        &__topTexts {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        &__text{
+            font-size: 14px;
+            color: $baseColor-Text;
+            font-weight: normal;
+        }
+        &__mt0 {
+            margin-top: 0;
+        }
+    }
+    &__border {
+        background: #d7e0eb 0% 0% no-repeat padding-box;
+        height: 1px;
+        margin: 24px 0 32px;
+    }
+    &__noData {
+        font-size: 14px;
+        font-weight: 600;
+        color: #223F70BD;
+        margin-bottom: 15px;
+    }
+    &__jsonFile {
+        display: flex;
+        justify-content: center;
+    }
+}

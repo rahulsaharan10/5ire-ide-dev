@@ -14,7 +14,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
     {
       coinIcon: BTC,
@@ -24,7 +24,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
     {
       coinIcon: BTC,
@@ -34,7 +34,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
     {
       coinIcon: BTC,
@@ -44,7 +44,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
     {
       coinIcon: BTC,
@@ -54,7 +54,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
     {
       coinIcon: BTC,
@@ -64,7 +64,7 @@ function Wallet() {
       coinStatus: "-0.90%",
       currCryptoBal: "0 BTC",
       currDollerBal: "0.00",
-      routeTo: "sendCurrency",
+      routeTo: "currencyDetails",
     },
   ];
   const [currData, setCurrData] = useState(data);
