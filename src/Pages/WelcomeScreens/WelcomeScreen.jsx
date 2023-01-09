@@ -13,7 +13,7 @@ function WelcomeScreen() {
         {/* You already know how to use it */}
       </p>
       <div className={style.cardWhite__linkOuter}>
-        <Link to="/wallet-name" className={style.cardWhite__linkOuter__link}>
+        <Link to="/setPassword" className={style.cardWhite__linkOuter__link}>
           <span className={style.cardWhite__linkOuter__linkImage}>
             <img src={PlusBordredIcon} width={20} height={20} />
             Create a new wallet
