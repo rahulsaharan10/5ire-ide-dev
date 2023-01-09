@@ -20,6 +20,7 @@ import Swap from "./Pages/Swap/Swap";
 import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
 import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
 import CustomTocken from "./Pages/CustomTocken/CustomTocken.jsx";
+import WalletName from "./Pages/WelcomeScreens/WalletName.jsx";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
         <Route path="" element={<WelcomeLayout />}>
           <Route index path="/" element={<WelcomeScreen />} />
           <Route path="/setPassword" element={<SetPasswordScreen />} />
+          <Route path="/wallet-name" element={<WalletName />} />
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
