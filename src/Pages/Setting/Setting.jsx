@@ -48,7 +48,7 @@ function Setting() {
     },
     {
       setinglist: "Address Book",
-      to: "/address",
+      to: "/address-book",
       ticketcheck: Editable
     },
     {

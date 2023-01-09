@@ -23,7 +23,7 @@ function WelcomeScreen() {
           </span>
         </Link>
         <div className={style.cardWhite__linkOuter__hr}></div>
-        <Link className={style.cardWhite__linkOuter__link}>
+        <Link className={style.cardWhite__linkOuter__link} to="/add-secret-phrase">
           <span className={style.cardWhite__linkOuter__linkImage}>
             <img src={RefreshIcon} width={20} height={20} />
             Restore using passphrase
@@ -33,7 +33,7 @@ function WelcomeScreen() {
           </span>
         </Link>
         <div className={style.cardWhite__linkOuter__hr}></div>
-        <Link className={style.cardWhite__linkOuter__link}>
+        <Link className={style.cardWhite__linkOuter__link} to="/watch-list">
           <span className={style.cardWhite__linkOuter__linkImage}>
             <img src={Wallet} width={20} height={20} />
             Watch Only Wallet

@@ -1,6 +1,8 @@
 import React from "react";
 import style from "./style.module.scss";
-
+import {
+  InputFieldOnly
+} from "../../Components/InputField/InputFieldSimple.jsx";
 function WalletName() {
   return (
     <>
@@ -10,8 +12,8 @@ function WalletName() {
           You can simply identify multiple wallets and label your own wallet.
         </p>
         <div className={style.cardWhite__linkOuter}>
-          <button>Back</button>
-          <button>Continue</button>
+        <InputFieldOnly placeholder={"Token Name"} label="Amount" />
+        <div className={style.send__infoText}>0 BTC ~ $88.02</div>
         </div>
       </div>
     </>

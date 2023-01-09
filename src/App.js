@@ -13,14 +13,17 @@ import Setting from "./Pages/Setting/Setting";
 import Wallet from "./Pages/Wallet/Wallet";
 import SetPasswordScreen from "./Pages/WelcomeScreens/SetPasswordScreen";
 import WelcomeScreen from "./Pages/WelcomeScreens/WelcomeScreen";
-import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase.jsx";
-import AddresBook from "./Pages/AddresBook/AddresBook.jsx";
-import Manage from "./Pages/Manage/Manage.jsx";
+import ImportPhrase from "./Pages/SecretPhrase/ImportPhrase";
+import AddresBook from "./Pages/AddresBook/AddresBook";
+import Manage from "./Pages/Manage/Manage";
 import Swap from "./Pages/Swap/Swap";
 import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
 import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
-import CustomTocken from "./Pages/CustomTocken/CustomTocken.jsx";
-import WalletName from "./Pages/WelcomeScreens/WalletName.jsx";
+import CustomTocken from "./Pages/CustomTocken/CustomTocken";
+import WalletName from "./Pages/WelcomeScreens/WalletName";
+import WatchWallet from "./Pages/WelcomeScreens/WatchWallet";
+import WatchAddress from "./Pages/WelcomeScreens/WatchAddress";
+import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste"
 function App() {
   return (
     <div className="App">
@@ -29,6 +32,9 @@ function App() {
           <Route index path="/" element={<WelcomeScreen />} />
           <Route path="/setPassword" element={<SetPasswordScreen />} />
           <Route path="/wallet-name" element={<WalletName />} />
+          <Route path="/watch-list" element={<WatchWallet />} />
+          <Route path="/address" element={<WatchAddress />} />
+          <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
@@ -40,7 +46,7 @@ function App() {
           <Route index path="/send" element={<Send />} />
           <Route index path="/sendCurrency" element={<SendCoins />} />
           <Route path="/import-phrase" element={<ImportPhrase />} />
-          <Route path="/address" element={<AddresBook />} />
+          <Route path="/address-book" element={<AddresBook />} />
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
           <Route index path="/manage" element={<Manage />} />
           <Route index path="/buy" element={<Buy />} />
