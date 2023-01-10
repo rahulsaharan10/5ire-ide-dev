@@ -5,7 +5,8 @@ import SearchIcon from '../../../Assets/SearchIcon.svg'
 import { Link } from "react-router-dom";
 import SettignIcon from '../../../Assets/SettignIcon.svg';
 import Filtericon from "../../../Assets/FilterIcon.svg";
-function MenuRestofHeaders({ title, searchTo, backTo,settingTo,FilterIcon }) {
+import ChartIcon from '../../../Assets/ChartIcon.svg'
+function MenuRestofHeaders({ title, searchTo, backTo,settingTo,FilterIcon,chartIcon }) {
   return (
     <div className={`${style.restOfHeaders} stickyHeader`}>
       <div>
@@ -31,6 +32,11 @@ function MenuRestofHeaders({ title, searchTo, backTo,settingTo,FilterIcon }) {
           <Link to={FilterIcon}>
             <img src={Filtericon} />
           </Link>
+        )}
+         {chartIcon && (
+          <span style={{cursor:"pointer"}} to={void(0)} onClick={chartIcon}>
+            <img src={ChartIcon} />
+          </span>
         )}
       </div>
     </div>

@@ -24,7 +24,7 @@ function MenuFooter() {
           Wallet
         </span>
       </Link>
-      <Link to="/defi"
+      {/* <Link to="/defi"
         // onClick={() => setactiveLink("defi")}
         className={`${style.menuItems__items} ${
           path === "defi" ? style.menuItems__items__active : ""
@@ -36,7 +36,7 @@ function MenuFooter() {
         <span className={style.menuItems__items__title}>
           Defi
         </span>
-      </Link>
+      </Link> */}
       <Link to="/history"
         // onClick={() => setactiveLink("history")}
         className={`${style.menuItems__items} ${

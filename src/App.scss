@@ -232,3 +232,13 @@
     background-color: $baseText-00AEEF;
   }
 }
+
+//Dropdown Css//
+:where(.css-dev-only-do-not-override-acm2ia).ant-dropdown .ant-dropdown-menu {
+  border-radius: 15px;
+}
+.ant-dropdown-menu-title-content {
+  color: $baseColor-Text;
+  font-size: 13px;
+  font-weight: bold;
+}

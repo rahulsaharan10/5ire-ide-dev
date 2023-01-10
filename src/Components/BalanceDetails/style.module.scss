@@ -1,18 +1,61 @@
 @import "../../styles/__vars.scss";
 .balanceDetails {
-  margin-top: 36px;
+  margin-bottom: 18px;
   text-align: center;
+  &__cardCurrencyDetails {
+    background: transparent;
+  }
+  &__addTokensBTn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $baseColor-Text;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 14px;
+    background-color: $inputBg;
+    border-radius: 30px;
+    margin: 0 auto;
+    max-width: 96px;
+    width: 100%;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  &__dropdownStyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    margin-top: 23px;
+    p {
+      color: $inputBg;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 24px;
+    }
+  }
+  &__decoratedSec {
+    padding: 22px;
+    margin-top: -4px;
+    margin-bottom: 20px;
+    border-radius: 0 0 30px 30px;
+    background-image: url("../../Assets/PNG/WalletBg.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
   &__title {
     font-size: 24px;
-    color: $baseColor-Text;
+    color: $white;
     font-weight: 900;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
   &__itemsOuter {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
     padding: 0 28px;
   }
   &__items {
@@ -20,12 +63,27 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 12px;
     color: $baseColor-Text;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
+    &__whiteText {
+      min-width: 40px;
+      text-decoration: none;
+      background: #367cc754 0% 0% no-repeat padding-box;
+      border-radius: 10px;
+      padding: 9px 10px;
+      width: 60px;
+      font-size: 12px;
+      color: $white;
+      font-weight: bold;
+      cursor: pointer;
+      span {
+        color: $white;
+      }
+    }
   }
   &__modal {
     display: flex;

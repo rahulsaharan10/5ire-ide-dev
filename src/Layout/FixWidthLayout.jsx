@@ -16,15 +16,15 @@ function FixWidthLayout() {
       <div className={style.fixedLayout__inner}>
         {path === "wallet" && (
           <div className={style.fixedLayout__inner__walletLayout}>
-            <div style={{ textAlign: "left" }}>
-              <img src={LogoHorizontal} width={155} height={20} />
+            <div className={style.decoratedBg} style={{ textAlign: "left" }}>
+              {/* <img src={LogoHorizontal} width={155} height={20} /> */}
               <BalanceDetails />
             </div>
           </div>
         )}
-        {path === "defi" && (
+        {/* {path === "defi" && (
          <MenuRestofHeaders backTo={"/"} title={"DeFi"} />
-        )}
+        )} */}
          {path === "history" && (
          <MenuRestofHeaders backTo={"/"} title={"History"} />
         )}
