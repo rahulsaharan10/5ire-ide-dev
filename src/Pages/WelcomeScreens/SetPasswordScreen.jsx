@@ -60,7 +60,7 @@ function SetPasswordScreen() {
         {activeTab === "setPassword"
           ? "Set a Password"
           : activeTab === "secretPhrase"
-          ? "Your Secret Phrase"
+          ? "Save Secret Phrase"
           : activeTab === "confirmSecretPhrase"
           ? "Confirm Your Secret Phrase"
           : "Congratulations!"}

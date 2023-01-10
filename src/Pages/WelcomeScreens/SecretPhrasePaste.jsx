@@ -5,8 +5,8 @@ import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import { useNavigate } from "react-router-dom";
 
 function SecretPhrasePaste({ children }) {
-    const [activeTab, setActiveTab] = useState("setPassword");
-    const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("setPassword");
+  const navigate = useNavigate();
 
   const [blankArray, setBlankArray] = useState([]);
   const phrases = [
@@ -23,7 +23,7 @@ function SecretPhrasePaste({ children }) {
     "lounge",
     "rookie",
   ];
-  console.log(blankArray, "asdkjadhskadasd")
+  console.log(blankArray, "asdkjadhskadasd");
   const pushData = (ele) => {
     let prev = [...blankArray]; // Previous State update
     let pres = prev.findIndex((elem) => elem == ele); // Present state's index gets
@@ -38,59 +38,66 @@ function SecretPhrasePaste({ children }) {
     data.splice(dataIndex, 1);
     setBlankArray(data);
   };
-    return (
-      <>
+  return (
+    <>
       <div className={style.cardWhite}>
-        <h2 className={style.cardWhite__title}>Wallet Name</h2>
+        <h2 className={style.cardWhite__title}>Import a Secret Phrase</h2>
         <p className={style.cardWhite__subTitle}>
-          You can simply identify multiple wallets and label your own wallet.
+        Paste or type your secret Phrase.
         </p>
-                <div className={style.cardWhite__linkOuter}>
-                <div className={style.setPassword__secretPharse}>
-      <p className={style.setPassword__secretPharse__grayText}>
-        Please select each word in correct to verify you have saved your Secret
-        Phrase.
-      </p>
-      <div className={style.setPassword__secretPharse__confirmFieldSBg}>
-        <div className={style.setPassword__secretPharse__confirmFieldSBgInner}>
-          {blankArray.map((ele, index) => (
-            <span  onClick={() => removePhrase(ele)} key={index}>
-              {ele} <img src={closeXicon} width={7} height={7} />
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className={style.setPassword__secretPhrase__latters}>
-        <div
-          className={`${style.setPassword__secretPharse__confirmFieldSBgInner} ${style.setPassword__secretPharse__confirmFieldSBgInner__bordered}`}
-        >
-          {phrases.map((ele, index) => (
-            <span onClick={() => pushData(ele)} key={index} className={ blankArray.includes( ele) ? style.currentItem : ''}>
-              {ele}
-            </span>
-          ))}
-        </div>
-      </div>
-      {children}
-                    </div>
-                    <div className={style.setPassword__footerbuttons}>
+        <div className={style.cardWhite__linkOuter}>
+          <div className={style.setPassword__secretPharse}>
+            {/* <p className={style.setPassword__secretPharse__grayText}>
+              Please select each word in correct to verify you have saved your
+              Secret Phrase.
+            </p> */}
+            <div className={style.setPassword__secretPharse__confirmFieldSBg}>
+              <div
+                className={
+                  style.setPassword__secretPharse__confirmFieldSBgInner
+                }
+              >
+                {blankArray.map((ele, index) => (
+                  <span onClick={() => removePhrase(ele)} key={index}>
+                    {ele} <img src={closeXicon} width={7} height={7} />
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className={style.setPassword__secretPhrase__latters}>
+              <div
+                className={`${style.setPassword__secretPharse__confirmFieldSBgInner} ${style.setPassword__secretPharse__confirmFieldSBgInner__bordered}`}
+              >
+                {phrases.map((ele, index) => (
+                  <span
+                    onClick={() => pushData(ele)}
+                    key={index}
+                    className={
+                      blankArray.includes(ele) ? style.currentItem : ""
+                    }
+                  >
+                    {ele}
+                  </span>
+                ))}
+              </div>
+            </div>
+            {children}
+          </div>
+          <div className={style.setPassword__footerbuttons}>
             <ButtonComp
-              onClick={() => navigate("/watch-list")}
+              onClick={() => navigate("/")}
               text={"Back"}
               bordered={true}
             />
-                <ButtonComp
-              onClick={() => navigate("/wallet-name")}
-                  
+            <ButtonComp
+              onClick={() => navigate("/createNewWallet")}
               // onClick={() => setActiveTab("/")}
               text={"Proceed"}
             />
           </div>
         </div>
-            </div>
-        
-        </>
-    
+      </div>
+    </>
   );
 }
 

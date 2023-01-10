@@ -3,7 +3,7 @@ import React from "react";
 import EyeOpenIcon from "../../Assets/EyeOpenIcon.svg";
 import EyeCloseIcon from "../../Assets/EyeCloseIcon.svg";
 import style from "./style.module.scss";
-import Scanner from "../../Assets/scanner.svg"
+import Scanner from "../../Assets/scanner.svg";
 import { Link } from "react-router-dom";
 function InputFieldSimple({ placeholder }) {
   return (
@@ -28,30 +28,45 @@ export const InputField = ({
   defaultValue,
   label,
   addonAfter,
-  inputSelect,scannerText,
-  mb0
+  inputSelect,
+  mb0,
+  placeholderBaseColor,
+  coloredBg,
 }) => {
   return (
     <div className={`${style.boxStyle} inputField ${mb0 ? style.mb0 : ""}`}>
-      <label className={style.boxStyle__label}>{label}</label>
+      <label className={`${style.boxStyle__label}`}>{label}</label>
       <Input
-        className={`${style.inputField__input} ${inputSelect ? style.inputField__inputSelect : ""}`}
+        className={`${style.inputField__input} ${
+          inputSelect ? style.inputField__inputSelect : ""
+        }  ${placeholderBaseColor ? "placeholderBaseColor" : ""} ${
+          coloredBg ? style.inputField__coloredBg : ""
+        }`}
         addonAfter={addonAfter}
         defaultValue={defaultValue}
         placeholder={placeholder}
       />
-      {/* { scannerText ? (
-        <div className={style.scannerText}><img src={Scanner} /><p><Link to="#"></Link>Paste</p></div>
-        ) : null} */}
     </div>
   );
 };
 
-export const InputFieldOnly = ({ placeholder, label,minHeight }) => {
+export const InputFieldOnly = ({
+  placeholder,
+  label,
+  minHeight,
+  placeholderBaseColor,
+  coloredBg,
+}) => {
   return (
     <div className={`${style.boxStyle} inputFieldOnly `}>
       <label className={style.boxStyle__label}>{label}</label>
-      <Input className={style.inputSimple} placeholder={placeholder}  style={{minHeight: minHeight}} />
+      <Input
+        className={`${style.inputSimple} ${
+          placeholderBaseColor ? "placeholderBaseColor" : ""
+        } ${coloredBg ? style.inputField__coloredBg : ""}`}
+        placeholder={placeholder}
+        style={{ minHeight: minHeight }}
+      />
     </div>
   );
 };

@@ -11,6 +11,7 @@
     font-weight: 900;
     margin-bottom: 16px;
     letter-spacing: 0px;
+    line-height: 36px;
     @media (max-width: 767px) {
       font-size: 18px;
     }
@@ -124,41 +125,51 @@
         margin: 0 auto;
       }
       &__fieldSBg {
-        background-color: $inputBg;
-        border-radius: 28px;
-        padding: 20px 16px 16px 20px;
+        // background-color: $inputBg;
+        // border-radius: 28px;
+        // padding: 20px 16px 16px 20px;
         margin: 24px 0 36px;
       }
       &__fieldSBgInner {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 16px;
         justify-content: flex-start;
         margin-bottom: 6px;
         flex-wrap: wrap;
-        max-width: 224px;
-        width: 100%;
         span {
-          font-size: 16px;
+          font-size: 14px;
+          text-transform: capitalize;
           font-weight: 500;
           line-height: 16px;
           color: $baseColor-Text;
+          width: calc(33% - 40px);
+          background-color: $inputBg;
+          border-radius: 14px;
+          padding: 6px 15px;
         }
       }
       &__copyField {
-        height: 26px;
-        width: 26px;
-        border-radius: 100%;
+        max-width: 119px;
+        height: 36px;
+        border-radius: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: transparent
-          linear-gradient(180deg, #00aeef 0%, #367cc7 100%) 0% 0% no-repeat
+          linear-gradient(180deg, #00aeef1a 0%, #367cc71a 100%) 0% 0% no-repeat
           padding-box;
-        margin-left: auto;
-        border: 1px solid transparent;
+        border: 1px solid #00aeef;
+        margin: 0 auto;
         cursor: pointer;
         transition: 0.3s all;
+        span {
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 24px;
+          color: $baseText-00AEEF;
+          margin-left: 10px;
+        }
         &:hover {
           border: 1px solid $baseText-00AEEF;
         }
@@ -184,8 +195,8 @@
           display: flex;
           align-items: center;
           border-radius: 17px;
-            cursor: pointer;
-            text-transform: capitalize;
+          cursor: pointer;
+          text-transform: capitalize;
           img {
             margin-left: 5px;
           }
@@ -196,7 +207,7 @@
           span {
             border: 1px dashed #999ca5;
             border-radius: 17px;
-            color: #999CA5;
+            color: #999ca5;
             width: calc(33% - 60px);
             justify-content: center;
           }
@@ -207,10 +218,8 @@
 }
 
 .currentItem {
-  background-color:$inputBg !important;
+  background-color: $inputBg !important;
 }
-
-
 
 .token {
   // &__symbol_dec{
@@ -218,32 +227,40 @@
   //     gap: 20px;
   // }
   &__pasteText {
-      color: $baseText-00AEEF;
-      font-size: 13px;
-      font-weight: bold;
-      text-decoration: underline;
-      cursor: pointer;
-      transition: 0.3s;
-      padding-left: 10px;
-      border-left: 1px solid #80838E;
-      &:hover {
-          opacity: 0.7;
-      }
-  }
-  &__selectStyle {
-      display: flex;
-      align-items: center;
-      &__img {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding-right: 10px;
-          cursor: pointer;
-      }
-  }
-  &__fields{
-    input{
-      background-color:#EEF3F9 ;
+    color: $baseText-00AEEF;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: 0.3s;
+    padding-left: 10px;
+    border-left: 1px solid #80838e;
+    &:hover {
+      opacity: 0.7;
     }
   }
+  &__selectStyle {
+    display: flex;
+    align-items: center;
+    &__img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 10px;
+      cursor: pointer;
+    }
+  }
+  &__fields {
+    input {
+      background-color: #eef3f9;
+    }
+  }
+}
+
+.textInfoBaseColor {
+  text-align: right;
+  color: $baseText-00AEEF;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 16px;
 }
