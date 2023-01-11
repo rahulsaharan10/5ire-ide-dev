@@ -9,6 +9,9 @@ import HistryList from "../../../Components/HistryList/HistryList";
 import Sendhistry from "../../../Assets/sendhistry.svg";
 import FilterIcon from '../../../Assets/FillterBasicIcon.svg'
 import { Link } from "react-router-dom";
+import { Drawer } from "antd";
+import ModalCloseIcon from "../../../Assets/ModalCloseIcon.svg";
+import StockMarket from '../../../Assets/PNG/StockMarket.png'
 function CurrencyDetails() {
   const data = [
     {
@@ -86,11 +89,16 @@ function CurrencyDetails() {
     },
   ];
   const [dataRender, setDataRender] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
     <div className={`scrollableCont`}>
       <MenuRestofHeaders
         backTo={"/wallet"}
-        chartIcon
+        chartIcon={()=>setOpen(true)}
         title={
           <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <img src={BTC} />
@@ -98,6 +106,17 @@ function CurrencyDetails() {
           </span>
         }
       />
+       <Drawer
+        title={<span style={{display:'flex', alignItems:"center", gap:"8px"}}>  <img src={BTC} width={30} height={30} />BTC</span>}
+        placement="bottom"
+        onClose={onClose}
+        open={open}
+        closeIcon={<img src={ModalCloseIcon} />}
+      >
+     <div>
+      <img src={StockMarket} />
+     </div>
+      </Drawer>
       <div className={`flexedContent`}>
         <div className={style.currDetails}>
           <div className={style.currDetails__card}>

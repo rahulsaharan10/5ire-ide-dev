@@ -23,7 +23,6 @@ function SecretPhrasePaste({ children }) {
     "lounge",
     "rookie",
   ];
-  console.log(blankArray, "asdkjadhskadasd");
   const pushData = (ele) => {
     let prev = [...blankArray]; // Previous State update
     let pres = prev.findIndex((elem) => elem == ele); // Present state's index gets
