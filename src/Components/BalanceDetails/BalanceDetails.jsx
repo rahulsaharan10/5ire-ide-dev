@@ -32,21 +32,21 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   };
   const items = [
     {
-      label: <Link to="">Edit</Link>,
+      label: <Link to="/editWalletName">Edit</Link>,
       key: "0",
     },
     {
       type: "divider",
     },
     {
-      label: <Link to="">Show Secret Pharse</Link>,
+      label: <Link to="/showSecretPhrase">Show Secret Pharse</Link>,
       key: "1",
     },
     {
       type: "divider",
     },
     {
-      label: <Link to="">Set Currency</Link>,
+      label: <Link to="/currencyPreference">Set Currency</Link>,
       key: "2",
     },
   ];
@@ -60,9 +60,9 @@ function BalanceDetails({ className, textLeft, mt0 }) {
             <div className={style.balanceDetails__dropdownStyle}>
               <p>Main Wallet #1</p>
               <Dropdown menu={{ items }} trigger={["click"]}>
-                <a onClick={(e) => e.preventDefault()}>
+                <Link onClick={(e) => e.preventDefault()}>
                   <img src={InfoIcon} />
-                </a>
+                </Link>
               </Dropdown>
             </div>
           </>
