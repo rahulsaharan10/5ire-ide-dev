@@ -13,7 +13,11 @@ function FixWidthLayout() {
   const path = getLocation.pathname.replace("/", "");
   return (
     <div className={`${style.fixedLayout}`}>
-      <div className={style.fixedLayout__inner}>
+      <div
+        className={`${style.fixedLayout__inner} ${
+          path !== "wallet" ? style.fixedLayout__innerBgChange : ""
+        }`}
+      >
         {path === "wallet" && (
           <div className={style.fixedLayout__inner__walletLayout}>
             <div className={style.decoratedBg} style={{ textAlign: "left" }}>
@@ -25,11 +29,11 @@ function FixWidthLayout() {
         {/* {path === "defi" && (
          <MenuRestofHeaders backTo={"/"} title={"DeFi"} />
         )} */}
-         {path === "history" && (
-         <MenuRestofHeaders backTo={"/"} title={"History"} />
+        {path === "history" && (
+          <MenuRestofHeaders backTo={"/"} title={"History"} />
         )}
-         {path === "setting" && (
-         <MenuRestofHeaders backTo={"/"} title={"Setting"} searchTo="/" />
+        {path === "setting" && (
+          <MenuRestofHeaders backTo={"/"} title={"Setting"} searchTo="/" />
         )}
         <Content className={style.fixedLayout__content}>
           <Outlet />

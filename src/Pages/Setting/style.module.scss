@@ -23,3 +23,17 @@
         width: 20px;
     }
 }
+
+.logout {
+    margin: 38px auto 0;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    color: $gray;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 18px;
+    img {
+        margin-right: 8px;
+    }
+}

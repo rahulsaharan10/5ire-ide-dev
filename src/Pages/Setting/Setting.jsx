@@ -12,6 +12,7 @@ import InputFieldSimple from "../../Components/InputField/InputFieldSimple.jsx";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import style from "./style.module.scss";
 import warning from "../../Assets/PNG/warning.png";
+import LogoutIcon from '../../Assets/LogoutIcon.svg'
 function Setting() {
   const [isModalOpen, setOpenmodal] = useState(false);
   const onClick = () => {
@@ -72,6 +73,7 @@ function Setting() {
           onClick={data.onClick}
         />
       ))}
+      <button className={style.logout}><img src={LogoutIcon} width={11} height={12} />Logout</button>
 
       <ModalCustom
         title={"Show Secret Phrase"}
