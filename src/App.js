@@ -25,6 +25,9 @@ import WatchWallet from "./Pages/WelcomeScreens/WatchWallet";
 import WatchAddress from "./Pages/WelcomeScreens/WatchAddress";
 import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste"
 import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
+import EditWallet from "./Pages/EditWallet/EditWallet";
+import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
+import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
 function App() {
   return (
     <div className="App">
@@ -57,6 +60,9 @@ function App() {
           <Route index path="/swapDetails" element={<SwapDetails />} />
           <Route index path="/currencyDetails" element={<CurrencyDetails />} />
           <Route index path="/add-token" element={<CustomTocken />} />
+          <Route index path="/editWalletName" element={<EditWallet />} />
+          <Route index path="/showSecretPhrase" element={<ShowSecretPhrase />} />
+          <Route index path="/currencyPreference" element={<CurrencyPrefrence />} />
         </Route>
       </Routes>
     </div>

@@ -5,7 +5,7 @@
 }
 .WelcomeLayout {
   background: $inputBg;
-  height: 100vh;
+  min-height: 100vh;
   &__container {
     padding: 120px 15px 40px;
     max-width: 400px;

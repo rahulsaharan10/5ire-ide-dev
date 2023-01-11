@@ -1,6 +1,6 @@
 @import '../styles/__vars.scss';
 .fixedLayout {
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgb(238, 243, 249);
   display: flex;
   justify-content: center;
