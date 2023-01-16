@@ -28,7 +28,7 @@ function FooterStepOne() {
 
 export default FooterStepOne;
 
-export const FooterStepTwo = ({}) => {
+export const FooterStepTwo = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -43,7 +43,8 @@ export const FooterStepTwo = ({}) => {
     </>
   );
 };
-export const FooterStepThree = ({}) => {
+
+export const FooterStepThree = () => {
   const [loader, setLoader] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
