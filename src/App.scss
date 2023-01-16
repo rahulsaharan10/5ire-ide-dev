@@ -7,9 +7,21 @@
   background: $inputBg;
   min-height: 100vh;
   &__container {
-    padding: 120px 15px 40px;
+    padding: 30px 15px 40px;
     max-width: 400px;
     margin: 0 auto;
+    height: 678px;
+    display: flex;
+    flex-direction: column;
+    .welcomeFooter {
+      background-color: $blue-08132C;
+      padding: 0;
+    }
+  }
+  &__content {
+    overflow-y: scroll;
+    flex: 1 1;
+    background-color: #08132c;
   }
   &__logo {
     margin-bottom: 24px;
@@ -47,10 +59,11 @@
   color: $red !important;
 }
 // Input Field css//
-.inputFieldOnly .placeholderBaseColor.ant-input.css-dev-only-do-not-override-acm2ia {
+.inputFieldOnly
+  .placeholderBaseColor.ant-input.css-dev-only-do-not-override-acm2ia {
   &::placeholder {
     color: $baseColor-Text !important;
-}
+  }
 }
 .inputField
   .placeholderBaseColor
@@ -84,9 +97,11 @@
 .inputFieldOnly {
   input {
     background-color: $white;
-    border-radius: 28px;
+    border-radius: 12px;
     padding: 14px 16px;
-    border: 0;
+    border: 1px solid #404058;
+    color: #6a84a0;
+    font-size: 14px;
   }
 }
 .ant-input-group-wrapper {
@@ -215,7 +230,6 @@
   gap: 20px;
 }
 
-
 //checkbox css//
 
 .checkboxOuter {
@@ -227,7 +241,8 @@
     line-height: 15px;
     text-align: left;
   }
-  :where(.css-dev-only-do-not-override-acm2ia).ant-checkbox-checked .ant-checkbox-inner {
+  :where(.css-dev-only-do-not-override-acm2ia).ant-checkbox-checked
+    .ant-checkbox-inner {
     border-color: $baseText-00AEEF;
     background-color: $baseText-00AEEF;
   }
@@ -241,4 +256,17 @@
   color: $baseColor-Text;
   font-size: 13px;
   font-weight: bold;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000050;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

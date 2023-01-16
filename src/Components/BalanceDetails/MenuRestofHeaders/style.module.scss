@@ -1,15 +1,18 @@
-@import '../../../styles/__vars.scss';
+@import "../../../styles/__vars.scss";
 .restOfHeaders {
-    padding: 24px 29px;
-    border-bottom: 1px solid #D7E0EB;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    h4 {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 0;
-        color: $baseColor-Text;
-    }
+  padding: 10px 24px 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  h4 {
+    font-size: 20px;
+    // font-weight: m;
+    margin-bottom: 0;
+    white-space: nowrap;
+    background: -webkit-linear-gradient(#0071ff ,  #54f0d1 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    // Fill Color Style: gradient;
+  }
 }

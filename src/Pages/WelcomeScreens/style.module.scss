@@ -1,8 +1,7 @@
 @import "../../styles/__vars.scss";
 .cardWhite {
-  border-radius: 30px;
-  background-color: $white;
-  padding: 36px 24px 26px;
+  background-color: $blue-08132C;
+  // padding: 36px 24px 26px;
 
   // Welcome Screen Css Starts here//
   &__title {
@@ -16,47 +15,120 @@
       font-size: 18px;
     }
   }
-  &__subTitle {
-    color: $gray-80838E-Dark;
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 19px;
-    @media (max-width: 767px) {
-      font-size: 14px;
+  &__numberingSec {
+    padding: 24px;
+    padding-bottom: 10px;
+    text-align: end;
+    background-color: #08132c;
+    p {
+      color: $white;
+      font-size: 16px;
+      line-height: 20px;
     }
   }
-  &__linkOuter {
-    &__hr {
-      height: 1px;
-      background-color: #d7e0eb;
-      margin: 19px 0;
+  &__beginText {
+    padding: 30px;
+    h1 {
+      background: linear-gradient(91.26deg, #0071ff 0%, #54f0d1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 28px;
+      margin: 0;
     }
-    &__link {
+    p {
+      color: $white;
+      font-size: 16px;
+      line-height: 24px;
+      padding-top: 32px;
+    }
+    &__passInputSec {
+      padding-top: 32px;
+    }
+  }
+  &__noteSec {
+    padding: 0 40px;
+    h4 {
+      color: #0071ff;
+      text-align: left;
+      font-size: 14px;
+    }
+    li {
+      color: #8fa2b7;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: left;
+      padding-bottom: 8px;
+    }
+  }
+  &__addressInput {
+    padding: 0 18px;
+    margin-bottom: 16px;
+
+    label {
+      color: $white;
+      opacity: 0.6;
+      font-size: 12px;
+      width: 100%;
+      text-align: left;
+      display: inline-flex;
+      margin-bottom: 8px;
+    }
+    &__copyText {
+      background: #0f2046;
+      border-radius: 8px;
+      padding: 12px 8px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 15px;
-      color: $baseColor-Text;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      padding: 15px 8px;
-      transition: 0.3s all;
-      border-radius: 12px;
-      &:hover {
-        background-color: #80838e1a;
-      }
-      @media (max-width: 767px) {
-        font-size: 14px;
-      }
-    }
-    &__linkImage {
-      display: flex;
       align-items: center;
+      span {
+        color: #6a84a0;
+        font-size: 14px;
+        word-break: break-all;
+        text-align: left;
+      }
       img {
-        margin-right: 12px;
+        cursor: pointer;
       }
     }
+  }
+  &__cardInner {
+    padding: 35px;
+    &__innerLogocontact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    &__innercontact {
+      h1 {
+        background: linear-gradient(91.26deg, #0071ff 0%, #54f0d1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        font-size: 24px;
+        margin: 0;
+        transform: rotate(0.01deg);
+      }
+      p {
+        color: $white;
+        font-size: 24px;
+        padding-top: 10px;
+      }
+    }
+  }
+
+  &__linkOuter {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    display: flex;
   }
   // Welcome Screen Css ends here //
 
@@ -216,7 +288,12 @@
     }
   }
 }
-
+.congratScreen {
+  background: #08132c;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+}
 .currentItem {
   background-color: $inputBg !important;
 }

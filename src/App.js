@@ -28,6 +28,9 @@ import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import EditWallet from "./Pages/EditWallet/EditWallet";
 import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
 import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
+import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
+import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
+import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
 function App() {
   return (
     <div className="App">
@@ -37,6 +40,8 @@ function App() {
           <Route path="/setPassword" element={<SetPasswordScreen />} />
           {/* <Route path="/wallet-name" element={<WalletName />} /> */}
           <Route path="/watch-list" element={<WatchWallet />} />
+          <Route path="/beforebegin" element={<Beforebegin />} />
+          <Route path="/createwalletchain" element={<CreateWalletChain />} />
           <Route path="/address" element={<WatchAddress />} />
           <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
           <Route path="/createNewWallet" element={<CreateNewWallet />} />

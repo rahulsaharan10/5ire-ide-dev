@@ -2,7 +2,7 @@
 .menuItems {
   padding: 24px 28px;
   box-shadow: 0px 3px 8px #223f7017;
-//   border: 1px solid #c4d7f8;
+  //   border: 1px solid #c4d7f8;
   background-color: $inputBg;
   display: flex;
   align-items: center;
@@ -16,15 +16,16 @@
     gap: 2px;
     cursor: pointer;
     font-size: 10px;
-      font-weight: bold;
-      color: $gray;
-      text-decoration: none;
+    font-weight: bold;
+    color: $gray;
+    text-decoration: none;
     transition: 0.3s all;
-    &__active , &:hover{
+    &__active,
+    &:hover {
       > div {
         filter: none;
       }
-      span{
+      span {
         color: $baseText-00AEEF;
       }
     }
@@ -32,4 +33,26 @@
       filter: grayscale(1);
     }
   }
+  &__needHelp {
+    width: 100%;
+    padding: 16px 37px ;
+    p{
+      color: #8FA2B7;
+    }
+    a{
+      cursor: pointer;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+  &__cancleContinue{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 67px;
+    border-top: 1px solid #404058;
+    padding: 16px 37px ;
+  }
 }
+
