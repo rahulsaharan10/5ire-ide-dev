@@ -20,10 +20,6 @@ import Swap from "./Pages/Swap/Swap";
 import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
 import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
 import CustomTocken from "./Pages/CustomTocken/CustomTocken";
-import WalletName from "./Pages/WelcomeScreens/WalletName";
-import WatchWallet from "./Pages/WelcomeScreens/WatchWallet";
-import WatchAddress from "./Pages/WelcomeScreens/WatchAddress";
-import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste"
 import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import EditWallet from "./Pages/EditWallet/EditWallet";
 import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
@@ -38,12 +34,8 @@ function App() {
         <Route path="" element={<WelcomeLayout />}>
           <Route index path="/" element={<WelcomeScreen />} />
           <Route path="/setPassword" element={<SetPasswordScreen />} />
-          {/* <Route path="/wallet-name" element={<WalletName />} /> */}
-          <Route path="/watch-list" element={<WatchWallet />} />
           <Route path="/beforebegin" element={<Beforebegin />} />
           <Route path="/createwalletchain" element={<CreateWalletChain />} />
-          <Route path="/address" element={<WatchAddress />} />
-          <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
           <Route path="/createNewWallet" element={<CreateNewWallet />} />
 
         </Route>

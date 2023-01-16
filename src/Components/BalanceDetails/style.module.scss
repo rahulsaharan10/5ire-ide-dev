@@ -35,15 +35,25 @@
       line-height: 24px;
     }
   }
+  &__accountName {
+    text-align: left;
+    p {
+      color: $white;
+      font-size: 15px;
+      text-transform: capitalize;
+      display: flex;
+      gap: 6px;
+    }
+    span {
+      color: $white;
+      font-size: 14px;
+    }
+  }
   &__decoratedSec {
-    padding: 22px;
-    margin-top: -4px;
-    margin-bottom: 20px;
-    border-radius: 0 0 30px 30px;
-    background-image: url("../../Assets/PNG/WalletBg.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
   }
   &__title {
     font-size: 24px;

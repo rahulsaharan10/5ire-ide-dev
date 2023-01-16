@@ -188,21 +188,29 @@
 //select Css//
 .ant-select {
   .ant-select-selector {
-    background-color: $inputBg !important;
+    background-color: transparent !important;
     border-radius: 20px !important;
     height: 40px !important;
     padding: 0 5px !important;
+    color: $white;
+    border-color: $white !important;
   }
   &:focus,
   &:hover {
     .ant-select-selector {
       outline: none !important;
       box-shadow: unset !important;
-      border: 1px solid transparent !important;
     }
   }
 }
-
+.ant-select-dropdown {
+  background-color: $blue-08132C !important;
+  border: 1px solid $white;
+}
+:where(.css-dev-only-do-not-override-acm2ia).ant-select-dropdown
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #e6f4ff; 
+}
 .inputField {
   .ant-input {
     height: 40px;
@@ -216,7 +224,7 @@
   margin-top: 5px;
   font-size: 12px;
   font-weight: bold;
-  color: $black;
+  color: $white;
 }
 :where(.css-dev-only-do-not-override-acm2ia).ant-select-dropdown
   .ant-select-item {
