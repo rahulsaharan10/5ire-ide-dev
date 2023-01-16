@@ -7,8 +7,11 @@
     margin: 0;
   }
 }
-body {
+html,body {
   margin: 0;
+  height: 680px;
+  width: 400px;
+  overflow: hidden;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
