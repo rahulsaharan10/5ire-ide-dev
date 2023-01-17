@@ -1,69 +1,64 @@
 /*global chrome a*/
 
 import { wrapStore } from "webext-redux";
-import store from "../Store/store";
-import { increment } from "../Store/reducer/counter";
-import throttle from "lodash/throttle";
-import omit from "lodash/omit";
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer, {
+  increment,
+  initialState,
+} from "../Store/reducer/counter";
+import { CONNECTION_NAME, PORT_NAME } from "../Constants";
+import logger from "redux-logger";
 export {};
 
-wrapStore(store);
+let isInitialized = false;
 
-//let store = null;
-
-// chrome.storage.local.get(["state"], ({ state }) => {
-//   debugger;
-//   store = Store(state || {});
-
-//   wrapStore(store);
-
-//   /**
-//    * Save the current store state to local storage
-//    */
-//   const saveState = () => {
-//     if (!store) {
-//       return;
-//     }
-
-//     console.info("Saving state to chrome.storage.local");
-
-//     const state = store.getState();
-
-//     chrome.storage.local.set({
-//       // remove bookmark folders from taking up unnecessary space
-//       state: omit(state, "entities"),
-//     });
-//   };
-
-//   // On new state, persist to local storage
-//   const throttledSave = throttle(saveState, 10000, {
-//     trailing: true,
-//     leading: true,
-//   });
-//   store.subscribe(throttledSave);
+// chrome.storage.local.get("state", (storage) => {
+//   const state = storage.state || initialState;
+//   chrome.action.setBadgeText({ text: `${state.value}` });
 // });
+
+// Initializes the Redux store
+const init = (preloadedState) => {
+  const store = configureStore({
+    reducer: counterReducer,
+    preloadedState,
+    middleware: [logger],
+  });
+
+  wrapStore(store, { portName: PORT_NAME });
+
+  // Subscribes to the redux store changes. For each state
+  // change, we want to store the new state to the storage.
+  store.subscribe(() => {
+    chrome.storage.local.set({ state: store.getState() });
+
+    // Optional: other things we want to do on state change
+    // Here we update the badge text with the counter value.
+    chrome.action.setBadgeText({ text: `${store.getState().value}` });
+  });
+};
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === CONNECTION_NAME) {
+    // The popup was opened.
+    // Gets the current state from the storage.
+    chrome.storage.local.get("state", (storage) => {
+      if (!isInitialized) {
+        // 1. Initializes the redux store and the message passing.
+        init(storage.state || initialState);
+        isInitialized = false;
+      }
+      // 2. Sends a message to notify that the store is ready.
+      chrome.runtime.sendMessage({ type: "STORE_INITIALIZED" });
+    });
+  }
+});
 
 /** Fired when the extension is first installed,
  *  when the extension is updated to a new version,
  *  and when Chrome is updated to a new version. */
 chrome.runtime.onInstalled.addListener((details) => {
   console.log("[background.js] onInstalled", details);
-  store.dispatch(increment());
-});
-
-chrome.runtime.onConnect.addListener((port) => {
-  console.log("[background.js] onConnect", port);
-  port.onMessage.addListener((msg) => {
-    console.log("Inside background message", msg);
-    const key = "myKey";
-    const value = { name: msg };
-
-    chrome.storage.local.set({ [key]: value }, () => {
-      if (chrome.runtime.lastError) console.log("Error setting");
-
-      console.log("Stored name: " + value.name);
-    });
-  });
 });
 
 chrome.runtime.onStartup.addListener(() => {
@@ -87,16 +82,6 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
         console.log("Opened popup!");
       }
     );
-
-    // chrome.tabs.query(
-    //   {
-    //     active: true,
-    //     currentWindow: true,
-    //   },
-    //   (tabs) => {
-    //     chrome.pageAction.show(sender.tab.id);
-    //   }
-    // );
   }
 });
 /**
@@ -111,26 +96,3 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
 chrome.runtime.onSuspend.addListener(() => {
   console.log("[background.js] onSuspend");
 });
-
-// let rt = window.chrome.runtime;
-
-// window.addEventListener(
-//   "message",
-//   async (event) => {
-//     // We only accept messages from ourselves
-//     if (event.source != window) {
-//       return;
-//     }
-
-//     if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
-//       console.log("Content script received its background: " + event.data.text);
-
-//       var response = await rt.sendMessage({ greeting: "hello" });
-
-//       // do something with response here, not outside the function
-//       console.log(response);
-//       // port.postMessage(event.data.text);
-//     }
-//   },
-//   false
-// );
