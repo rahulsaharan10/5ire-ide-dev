@@ -3,9 +3,45 @@
 import { wrapStore } from "webext-redux";
 import store from "../Store/store";
 import { increment } from "../Store/reducer/counter";
+import throttle from "lodash/throttle";
+import omit from "lodash/omit";
 export {};
 
 wrapStore(store);
+
+//let store = null;
+
+// chrome.storage.local.get(["state"], ({ state }) => {
+//   debugger;
+//   store = Store(state || {});
+
+//   wrapStore(store);
+
+//   /**
+//    * Save the current store state to local storage
+//    */
+//   const saveState = () => {
+//     if (!store) {
+//       return;
+//     }
+
+//     console.info("Saving state to chrome.storage.local");
+
+//     const state = store.getState();
+
+//     chrome.storage.local.set({
+//       // remove bookmark folders from taking up unnecessary space
+//       state: omit(state, "entities"),
+//     });
+//   };
+
+//   // On new state, persist to local storage
+//   const throttledSave = throttle(saveState, 10000, {
+//     trailing: true,
+//     leading: true,
+//   });
+//   store.subscribe(throttledSave);
+// });
 
 /** Fired when the extension is first installed,
  *  when the extension is updated to a new version,
@@ -37,7 +73,6 @@ chrome.runtime.onStartup.addListener(() => {
 chrome.runtime.onMessage.addListener(function (message, sender) {
   if (message.msg == "showPageAction") {
     let extensionURL = chrome.runtime.getURL("index.html");
-
     chrome.windows.create(
       {
         url: extensionURL + `?type=helloworld`,

@@ -5,15 +5,15 @@ import { increment } from "../Store/reducer/counter";
 // Proxy store
 const store = new Store();
 
-// Apply middleware to proxy store
-const middleware = [thunkMiddleware];
-const storeWithMiddleware = applyMiddleware(store, ...middleware);
+// // Apply middleware to proxy store
+// const middleware = [thunkMiddleware];
+// const storeWithMiddleware = applyMiddleware(store, ...middleware);
 
-// You can now dispatch a function from the proxy store
-storeWithMiddleware.dispatch((dispatch, getState) => {
-  // Regular dispatches will still be routed to the background
-  dispatch(increment());
-});
+// // You can now dispatch a function from the proxy store
+// storeWithMiddleware.dispatch((dispatch, getState) => {
+//   // Regular dispatches will still be routed to the background
+//   dispatch(increment());
+// });
 
 const messagesFromReactAppListener = (message, sender, response) => {
   console.log("[content.js]. Message received", {
@@ -48,7 +48,7 @@ const listener = async (event) => {
     window.chrome.runtime.sendMessage({ msg: "showPageAction" });
 
     // var response = await rt.sendMessage({ greeting: "hello" });
-
+    store.dispatch(increment());
     // do something with response here, not outside the function
     const msg = port.postMessage(event.data.text);
     console.log(msg);
