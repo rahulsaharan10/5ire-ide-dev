@@ -29,15 +29,17 @@ chrome.runtime.onStartup.addListener(() => {
 
 chrome.runtime.onMessage.addListener(function (message, sender) {
   if (message.msg == "showPageAction") {
+    let extensionURL = chrome.runtime.getURL("index.html");
+
     chrome.windows.create(
       {
-        url: "index.html",
+        url: extensionURL + `?type=helloworld`,
         type: "popup",
         focused: true,
         width: 400,
-        height: 600,
+        height: 700,
         top: 0,
-        left: 1000 - 400,
+        left: 800,
       },
       () => {
         console.log("Opened popup!");

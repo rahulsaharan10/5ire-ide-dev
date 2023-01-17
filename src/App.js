@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate, useSearchParams } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
@@ -23,7 +23,7 @@ import CustomTocken from "./Pages/CustomTocken/CustomTocken";
 import WalletName from "./Pages/WelcomeScreens/WalletName";
 import WatchWallet from "./Pages/WelcomeScreens/WatchWallet";
 import WatchAddress from "./Pages/WelcomeScreens/WatchAddress";
-import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste"
+import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste";
 import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import EditWallet from "./Pages/EditWallet/EditWallet";
 import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
@@ -31,7 +31,26 @@ import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
 import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
+import { useEffect } from "react";
+
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const type = getParameterByName("type");
+    console.log("I AM FIRST TIME", window.location.pathname, type);
+
+    if (type === "helloworld") {
+      navigate("/add-secret-phrase");
+    }
+  }, []);
   return (
     <div className="App">
       <Routes>
@@ -45,7 +64,6 @@ function App() {
           <Route path="/address" element={<WatchAddress />} />
           <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
           <Route path="/createNewWallet" element={<CreateNewWallet />} />
-
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
@@ -66,8 +84,16 @@ function App() {
           <Route index path="/currencyDetails" element={<CurrencyDetails />} />
           <Route index path="/add-token" element={<CustomTocken />} />
           <Route index path="/editWalletName" element={<EditWallet />} />
-          <Route index path="/showSecretPhrase" element={<ShowSecretPhrase />} />
-          <Route index path="/currencyPreference" element={<CurrencyPrefrence />} />
+          <Route
+            index
+            path="/showSecretPhrase"
+            element={<ShowSecretPhrase />}
+          />
+          <Route
+            index
+            path="/currencyPreference"
+            element={<CurrencyPrefrence />}
+          />
         </Route>
       </Routes>
     </div>
