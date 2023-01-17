@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@metamask/eth-simple-keyring": "^5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@polkadot/keyring": "^7.9.2",
     "@polkadot/util": "^7.9.2",
@@ -31,6 +32,7 @@
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
+    "eth-keyring-controller": "^9.0.0",
     "ethers": "^5.7.2",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",

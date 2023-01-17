@@ -6,6 +6,8 @@ import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScr
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
 import { UserContext } from "../../Context";
+import KeyringController from 'eth-keyring-controller';
+import SimpleKeyring from '@metamask/eth-simple-keyring';
 
 function FooterStepOne() {
   const navigate = useNavigate();
@@ -65,17 +67,17 @@ export const FooterStepThree = () => {
 
     if (pass.p1 === pass.p2) {
       setPassmatch(true);
-      bcrypt.genSalt(10, function (err, salt) {
-        if (salt)
-          bcrypt.hash("", salt, function (err, hash) {
-            if (hash)
-              // Store hash in your password DB.
-              window.chrome.storage.local.set({ password : hash })
-              // localStorage.setItem("pass", hash);
-            if (err) console.log("Error : ", err)
-          });
-        if (err) console.log("Error : ", err)
-      });
+      // bcrypt.genSalt(10, function (err, salt) {
+      //   if (salt)
+      //     bcrypt.hash("", salt, function (err, hash) {
+      //       if (hash)
+      //         // Store hash in your password DB.
+      //         window.chrome.storage.local.set({ password: hash })
+      //       // localStorage.setItem("pass", hash);
+      //       if (err) console.log("Error : ", err)
+      //     });
+      //   if (err) console.log("Error : ", err)
+      // });
       setLoader(!loader);
       setTimeout(() => {
         setLoader(false);
