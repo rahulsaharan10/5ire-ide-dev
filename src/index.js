@@ -9,8 +9,11 @@ import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Store } from "webext-redux";
 import { CONNECTION_NAME, PORT_NAME } from "./Constants";
+import reduxStore from "./Store/store";
+import browser from "./chrome/pollyfill";
+const isDev = process.env.NODE_ENV === "development";
+console.log("which env", isDev);
 
-chrome.runtime.connect({ name: CONNECTION_NAME });
 const initApp = () => {
   const store = new Store({ portName: PORT_NAME });
 
@@ -43,10 +46,26 @@ const initApp = () => {
   reportWebVitals();
 };
 
-// Listens for when the store gets initialized
-chrome.runtime.onMessage.addListener((req) => {
-  if (req.type === "STORE_INITIALIZED") {
-    // Initializes the popup logic
-    initApp();
-  }
-});
+if (true) {
+  browser.runtime.connect({ name: CONNECTION_NAME });
+
+  // Listens for when the store gets initialized
+  browser.runtime.onMessage.addListener((req) => {
+    if (req.type === "STORE_INITIALIZED") {
+      // Initializes the popup logic
+      initApp();
+    }
+  });
+} else {
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(
+    <Provider store={reduxStore}>
+      <MemoryRouter>
+        {/* <React.StrictMode> */}
+        <App />
+        {/* </React.StrictMode> */}
+      </MemoryRouter>
+    </Provider>
+  );
+  reportWebVitals();
+}

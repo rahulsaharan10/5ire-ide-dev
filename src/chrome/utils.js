@@ -1,8 +1,8 @@
 export const getCurrentTabUrl = (callback) => {
   const queryInfo = { active: true, lastFocusedWindow: true };
 
-  window.chrome.tabs &&
-    window.chrome.tabs.query(queryInfo, (tabs) => {
+  window.browser.tabs &&
+    window.browser.tabs.query(queryInfo, (tabs) => {
       callback(tabs[0].url);
     });
 };
@@ -10,8 +10,8 @@ export const getCurrentTabUrl = (callback) => {
 export const getCurrentTabUId = (callback) => {
   const queryInfo = { active: true, lastFocusedWindow: true };
 
-  window.chrome.tabs &&
-    window.chrome.tabs.query(queryInfo, (tabs) => {
+  window.browser.tabs &&
+    window.browser.tabs.query(queryInfo, (tabs) => {
       callback(tabs[0].id);
     });
 };

@@ -1,6 +1,7 @@
 import { Store, applyMiddleware } from "webext-redux";
 import thunkMiddleware from "redux-thunk";
 import { increment } from "../Store/reducer/counter";
+import browser from "./pollyfill";
 
 // Proxy store
 const store = new Store();
@@ -22,7 +23,7 @@ const messagesFromReactAppListener = (message, sender, response) => {
   });
 
   if (
-    sender.id === window.chrome.runtime.id &&
+    sender.id === browser.runtime.id &&
     message.from === "React" &&
     message.message === "Hello from React"
   ) {
@@ -35,7 +36,7 @@ const messagesFromReactAppListener = (message, sender, response) => {
  */
 window.chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 
-const port = window.chrome.runtime.connect({ name: "HelloWorld" });
+const port = browser.runtime.connect({ name: "HelloWorld" });
 
 const listener = async (event) => {
   // We only accept messages from ourselves
@@ -45,7 +46,7 @@ const listener = async (event) => {
 
   if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
     console.log("Content script received: " + event.data.text);
-    window.chrome.runtime.sendMessage({ msg: "showPageAction" });
+    browser.runtime.sendMessage({ msg: "showPageAction" });
 
     // var response = await rt.sendMessage({ greeting: "hello" });
     store.dispatch(increment());
@@ -59,12 +60,3 @@ port.onDisconnect.addListener(function () {
   // clean up when content script gets disconnected
   window.removeEventListener("message", listener);
 });
-
-// var port = window.chrome.runtime.connect({ name: "knockknock" });
-// port.postMessage({ joke: "Knock knock" });
-// port.onMessage.addListener(function (msg) {
-//   if (msg.question === "Who's there?") port.postMessage({ answer: "Madame" });
-//   else if (msg.question === "Madame who?")
-//     port.postMessage({ answer: "Madame... Bovary" });
-// });
-window.fire = "HELLO FIRE";
