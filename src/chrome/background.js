@@ -1,11 +1,18 @@
 /*global chrome a*/
 
+import { wrapStore } from "webext-redux";
+import store from "../Store/store";
+import { increment } from "../Store/reducer/counter";
 export {};
+
+wrapStore(store);
+
 /** Fired when the extension is first installed,
  *  when the extension is updated to a new version,
  *  and when Chrome is updated to a new version. */
 chrome.runtime.onInstalled.addListener((details) => {
   console.log("[background.js] onInstalled", details);
+  store.dispatch(increment());
 });
 
 chrome.runtime.onConnect.addListener((port) => {

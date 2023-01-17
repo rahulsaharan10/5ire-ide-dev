@@ -2,8 +2,11 @@ import React from "react";
 import style from "./style.module.scss";
 import PlaceLogo from "../../Assets/PlaceLog.svg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 function WelcomeScreen() {
+  const count = useSelector((state) => state.counter);
+  console.log("CVOUN", count);
   return (
     <div className={style.cardWhite}>
       <MenuRestofHeaders logosilver={true} title="5ire Non-Custodial Wallet" />
@@ -19,7 +22,7 @@ function WelcomeScreen() {
         </div>
         <div className={style.cardWhite__linkOuter}>
           <Link to="/createNewWallet" className="bluegradient">
-            Create a new wallet
+            Create a new wallet {count.value} 
           </Link>
           <Link className="grayBtn" to="/watch-list">
             Import Wallet

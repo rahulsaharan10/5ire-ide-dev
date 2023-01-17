@@ -1,3 +1,20 @@
+import { Store, applyMiddleware } from "webext-redux";
+import thunkMiddleware from "redux-thunk";
+import { increment } from "../Store/reducer/counter";
+
+// Proxy store
+const store = new Store();
+
+// Apply middleware to proxy store
+const middleware = [thunkMiddleware];
+const storeWithMiddleware = applyMiddleware(store, ...middleware);
+
+// You can now dispatch a function from the proxy store
+storeWithMiddleware.dispatch((dispatch, getState) => {
+  // Regular dispatches will still be routed to the background
+  dispatch(increment());
+});
+
 const messagesFromReactAppListener = (message, sender, response) => {
   console.log("[content.js]. Message received", {
     message,
