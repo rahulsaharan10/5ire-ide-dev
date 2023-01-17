@@ -38,14 +38,14 @@
   .stickyHeader {
     position: sticky;
     top: 0;
-    background: $inputBg;
+    background: #08132C;
     z-index: 9;
   }
   .flexedContent {
     padding: 24px 28px 0;
     overflow-y: auto;
     height: 100%;
-    background-color: $inputBg;
+    background-color: #08132C;
   }
 }
 // CommonText//
@@ -172,7 +172,7 @@
   }
   &-header {
     padding: 0 0 21px 0 !important;
-    border-bottom: 1px solid #d7e0eb;
+    border-bottom: 1px solid grey!important;
     &-title {
       display: flex;
       flex-direction: row-reverse;
@@ -303,3 +303,5 @@
 
     }
   }
+
+  

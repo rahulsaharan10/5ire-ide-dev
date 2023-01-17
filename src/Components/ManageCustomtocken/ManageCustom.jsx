@@ -25,7 +25,7 @@ function ManageCustom(props) {
         {edited ? (
           <Switch defaultChecked onChange={onChange} />
         ) : (
-          <Checkbox onChange={onChange}>Checkbox</Checkbox>
+          <Checkbox onChange={onChange} className={style.checkbox}></Checkbox>
         )}
       </div>
     </>

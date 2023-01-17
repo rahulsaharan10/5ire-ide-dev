@@ -3,7 +3,7 @@
   padding: 24px 28px;
   box-shadow: 0px 3px 8px #223f7017;
   //   border: 1px solid #c4d7f8;
-  background-color: $inputBg;
+  background-color: #0F2046;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,7 +30,10 @@
       }
     }
     &__img {
-      filter: grayscale(1);
+      // filter: grayscale(1);
+    }
+    span{
+      color: #00AEEF;
     }
   }
   &__needHelp {
@@ -56,3 +59,27 @@
   }
 }
 
+.sttings{
+  display: flex;
+  justify-content: space-between;
+  background-color: $baseColor-Text2;
+  padding: 14px 16px;
+  align-items: center;
+  border-radius: 10px;
+  &__left{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    &__textsTop{
+      font-size: 14px;
+      font-weight: 400;
+      margin: 0;
+      color: #fff;
+    }
+  }
+  &__right{
+    img{
+     margin-right: 25px;
+    }
+  }
+}
