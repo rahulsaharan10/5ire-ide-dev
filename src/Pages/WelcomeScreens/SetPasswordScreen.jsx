@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
+import { UserContext } from "../../Context";
 
 function SetPasswordScreen() {
- 
+  let { setPass } = useContext(UserContext);
+  // const [pass, setPass] = useState();
+
+  const handleChange = (e) => {
+    setPass((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
 
   return (
     <div className={`${style.cardWhite}`}>
@@ -16,6 +27,8 @@ function SetPasswordScreen() {
         </p>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
+            name="p1"
+            onChange={handleChange}
             placeholder={"Enter Password"}
             placeholderBaseColor={true}
             coloredBg={true}
@@ -23,6 +36,8 @@ function SetPasswordScreen() {
         </div>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
+            name="p2"
+            onChange={handleChange}
             placeholder={"Confirm  Password"}
             placeholderBaseColor={true}
             coloredBg={true}

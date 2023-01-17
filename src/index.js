@@ -4,12 +4,15 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MemoryRouter } from "react-router-dom";
+import Context from "./Context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <MemoryRouter>
     {/* <React.StrictMode> */}
+    <Context >
       <App />
+    </Context>
     {/* </React.StrictMode> */}
   </MemoryRouter>
 );

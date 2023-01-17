@@ -1,9 +1,11 @@
 import { Spin } from "antd";
-import React, { useEffect, useState } from "react";
+import bcrypt from 'bcryptjs';
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
+import { UserContext } from "../../Context";
 
 function FooterStepOne() {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ function FooterStepOne() {
     <>
       <div className={style.menuItems__cancleContinue}>
         <ButtonComp
-          // onClick={() => Navigate("/confirmCurrency")}
+          onClick={() => navigate("/createNewWallet")}
           bordered={true}
           text={"Cancel"}
           maxWidth={"100%"}
@@ -25,7 +27,6 @@ function FooterStepOne() {
     </>
   );
 }
-
 export default FooterStepOne;
 
 export const FooterStepTwo = () => {
@@ -45,9 +46,11 @@ export const FooterStepTwo = () => {
 };
 
 export const FooterStepThree = () => {
+  const { pass, setPassmatch } = useContext(UserContext);
   const [loader, setLoader] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (show) {
       setTimeout(() => {
@@ -56,15 +59,35 @@ export const FooterStepThree = () => {
       }, 4000);
     }
   }, [show]);
+
   const handleSubmit = () => {
-    setLoader(!loader);
-    setTimeout(() => {
-      setLoader(false);
-      setShow(!show);
-    }, 1000);
+    console.log(pass);
+
+    if (pass.p1 === pass.p2) {
+      setPassmatch(true);
+      bcrypt.genSalt(10, function (err, salt) {
+        if (salt)
+          bcrypt.hash("", salt, function (err, hash) {
+            if (hash)
+              // Store hash in your password DB.
+              window.chrome.storage.local.set({ password : hash })
+              // localStorage.setItem("pass", hash);
+            if (err) console.log("Error : ", err)
+          });
+        if (err) console.log("Error : ", err)
+      });
+      setLoader(!loader);
+      setTimeout(() => {
+        setLoader(false);
+        setShow(!show);
+      }, 1000);
+    } else {
+      setPassmatch(false);
+    }
+
   };
 
- 
+
   if (loader)
     return (
       <>

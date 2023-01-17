@@ -46,6 +46,17 @@ function App() {
           <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
           <Route path="/createNewWallet" element={<CreateNewWallet />} />
 
+        </Route><Route path="" element={<WelcomeLayout />}>
+          <Route index path="/" element={<WelcomeScreen />} />
+          <Route path="/setPassword" element={<SetPasswordScreen />} />
+          {/* <Route path="/wallet-name" element={<WalletName />} /> */}
+          <Route path="/watch-list" element={<WatchWallet />} />
+          <Route path="/beforebegin" element={<Beforebegin />} />
+          <Route path="/createwalletchain" element={<CreateWalletChain />} />
+          <Route path="/address" element={<WatchAddress />} />
+          <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
+          <Route path="/createNewWallet" element={<CreateNewWallet />} />
+
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />

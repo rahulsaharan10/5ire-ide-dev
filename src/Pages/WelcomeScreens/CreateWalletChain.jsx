@@ -6,10 +6,12 @@ import Wallet from "../../Hooks/wallet";
 
 function CreateWalletChain() {
   // const navigate = useNavigate();
-  let wallet = Wallet();
-  console.log("WalletData : ",wallet);
+  let {walletSignUp, authData} = Wallet();
+
 
   useEffect(()=>{
+    walletSignUp();
+    console.log("authData : ",authData);
   },[]);
 
   return (
@@ -20,31 +22,28 @@ function CreateWalletChain() {
       <div className={style.cardWhite__addressInput}>
         <label>EVM Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>0x9db871CCfC1aCF472....60Fa3bE0A716e4</span>
+          <span>{authData.evmAddress}</span>
           <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Native Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>5FWJXakbsYfB2Gskr1AQvTd......nFaeRP5y</span>
+          <span>{authData.nativeAddress}</span>
           <img src={CopyIcon} alt="copyIcon"/>{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Mnemonic Phrase:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>
-            mean whale uniform grid coyote hour almost gorilla hunt that horn
-            rabbit
-          </span>
+          <span>{authData.mnemonic}</span>
           <img src={CopyIcon} alt="copyIcon"/>{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Ethereum Private Key:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>0xe221dc4f48eda87b3625147ac532d2...6c0</span>
+          <span>{authData.evmPrivatekey}</span>
           <img src={CopyIcon} alt="copyIcon"/>{" "}
         </p>
       </div>
