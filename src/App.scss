@@ -62,14 +62,14 @@
 .inputFieldOnly
   .placeholderBaseColor.ant-input.css-dev-only-do-not-override-acm2ia {
   &::placeholder {
-    color: $baseColor-Text !important;
+    color: $white !important;
   }
 }
 .inputField
   .placeholderBaseColor
   .ant-input.css-dev-only-do-not-override-acm2ia {
   &::placeholder {
-    color: $baseColor-Text !important;
+    color: $white !important;
   }
 }
 .inputField {
@@ -77,7 +77,7 @@
     background-color: transparent;
     font-size: 14px;
     font-weight: normal;
-    color: $baseColor-Text;
+    color: $white;
     border: 0 !important;
     padding: 0 10px 0 0;
     &:focus {
@@ -85,12 +85,13 @@
       outline: none;
     }
     &::placeholder {
-      color: $grayPlaceholder !important;
+      color: $white !important;
     }
   }
   .ant-input-group-addon {
     border: 0 !important;
     background-color: transparent !important;
+    padding: 0 !important;
   }
 }
 
@@ -100,7 +101,7 @@
     border-radius: 12px;
     padding: 14px 16px;
     border: 1px solid #404058;
-    color: #6a84a0;
+    color: $white;
     font-size: 14px;
   }
 }
@@ -115,8 +116,9 @@
 
 //Modal Css Full width //
 :where(.css-dev-only-do-not-override-acm2ia).ant-modal-root .ant-modal-mask {
-  backdrop-filter: blur(13px);
-  -webkit-backdrop-filter: blur(13px);
+  // backdrop-filter: blur(13px);
+  // -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(12px);
   background-color: unset;
 }
 
@@ -130,8 +132,15 @@
     box-shadow: none;
   }
 }
+.modalCustom {
+  background: #08132c;
+  width: 327px !important;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  height: auto !important;
+}
 .modalCustom.ant-modal .ant-modal-content {
-  padding-top: 79px !important;
   .ant-modal-header {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -209,13 +218,13 @@
 }
 :where(.css-dev-only-do-not-override-acm2ia).ant-select-dropdown
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: #e6f4ff; 
+  background-color: #616161;
 }
-.inputField {
-  .ant-input {
-    height: 40px;
-  }
-}
+// .inputField {
+//   .ant-input {
+//     height: 40px;
+//   }
+// }
 
 .flexedItemSelect {
   display: flex;
