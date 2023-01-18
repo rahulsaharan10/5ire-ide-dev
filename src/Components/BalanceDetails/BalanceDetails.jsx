@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import style from "./style.module.scss";
-import SendIcon from "../../Assets/SendIcon.svg";
-import RecieveIcon from "../../Assets/RecieveIcon.svg";
-import BuyIcon from "../../Assets/BuyIcon.svg";
-import SwapIcon from "../../Assets/SwapIcon.svg";
 import { Link, useLocation } from "react-router-dom";
 import DarkLogo from "../../Assets/DarkLogo.svg";
 import GreenCircle from "../../Assets/greencircle.svg";
 import DownArrowSuffix from "../../Assets/DownArrowSuffix.svg";
+import WalletCardLogo from "../../Assets/walletcardLogo.svg";
+import WalletQr from "../../Assets/walletqr.png";
 import ModalCustom from "../ModalCustom/ModalCustom";
-import BTCicon from "../../Assets/Coins/BTC.png";
-import ScannerImg from "../../Assets/PNG/ScannerImg.png";
-import CopyIconBlue from "../../Assets/CopyIconBlue.svg";
-import SendIconWhite from "../../Assets/SendIconWhite.svg";
-import RecieveIconWhite from "../../Assets/RecieveIconWhite.svg";
-import BuyIconWhite from "../../Assets/BuyIconWhite.svg";
-import SwapIconWhite from "../../Assets/SwapIconWhite.svg";
-import { Dropdown, Select } from "antd";
+import ModelLogo from "../../Assets/modalLogo.svg";
+import ScannerImg from "../../Assets/qrimg.svg";
+import CopyIcon from "../../Assets/CopyIcon.svg";
+import { Select } from "antd";
+import ButtonComp from "../ButtonComp/ButtonComp";
 function BalanceDetails({ className, textLeft, mt0 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const getLocation = useLocation();
   const path = getLocation.pathname.replace("/", "");
   const showModal = () => {
@@ -33,143 +29,106 @@ function BalanceDetails({ className, textLeft, mt0 }) {
 
   return (
     <div className={`${style.balanceDetails} ${mt0 ? mt0 : ""}`}>
-      <div
-        className={
-          path !== "currencyDetails"
-            ? style.balanceDetails__decoratedSec
-            : style.balanceDetails__cardCurrencyDetails
-        }
-      >
-        {path !== "currencyDetails" ? (
-          <>
-            <img src={DarkLogo} />
-            <div className={style.balanceDetails__accountName}>
-              <p>
-                <img src={GreenCircle} />
-                Account Name
-              </p>
-              <span>0x0a....12sd</span>
+      <div className={style.balanceDetails__decoratedSec}>
+        <>
+          <img src={DarkLogo} />
+          <div className={style.balanceDetails__accountName}>
+            <p>
+              <img src={GreenCircle} />
+              Account Name
+            </p>
+            <span>0x0a....12sd</span>
+          </div>
+          <div className={style.balanceDetails__selectStyle}>
+            <Select
+              suffixIcon={<img src={DownArrowSuffix} />}
+              defaultValue={[
+                {
+                  value: <span className="flexedItemSelect">Network</span>,
+                },
+              ]}
+              style={{
+                width: 100,
+              }}
+              options={[
+                {
+                  value: "BTC",
+                  label: <span className="flexedItemSelect">BTC</span>,
+                },
+                {
+                  value: "usdt",
+                  label: <span className="flexedItemSelect">BTC</span>,
+                },
+              ]}
+            />
+          </div>
+        </>
+      </div>
+      <div className={style.balanceDetails__innerBalance}>
+        <div className={style.balanceDetails__innerBalance__totalBalnce}>
+          <p>
+            Total Balance : <span>5000 </span>
+          </p>
+        </div>
+        <div className={style.balanceDetails__innerBalance__chainBalance}>
+          <div className={style.balanceDetails__innerBalance__balanceCard}>
+            <div className={style.balanceDetails__innerBalance__balanceName}>
+              <p>Native Chain Balance</p>
+              <h3>
+                <img src={WalletCardLogo} />
+                3000{" "}
+              </h3>
             </div>
-            <div className={style.balanceDetails__dropdownStyle}>
-              <Select
-                suffixIcon={<img src={DownArrowSuffix} />}
-                defaultValue={[
-                  {
-                    value: <span className="flexedItemSelect">Network</span>,
-                  },
-                ]}
-                style={{
-                  width: 100,
-                }}
-                options={[
-                  {
-                    value: "BTC",
-                    label: <span className="flexedItemSelect">BTC</span>,
-                  },
-                ]}
-              />
+            <div className={style.balanceDetails__innerBalance__walletQa}>
+              <img onClick={showModal} src={WalletQr} />
             </div>
-          </>
-        ) : null}
+          </div>
+          <div className={style.balanceDetails__innerBalance__balanceCard}>
+            <div className={style.balanceDetails__innerBalance__balanceName}>
+              <p>Native Chain Balance</p>
+              <h3>
+                <img src={WalletCardLogo} />
+                3000{" "}
+              </h3>
+            </div>
+            <div className={style.balanceDetails__innerBalance__walletQa}>
+              <img src={WalletQr} />
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {/* {path !== "currencyDetails" ? (
-          <Link to="/add-token" className={style.balanceDetails__addTokensBTn}>
-            <img src={PlusBordredIcon} width={20} height={20} />
-            <span>Add Tokens</span>
-          </Link>
-        ) : null} */}
-      </div>
-      <div
-        className={`${style.balanceDetails__itemsOuter} ${
-          className ? className : ""
-        }`}
-      >
-        <Link
-          to="/send"
-          className={
-            path === "currencyDetails"
-              ? style.balanceDetails__items__whiteText
-              : style.balanceDetails__items
-          }
-        >
-          <div className={style.balanceDetails__items__img}>
-            {path === "currencyDetails" ? (
-              <img src={SendIconWhite} height={24} width={24} />
-            ) : (
-              <img src={SendIcon} height={24} width={24} />
-            )}
-          </div>
-          <span>Send</span>
-        </Link>
-        <Link
-          onClick={showModal}
-          to="#"
-          className={
-            path === "currencyDetails"
-              ? style.balanceDetails__items__whiteText
-              : style.balanceDetails__items
-          }
-        >
-          <div className={style.balanceDetails__items__img}>
-            {path === "currencyDetails" ? (
-              <img src={RecieveIconWhite} height={24} width={24} />
-            ) : (
-              <img src={RecieveIcon} height={24} width={24} />
-            )}
-          </div>
-          <span>Receive</span>
-        </Link>
-        <Link
-          to="/buy"
-          className={
-            path === "currencyDetails"
-              ? style.balanceDetails__items__whiteText
-              : style.balanceDetails__items
-          }
-        >
-          <div className={style.balanceDetails__items__img}>
-            {path === "currencyDetails" ? (
-              <img src={BuyIconWhite} height={24} width={24} />
-            ) : (
-              <img src={BuyIcon} height={24} width={24} />
-            )}
-          </div>
-          <span>Buy</span>
-        </Link>
-        <Link
-          to="/swap"
-          className={
-            path === "currencyDetails"
-              ? style.balanceDetails__items__whiteText
-              : style.balanceDetails__items
-          }
-        >
-          <div className={style.balanceDetails__items__img}>
-            {path === "currencyDetails" ? (
-              <img src={SwapIconWhite} height={24} width={24} />
-            ) : (
-              <img src={SwapIcon} height={24} width={24} />
-            )}
-          </div>
-          <span>Swap</span>
-        </Link>
-      </div>
       <ModalCustom
         isModalOpen={isModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
       >
-        <div className={style.balanceDetails__modal}>
-          <div>
-            <img src={BTCicon} width={46} height={46} />
-          </div>
-          <p className={style.balanceDetails__modal__title}>Receive BTC</p>
-          <div className={style.balanceDetails__modal__scanner}>
-            <img src={ScannerImg} />
-          </div>
-          <div className={style.balanceDetails__modal__wrapedText}>
-            <img src={CopyIconBlue} width={15} height={16} />
-            <span>Ox3fe....92D92cb</span>
+        <div className={style.balanceDetails__nativemodal}>
+          <div className={style.balanceDetails__nativemodal__innerContact}>
+            <img src={ModelLogo} />
+            <p className={style.balanceDetails__nativemodal__title}>
+              5ire Native Chain
+            </p>
+            <div className={style.balanceDetails__nativemodal__scanner}>
+              <img src={ScannerImg} />
+            </div>
+            <div className={style.balanceDetails__nativemodal__modalOr}>
+              <p>or</p>
+            </div>
+            <p className={style.balanceDetails__nativemodal__addressText}>
+              Your 5ire Native Address
+            </p>
+            <div className={style.balanceDetails__nativemodal__wrapedText}>
+              <p>
+                0x9db871CCfC1aCF472asddadada60F
+                <img src={CopyIcon} />
+              </p>
+            </div>
+            <div className={style.balanceDetails__nativemodal__footerbuttons}>
+              <ButtonComp
+                text={"Share Address"}
+              />
+            </div>
           </div>
         </div>
       </ModalCustom>
