@@ -5,7 +5,13 @@ import CopyIcon from "../../Assets/CopyIcon.svg";
 import WalletCardLogo from "../../Assets/walletcardLogo.svg";
 import { InputField } from "../../Components/InputField/InputFieldSimple";
 import Approve from "../Approve/Approve";
+import ModalCustom from "../../Components/ModalCustom/ModalCustom";
+import ButtonComp from "../../Components/ButtonComp/ButtonComp";
+import ComplSwap from "../../Assets/tranCompl.svg";
+import FaildSwap from "../../Assets/tranReject.svg"
 function Swap() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFaildOpen, setIsFaildOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("one");
   const activeIst = () => {
     setActiveTab("one");
@@ -18,6 +24,24 @@ function Swap() {
   };
   const activeFour = () => {
     setActiveTab("four");
+  };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const swapfaild = () => {
+    setIsFaildOpen(true);
+  };
+  const faildOk = () => {
+    setIsFaildOpen(false);
+  };
+  const faildCancel = () => {
+    setIsFaildOpen(false);
   };
   return (
     <>
@@ -101,7 +125,42 @@ function Swap() {
         <p>Transaction Fee : 0.0002 5IRE</p>
       </div>
     </div>
-    <Approve/>
+    <Approve onClick={showModal}/>
+    <ModalCustom
+        isModalOpen={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      >
+        <div className="swapsendModel">
+          <div className="innerContact">
+            <img src={ComplSwap}/>
+            <h2 className="title">Swap Completed</h2>
+            <p className="transId">Your Swapped Transaction ID</p>
+            <span className="address">0ADX0SSD123211HJGT12641673653OL126416736GT12</span>
+
+            <div className="footerbuttons">
+              <ButtonComp text={"Swap Again"} onClick={swapfaild}/>
+            </div>
+          </div>
+        </div>
+      </ModalCustom>
+      <ModalCustom
+        isModalOpen={isFaildOpen}
+        handleOk={faildOk}
+        handleCancel={faildCancel}
+      >
+        <div className="swapsendModel">
+          <div className="innerContact">
+            <img src={FaildSwap}/>
+            <h2 className="title">Swap Failed</h2>
+            <p className="transId">Your Swap Failed</p>
+
+            <div className="footerbuttons">
+              <ButtonComp text={"Swap Again"}/>
+            </div>
+          </div>
+        </div>
+      </ModalCustom>
     </>
   );
 }

@@ -29,6 +29,7 @@ import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
 import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
 import ManageWallet from "./Components/Setting/ManageWallet/ManageWallet.jsx";
 import EnterPassword from "./Components/Setting/EnterPassword";
+import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 function App() {
   return (
     <div className="App">
@@ -43,6 +44,7 @@ function App() {
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
+          <Route index path="/swapapprove" element={<SwapApprove />} />
           <Route path="/defi" element={<Defi />} />
           <Route path="/history" element={<History />} />
           <Route path="/setting" element={<Setting />} />
@@ -55,7 +57,7 @@ function App() {
           <Route index path="/confirmCurrency" element={<SendConfirm />} />
           <Route index path="/manage" element={<Manage />} />
           <Route index path="/buy" element={<Buy />} />
-          <Route index path="/swap" element={<Swap />} />
+          <Route index path="/swap" element={<Swap />} />          
           <Route index path="/swapDetails" element={<SwapDetails />} />
           <Route index path="/currencyDetails" element={<CurrencyDetails />} />
           <Route index path="/add-token" element={<CustomTocken />} />

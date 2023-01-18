@@ -14,21 +14,17 @@ function FixWidthLayout() {
   return (
     <div className={`${style.fixedLayout}`}>
       <div
-        className={`${style.fixedLayout__inner} ${
-          path !== "wallet" ? style.fixedLayout__innerBgChange : ""
-        }`}
+        className={style.fixedLayout__inner }
       >
-        {path === "wallet" && (
-          <div className={style.fixedLayout__inner__walletLayout}>
-            <div className={style.decoratedBg} style={{ textAlign: "left" }}>
-              {/* <img src={LogoHorizontal} width={155} height={20} /> */}
-              <BalanceDetails />
+        {(path === "wallet" || path === "swapapprove") && (
+            <div className={style.fixedLayout__inner__walletLayout}>
+              <div className={style.decoratedBg} style={{ textAlign: "left" }}>
+                {/* <img src={LogoHorizontal} width={155} height={20} /> */}
+                <BalanceDetails />
+              </div>
             </div>
-          </div>
-        )}
-        {/* {path === "defi" && (
-         <MenuRestofHeaders backTo={"/"} title={"DeFi"} />
-        )} */}
+          )}
+
         {path === "history" && (
           <MenuRestofHeaders backTo={"/"} title={"History"} />
         )}

@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import style from "./style.module.scss";
-function Approve() {
+function Approve({ onClick }) {
   return (
     <div>
       {" "}
@@ -9,7 +9,8 @@ function Approve() {
         <ButtonComp bordered={true} text={"Cancel"} maxWidth={"100%"} />
 
         <ButtonComp
-        //   onClick={handleSubmit}
+          onClick={onClick}
+          //   onClick={handleSubmit}
           text={"Approve"}
           maxWidth={"100%"}
         />

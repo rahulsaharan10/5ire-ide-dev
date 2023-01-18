@@ -120,14 +120,37 @@
         font-size: 14px;
         display: flex;
         gap: 6px;
-        img{
+        img {
           cursor: pointer;
         }
       }
     }
-    &__footerbuttons{
+    &__footerbuttons {
       width: 100%;
       padding-top: 40px;
+    }
+  }
+  &__conectedSec {
+    padding: 15px 37px;
+    box-shadow: inset 0px -1px 0px #707070;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__connectedField {
+      color: $white;
+      font-size: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    &__textConatct {
+      p {
+        color: $white;
+        font-size: 15px;
+      }
+      span {
+        color: $white;
+        font-size: 14px;
+      }
     }
   }
   &__multiSwapBtn {

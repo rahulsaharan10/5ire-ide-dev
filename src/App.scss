@@ -38,14 +38,14 @@
   .stickyHeader {
     position: sticky;
     top: 0;
-    background: #08132C;
+    background: #08132c;
     z-index: 9;
   }
   .flexedContent {
     padding: 24px 28px 0;
     overflow-y: auto;
     height: 100%;
-    background-color: #08132C;
+    background-color: #08132c;
   }
 }
 // CommonText//
@@ -163,6 +163,37 @@
   }
 }
 
+// ---------modal css send swap----------------
+.swapsendModel {
+  padding: 20px 0;
+  .innerContact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    .title {
+      background: linear-gradient(91.26deg, #0071ff 0%, #54f0d1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-size: 24px;
+    }
+    .transId {
+      color: #8fa2b7;
+      font-size: 14px;
+    }
+    .address {
+      color: $white;
+      font-size: 16px;
+      word-break: break-all;
+      text-align: center;
+    }
+    .footerbuttons{
+      width: 100%;
+    }
+  }
+}
 //Drawer Style//
 .ant-drawer-mask {
   backdrop-filter: blur(13px);
@@ -181,7 +212,7 @@
   }
   &-header {
     padding: 0 0 21px 0 !important;
-    border-bottom: 1px solid grey!important;
+    border-bottom: 1px solid grey !important;
     &-title {
       display: flex;
       flex-direction: row-reverse;
@@ -287,30 +318,26 @@
   align-items: center;
   justify-content: center;
 }
-.ant-drawer-content{
-  background-color: #08132C!important;
-  }
-  .ant-drawer-title{
-    span{
-      height: 40px;
-      
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 40px;
-      text-align: center;
-      background: linear-gradient(91.26deg, #0071FF 0%, #54F0D1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      
-      
-      /* Inside auto layout */
-      flex: none;
-      order: 0;
-      flex-grow: 0;
+.ant-drawer-content {
+  background-color: #08132c !important;
+}
+.ant-drawer-title {
+  span {
+    height: 40px;
 
-    }
-  }
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    background: linear-gradient(91.26deg, #0071ff 0%, #54f0d1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 
-  
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+}
