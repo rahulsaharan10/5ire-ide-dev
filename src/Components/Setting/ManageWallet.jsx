@@ -1,10 +1,10 @@
 import React from "react";
-import MenuRestofHeaders from "../../BalanceDetails/MenuRestofHeaders/MenuRestofHeaders.jsx";
-import { InputFieldOnly } from "../../InputField/InputFieldSimple.jsx";
-import CopyIcon from "../../../Assets/CopyIcon.svg";
+import MenuRestofHeaders from "../BalanceDetails/MenuRestofHeaders/MenuRestofHeaders.jsx";
+import { InputFieldOnly } from "../InputField/InputFieldSimple.jsx";
+import CopyIcon from "../../Assets/CopyIcon.svg";
 import style from "./style.module.scss";
-import ButtonComp from "../../ButtonComp/ButtonComp";
-import Exportprivate from "../../../Assets/PNG/exportprivate.png";
+import ButtonComp from "../ButtonComp/ButtonComp.jsx";
+import Exportprivate from "../../Assets/PNG/exportprivate.png";
 import { useNavigate } from "react-router-dom";
 
 function ManageWallet() {
@@ -40,7 +40,7 @@ function ManageWallet() {
           </div>
           <div className={style.btn_icon}>
                       <ButtonComp
-                           onClick={() => navigate("/createwalletchain")}
+                           onClick={() => navigate("/enter-password")}
               text="Export Private Key"
               img={Exportprivate}
             ></ButtonComp>

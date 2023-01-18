@@ -27,9 +27,10 @@ import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
 import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
-import ManageWallet from "./Components/Setting/ManageWallet/ManageWallet.jsx";
+import ManageWallet from "./Components/Setting/ManageWallet.jsx";
 import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
+import PrivateKey from "./Components/Setting/PrivateKey";
 function App() {
   return (
     <div className="App">
@@ -68,6 +69,7 @@ function App() {
 
           <Route index path="/manage-wallet" element={<ManageWallet/>} />
           <Route index path="/enter-password" element={<EnterPassword/>} />
+          <Route index path="/private-key" element={<PrivateKey/>} />
 
 
         </Route>
