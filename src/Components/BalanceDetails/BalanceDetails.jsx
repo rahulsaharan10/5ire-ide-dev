@@ -78,17 +78,18 @@ function BalanceDetails({ className, textLeft, mt0 }) {
               </div>
             </>
           </div>
-          <div className={style.balanceDetails__conectedSec}>
-            <p className={style.balanceDetails__conectedSec__connectedField}>
-              <img src={GreenCircle} />
-              connected
-            </p>
-            <div className={style.balanceDetails__conectedSec__textConatct}>
-              <p>Account 1</p>
-              <span>0x02da....q12sd</span>
+          {path === "swapapprove" && (
+            <div className={style.balanceDetails__conectedSec}>
+              <p className={style.balanceDetails__conectedSec__connectedField}>
+                <img src={GreenCircle} />
+                connected
+              </p>
+              <div className={style.balanceDetails__conectedSec__textConatct}>
+                <p>Account 1</p>
+                <span>0x02da....q12sd</span>
+              </div>
             </div>
-          </div>
-
+          )}
           {path === "wallet" && (
             <div className={style.balanceDetails__innerBalance}>
               <div className={style.balanceDetails__innerBalance__totalBalnce}>
