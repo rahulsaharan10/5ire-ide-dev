@@ -50,18 +50,11 @@
   flex-direction: column;
   position: relative;
   &__label {
-<<<<<<< HEAD
     color: #ffffff;
     font-size: 12px;
     font-weight: 400;
     margin-bottom: 8px;
     opacity: 0.6;
-=======
-    color: $black;
-    font-size: 14px;
-    font-weight: 600;
-    // margin-bottom: 8px;
->>>>>>> main
   }
   &:last-child {
     margin-bottom: 0;
