@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
@@ -27,13 +27,12 @@ import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
 import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import ManageWallet from "./Components/Setting/ManageWallet.jsx";
 import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
-import { useSelector } from "react-redux";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -45,21 +44,14 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 function App() {
-  const navigate = useNavigate();
-  const st = useSelector((state) => state);
-  console.log("HHHHH", st);
-  const isLogin = useSelector((state) => state?.counter?.login);
-  useEffect(() => {
-    const type = getParameterByName("type");
+  const auth = useSelector((state) => state.auth);
 
-    if (type === "helloworld") {
-      navigate("/add-secret-phrase");
-    }
-  }, []);
+  console.log("isLogin : ", auth);
+
   return (
     <div className="App">
       <Routes>
-        {!isLogin ? (
+        {!auth.isLogin ? (
           <Route path="" element={<WelcomeLayout />}>
             <Route index path="/" element={<WelcomeScreen />} />
             <Route path="/setPassword" element={<SetPasswordScreen />} />

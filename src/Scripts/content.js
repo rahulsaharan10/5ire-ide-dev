@@ -1,6 +1,5 @@
 import { Store, applyMiddleware } from "webext-redux";
 import thunkMiddleware from "redux-thunk";
-import { increment } from "../Store/reducer/counter";
 import browser from "./pollyfill";
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE } from "./constants";
@@ -65,7 +64,6 @@ const listener = async (event) => {
     console.log("Content script received: " + event.data.text);
     browser.runtime.sendMessage({ msg: "showPageAction" });
 
-    store.dispatch(increment());
     // do something with response here, not outside the function
     const msg = port.postMessage(event.data.text);
     console.log(msg);

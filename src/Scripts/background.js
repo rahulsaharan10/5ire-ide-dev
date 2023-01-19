@@ -2,10 +2,7 @@
 
 import { wrapStore } from "webext-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer, {
-  increment,
-  initialState,
-} from "../Store/reducer/counter";
+import authReducer, { userState } from "../Store/reducer/auth";
 import { CONNECTION_NAME, PORT_NAME } from "../Constants";
 import logger from "redux-logger";
 
@@ -25,7 +22,7 @@ let isInitialized = false;
 // Initializes the Redux store
 const init = (preloadedState) => {
   const store = configureStore({
-    reducer: { counter: counterReducer },
+    reducer: { auth: authReducer },
     preloadedState,
     middleware: [logger],
   });
@@ -39,9 +36,8 @@ const init = (preloadedState) => {
 
     // Optional: other things we want to do on state change
     // Here we update the badge text with the counter value.
-    browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
+    //    browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
   });
-  store.dispatch(increment());
 };
 
 browser.runtime.onConnect.addListener((port) => {
@@ -50,7 +46,7 @@ browser.runtime.onConnect.addListener((port) => {
     browser.storage.local.get("state", (storage) => {
       if (!isInitialized) {
         // 1. Initializes the redux store and the message passing.
-        init(storage.state || { counter: initialState });
+        init(storage.state || { auth: userState });
         isInitialized = false;
       }
       // 2. Sends a message to notify that the store is ready.

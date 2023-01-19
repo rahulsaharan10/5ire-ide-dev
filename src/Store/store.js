@@ -1,11 +1,12 @@
 /* global chrome */
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import counterReducer from "./reducer/counter";
+import userSlice from "./reducer/auth";
+
 import logger from "redux-logger";
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
+  password: userSlice,
 });
 
 const store = configureStore({

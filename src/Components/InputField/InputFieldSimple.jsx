@@ -56,6 +56,8 @@ export const InputFieldOnly = ({
   minHeight,
   placeholderBaseColor,
   coloredBg,
+  onChange,
+  name
 }) => {
   return (
     <div className={`${style.boxStyle} inputFieldOnly `}>
@@ -66,6 +68,8 @@ export const InputFieldOnly = ({
         } ${coloredBg ? style.inputField__coloredBg : ""}`}
         placeholder={placeholder}
         style={{ minHeight: minHeight }}
+        onChange={onChange}
+        name={name}
       />
     </div>
   );
