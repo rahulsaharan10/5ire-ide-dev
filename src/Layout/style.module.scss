@@ -6,19 +6,17 @@
   justify-content: center;
   &__inner {
     height: 710px;
-    background-color: rgb(255, 255, 255);
+    background-color: $blue-08132C;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 375px;
-    box-shadow: 0px -3px 8px #223f7017;
-    border: 1px solid #c4d7f8;
+    max-width: 404px;
   }
   &__innerBgChange {
     background-color: $inputBg;
   }
   &__content {
-    padding: 0 28px 24px;
+    // padding: 0 28px 24px;
     overflow-y: scroll;
     flex: 1 1 0%;
     &__paddingX {

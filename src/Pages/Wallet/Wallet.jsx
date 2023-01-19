@@ -1,83 +1,56 @@
 import React, { useState } from "react";
+import Send from "../Send/Send";
+import Swap from "../Swap/Swap.jsx";
 import style from "./style.module.scss";
-import FilterIcon from "../../Assets/FilterIcon.svg";
-import CoinsTable from "../../Components/CoinsTable/CoinsTable";
-import BTC from "../../Assets/Coins/BTC.png";
-import { Link } from "react-router-dom";
 function Wallet() {
-  const data = [
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-    {
-      coinIcon: BTC,
-      coinName: "BTC",
-      coinSubName: "Bitcoin",
-      coinPrice: "28,752",
-      coinStatus: "-0.90%",
-      currCryptoBal: "0 BTC",
-      currDollerBal: "0.00",
-      routeTo: "currencyDetails",
-    },
-  ];
-  const [currData, setCurrData] = useState(data);
+  const [activeTab, setActiveTab] = useState("send");
+  const activeSend = () => {
+    setActiveTab("send");
+  };
+  const activeSwap = () => {
+    setActiveTab("swap");
+  };
   return (
     <div className={style.wallet}>
-      <div className={style.wallet__heading}>
-        <h3 className={style.wallet__heading__text}>Tokens</h3>
-        <div className={style.wallet__heading__filter}>
-          <Link to="/manage"><img src={FilterIcon}  /></Link>
+     
+       <div
+        className={style.wallet__sendSwapSec }
+      >
+        <div className={style.wallet__multiSwapBtn}>
+          <div className={style.wallet__sendSwapbtn}>
+            <button
+              onClick={activeSend}
+              className={`${style.wallet__sendSwapbtn__buttons} 
+              ${
+                activeTab === "send" &&
+                style.wallet__sendSwapbtn__buttons__active
+              }
+            `}
+            >
+              Send
+            </button>
+            <button
+              onClick={activeSwap}
+              className={`${style.wallet__sendSwapbtn__buttons}  ${
+                activeTab === "swap" &&
+                style.wallet__sendSwapbtn__buttons__active
+              }`}
+            >
+              Swap
+            </button>
+          </div>
         </div>
-      </div>
-      <div className={style.wallet__tableOuter}>
-        <CoinsTable dataArray={currData} />
+        {activeTab === "send" && (
+          <div>
+            <Send />
+          </div>
+        )}
+           {activeTab === "swap" && (
+          <div>
+            <Swap/>
+          </div>
+        )}
+        
       </div>
     </div>
   );

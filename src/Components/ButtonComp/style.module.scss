@@ -11,6 +11,9 @@
   height: 50px;
   transition: 0.3s all;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     border: 1px solid $border-1098FC;
   }
@@ -22,4 +25,12 @@
        opacity: 0.6;
       }
   }
+  img{
+    height: 17px;
+    width: 18px;
+    margin-right: 13px;
+
+  }
 }
+
+

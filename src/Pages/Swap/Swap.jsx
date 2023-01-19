@@ -1,149 +1,167 @@
-import { Select } from "antd";
-import React from "react";
-import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
-import { InputField } from "../../Components/InputField/InputFieldSimple";
+import React, { useState } from "react";
 import style from "./style.module.scss";
-import BTC from "../../Assets/Coins/BTC.png";
-import DownArrowSuffix from "../../Assets/DownArrowSuffix.svg";
-import ETH from "../../Assets/Coins/ETH.png";
-import ADA from "../../Assets/Coins/ADA.png";
-import SwapVerticalIcon from "../../Assets/SwapVerticalIcon.svg";
+import SwapIcon from "../../Assets/SwapIcon.svg";
+import CopyIcon from "../../Assets/CopyIcon.svg";
+import WalletCardLogo from "../../Assets/walletcardLogo.svg";
+import { InputField } from "../../Components/InputField/InputFieldSimple";
+import Approve from "../Approve/Approve";
+import ModalCustom from "../../Components/ModalCustom/ModalCustom";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
-import { useNavigate } from "react-router-dom";
+import ComplSwap from "../../Assets/tranCompl.svg";
+import FaildSwap from "../../Assets/tranReject.svg"
 function Swap() {
-  const navigate = useNavigate();
-  const selectAfter = (
-    <div className={"addonAfter"}>
-      <span className={style.swap__pasteText}>Max</span>
-      <Select
-        suffixIcon={<img src={DownArrowSuffix} />}
-        defaultValue={[
-          {
-            value: (
-              <span className="flexedItemSelect">
-                <img src={BTC} />
-                BTC
-              </span>
-            ),
-          },
-        ]}
-        style={{
-          width: 100,
-        }}
-        options={[
-          {
-            value: "BTC",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={BTC} />
-                BTC
-              </span>
-            ),
-          },
-          {
-            value: "ETH",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={ETH} />
-                ETH
-              </span>
-            ),
-          },
-          {
-            value: "ADA",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={ADA} />
-                BTC
-              </span>
-            ),
-          },
-        ]}
-      />
-    </div>
-  );
-  const selectAfterTo = (
-    <div className={"addonAfter"}>
-      <Select
-        suffixIcon={<img src={DownArrowSuffix} />}
-        defaultValue={[
-          {
-            value: (
-              <span className="flexedItemSelect">
-                <img src={BTC} />
-                BTC
-              </span>
-            ),
-          },
-        ]}
-        style={{
-          width: 100,
-        }}
-        options={[
-          {
-            value: "BTC",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={BTC} />
-                BTC
-              </span>
-            ),
-          },
-          {
-            value: "ETH",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={ETH} />
-                ETH
-              </span>
-            ),
-          },
-          {
-            value: "ADA",
-            label: (
-              <span className="flexedItemSelect">
-                <img src={ADA} />
-                BTC
-              </span>
-            ),
-          },
-        ]}
-      />
-    </div>
-  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFaildOpen, setIsFaildOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("one");
+  const activeIst = () => {
+    setActiveTab("one");
+  };
+  const activeSecond = () => {
+    setActiveTab("two");
+  };
+  const activeThree = () => {
+    setActiveTab("three");
+  };
+  const activeFour = () => {
+    setActiveTab("four");
+  };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const swapfaild = () => {
+    setIsFaildOpen(true);
+  };
+  const faildOk = () => {
+    setIsFaildOpen(false);
+  };
+  const faildCancel = () => {
+    setIsFaildOpen(false);
+  };
   return (
-    <div className={`scrollableCont`}>
-      <MenuRestofHeaders backTo={"/wallet"} title={"Swap"} />
-      <div className={`flexedContent`}>
-        <div className={style.swap}>
-          <InputField
-            mb0={true}
-            inputSelect={true}
-            placeholder={"Wallet Address"}
-            label="Address"
-            addonAfter={selectAfter}
-          />
-          <div className={style.swap__infoText}>0 BTC ~ $88.02</div>
-          <div className={style.swap__icon}>
-            <img src={SwapVerticalIcon} width={44} height={44} />
-          </div>
-          <InputField
-            mb0={true}
-            inputSelect={true}
-            placeholder={"283.00"}
-            label="To"
-            addonAfter={selectAfterTo}
-          />
-          <div style={{ marginTop: "50px" }}>
-            <ButtonComp
-              onClick={() => navigate("/swapDetails")}
-              text={"Swap"}
-              maxWidth={"100%"}
-            />
-          </div>
+    <>
+    <div className={style.swap}>
+      <div className={style.swap__swapCopy}>
+        <div className={style.swap__swapSec}>
+          <h3>From Native</h3>
+          <p>300 5ire</p>
+          <span>
+            0xxx0...lsh223 <img src={CopyIcon} width={11} height={11} />
+          </span>
+        </div>
+        <div className={style.swap__icon}>
+          <img src={SwapIcon} />
+        </div>
+        <div className={style.swap__swapSec}>
+          <h3>From Native</h3>
+          <p>300 5ire</p>
+          <span>
+            0xx ...lsh223 <img src={CopyIcon} width={11} height={11} />
+          </span>
         </div>
       </div>
+      <div className={style.swap__swapAccount}>
+        <div>
+          <InputField
+            placeholder={"Enter Swap Amount "}
+            addonAfter={
+              <span className={style.swap__pasteText}>
+                <img src={WalletCardLogo} />
+                5ire
+              </span>
+            }
+          />
+          <span className={style.swap__spanbalanceText}>
+            Balance 00.0000 5IRE
+          </span>
+        </div>
+        <div className={style.swap__activeBalnce}>
+          <button
+            onClick={activeIst}
+            className={`${style.swap__activeBalanceSelect__buttons} 
+              ${
+                activeTab === "one" &&
+                style.swap__activeBalanceSelect__buttons__active
+              }
+            `}
+          >
+            25 %
+          </button>
+          <button
+            onClick={activeSecond}
+            className={`${style.swap__activeBalanceSelect__buttons}  ${
+              activeTab === "two" &&
+              style.swap__activeBalanceSelect__buttons__active
+            }`}
+          >
+            50 %
+          </button>
+          <button
+            onClick={activeThree}
+            className={`${style.swap__activeBalanceSelect__buttons}  ${
+              activeTab === "three" &&
+              style.swap__activeBalanceSelect__buttons__active
+            }`}
+          >
+            70 %
+          </button>
+          <button
+            onClick={activeFour}
+            className={`${style.swap__activeBalanceSelect__buttons}  ${
+              activeTab === "four" &&
+              style.swap__activeBalanceSelect__buttons__active
+            }`}
+          >
+            100 %
+          </button>
+        </div>
+      </div>
+      <div className={style.swap__transactionFee}>
+        <p>Transaction Fee : 0.0002 5IRE</p>
+      </div>
     </div>
+    <Approve onClick={showModal}/>
+    <ModalCustom
+        isModalOpen={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      >
+        <div className="swapsendModel">
+          <div className="innerContact">
+            <img src={ComplSwap}/>
+            <h2 className="title">Swap Completed</h2>
+            <p className="transId">Your Swapped Transaction ID</p>
+            <span className="address">0ADX0SSD123211HJGT12641673653OL126416736GT12</span>
+
+            <div className="footerbuttons">
+              <ButtonComp text={"Swap Again"} onClick={swapfaild}/>
+            </div>
+          </div>
+        </div>
+      </ModalCustom>
+      <ModalCustom
+        isModalOpen={isFaildOpen}
+        handleOk={faildOk}
+        handleCancel={faildCancel}
+      >
+        <div className="swapsendModel">
+          <div className="innerContact">
+            <img src={FaildSwap}/>
+            <h2 className="title">Swap Failed</h2>
+            <p className="transId">Your Swap Failed</p>
+
+            <div className="footerbuttons">
+              <ButtonComp text={"Swap Again"}/>
+            </div>
+          </div>
+        </div>
+      </ModalCustom>
+    </>
   );
 }
 

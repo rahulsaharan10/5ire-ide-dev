@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, useSearchParams } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
@@ -20,18 +20,19 @@ import Swap from "./Pages/Swap/Swap";
 import SwapDetails from "./Pages/Swap/SwapDetails/SwapDetails";
 import CurrencyDetails from "./Pages/Wallet/CurrencyDetails/CurrencyDetails";
 import CustomTocken from "./Pages/CustomTocken/CustomTocken";
-import WalletName from "./Pages/WelcomeScreens/WalletName";
-import WatchWallet from "./Pages/WelcomeScreens/WatchWallet";
-import WatchAddress from "./Pages/WelcomeScreens/WatchAddress";
-import SecretPhrasePaste from "./Pages/WelcomeScreens/SecretPhrasePaste";
+
 import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import EditWallet from "./Pages/EditWallet/EditWallet";
 import ShowSecretPhrase from "./Pages/showSecretPhrase/ShowSecretPhrase";
 import CurrencyPrefrence from "./Pages/CurrencyPrefrence/CurrencyPrefrence";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
-import CongratulationsScreen from "./Pages/WelcomeScreens/CongratulationsScreen";
 import { useEffect } from "react";
+
+import ManageWallet from "./Components/Setting/ManageWallet.jsx";
+import EnterPassword from "./Components/Setting/EnterPassword";
+import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
+import PrivateKey from "./Components/Setting/PrivateKey";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -57,16 +58,13 @@ function App() {
         <Route path="" element={<WelcomeLayout />}>
           <Route index path="/" element={<WelcomeScreen />} />
           <Route path="/setPassword" element={<SetPasswordScreen />} />
-          {/* <Route path="/wallet-name" element={<WalletName />} /> */}
-          <Route path="/watch-list" element={<WatchWallet />} />
           <Route path="/beforebegin" element={<Beforebegin />} />
           <Route path="/createwalletchain" element={<CreateWalletChain />} />
-          <Route path="/address" element={<WatchAddress />} />
-          <Route path="/add-secret-phrase" element={<SecretPhrasePaste />} />
           <Route path="/createNewWallet" element={<CreateNewWallet />} />
         </Route>
         <Route path="" element={<FixWidthLayout />}>
           <Route index path="/wallet" element={<Wallet />} />
+          <Route index path="/swapapprove" element={<SwapApprove />} />
           <Route path="/defi" element={<Defi />} />
           <Route path="/history" element={<History />} />
           <Route path="/setting" element={<Setting />} />
@@ -94,6 +92,10 @@ function App() {
             path="/currencyPreference"
             element={<CurrencyPrefrence />}
           />
+
+          <Route index path="/manage-wallet" element={<ManageWallet />} />
+          <Route index path="/enter-password" element={<EnterPassword />} />
+          <Route index path="/private-key" element={<PrivateKey />} />
         </Route>
       </Routes>
     </div>

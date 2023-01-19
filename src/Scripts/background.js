@@ -9,18 +9,6 @@ import counterReducer, {
 import { CONNECTION_NAME, PORT_NAME } from "../Constants";
 import logger from "redux-logger";
 import { engine } from "./jsonrpc";
-import { WindowPostMessageStream } from "./stream";
-import { INPAGE, BACKGROUND } from "./constants";
-export {};
-
-const contentStream = new WindowPostMessageStream({
-  name: BACKGROUND,
-  target: INPAGE,
-});
-
-contentStream.on("data", (data) =>
-  console.log(data + ", world in background js")
-);
 
 engine.push(function (req, res, next, end) {
   res.result = 42;
@@ -33,7 +21,6 @@ const browser = chrome?.runtime
   ? browser
   : msBrowser;
 
-console.log("I AM BACKGROUND", browser.runtime);
 let isInitialized = false;
 
 // chrome.storage.local.get("state", (storage) => {
@@ -158,7 +145,7 @@ async function initScript() {
      * 2. await chrome.scripting.getRegisteredContentScripts() to check for an existing
      *    inpage script before registering - The provider is not loaded on time.
      */
-    console.warn(`Dropped attempt to register inpage content script. ${err}`);
+    console.log(`Dropped attempt to register inpage content script. ${err}`);
   }
 }
 

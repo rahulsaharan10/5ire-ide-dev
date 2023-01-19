@@ -1,21 +1,20 @@
 @import "../../styles/__vars.scss";
 .manageList {
-  border-bottom: 1px solid $gray-D7E0EB-light;
-  padding-bottom: 20px;
+  border-bottom: 1px solid #202a41;
+  padding: 20px 10px;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
- 
+  align-items: center;
   &__imgcurrency {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 20px;
+    // margin-top: 20px;
     
     p {
       font-size: 16px;
       font-weight: bold;
-      color: $baseColor-Text;
+      color: #fff;
       text-align: left;
     }
     span {
@@ -30,4 +29,8 @@
   button{
     margin: 0px !important;
   }
+}
+.checkbox{
+  margin-right: 50px;
+  
 }

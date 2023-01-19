@@ -1,6 +1,6 @@
 @import "../../styles/__vars.scss";
 .balanceDetails {
-  margin-bottom: 18px;
+  // margin-bottom: 18px;
   text-align: center;
   &__cardCurrencyDetails {
     background: transparent;
@@ -21,29 +21,184 @@
     text-decoration: none;
     white-space: nowrap;
   }
-  &__dropdownStyle {
+  &__selectStyle {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    margin-top: 23px;
+  }
+  &__innerBalance {
+    background-image: url("../../Assets/PNG/WalletBg.png");
+    background-position: center;
+    background-size: cover;
+    padding: 20px 24px;
+    &__totalBalnce {
+      p {
+        color: $white;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        span {
+          font-size: 24px;
+        }
+      }
+    }
+    &__chainBalance {
+      display: flex;
+      gap: 20px;
+      padding-top: 8px;
+    }
+    &__balanceName {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 8px;
+      p {
+        color: #f7faff;
+        font-size: 10px;
+        white-space: nowrap;
+      }
+      h3 {
+        color: #f7faff;
+        display: flex;
+        gap: 8px;
+        font-size: 18px;
+      }
+    }
+    &__balanceCard {
+      background-image: url("../../Assets/PNG/walletInnerCard.png");
+      background-position: center;
+      background-size: cover;
+      padding: 10px;
+      gap: 8px;
+      display: flex;
+      align-items: center;
+      border-radius: 6px;
+    }
+  }
+  &__nativemodal {
+    padding: 25px 14px;
+    &__innerContact {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    &__title {
+      background: linear-gradient(91.26deg, #0071ff 0%, #54f0d1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-size: 24px;
+    }
+    &__modalOr {
+      background-color: #dfe2e4;
+      height: 1px;
+      text-align: center;
+      width: 100%;
+      position: relative;
+      margin-top: 8px;
+      p {
+        color: $white;
+        font-size: 12px;
+        position: absolute;
+        top: -10px;
+        left: 45%;
+        background: #0f2046;
+        padding: 3px;
+      }
+    }
+    &__addressText {
+      color: $white;
+      font-size: 14px;
+      padding-top: 12px;
+    }
+    &__wrapedText {
+      p {
+        color: $white;
+        font-size: 14px;
+        display: flex;
+        gap: 6px;
+        img {
+          cursor: pointer;
+        }
+      }
+    }
+    &__footerbuttons {
+      width: 100%;
+      padding-top: 40px;
+    }
+  }
+  &__conectedSec {
+    padding: 15px 37px;
+    box-shadow: inset 0px -1px 0px #707070;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__connectedField {
+      color: $white;
+      font-size: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    &__textConatct {
+      p {
+        color: $white;
+        font-size: 15px;
+      }
+      span {
+        color: $white;
+        font-size: 14px;
+      }
+    }
+  }
+  &__multiSwapBtn {
+    padding: 30px 37px;
+    padding-bottom: 0;
+  }
+  &__sendSwapbtn {
+    display: flex;
+    border-radius: 12px;
+    background: #0e1e41;
+    border: 1px solid #102658;
+    &__buttons {
+      background: #0e1e41;
+      // border-radius: 12px 0 0px 12px;
+      width: 100%;
+      border-radius: 12px;
+      cursor: pointer;
+      color: $white;
+      border: 0;
+      font-size: 15px;
+      padding: 14px;
+      &__active {
+        background: linear-gradient(114.15deg, #0da6c2 20.67%, #0e39c6 89.64%);
+        // border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid #13d3e1;
+        // border-radius: 0px 12px 12px 0px;
+      }
+    }
+  }
+  &__accountName {
+    text-align: left;
     p {
-      color: $inputBg;
-      font-size: 16px;
-      font-weight: normal;
-      line-height: 24px;
+      color: $white;
+      font-size: 15px;
+      text-transform: capitalize;
+      display: flex;
+      gap: 6px;
+    }
+    span {
+      color: $white;
+      font-size: 14px;
     }
   }
   &__decoratedSec {
-    padding: 22px;
-    margin-top: -4px;
-    margin-bottom: 20px;
-    border-radius: 0 0 30px 30px;
-    background-image: url("../../Assets/PNG/WalletBg.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
   }
   &__title {
     font-size: 24px;
@@ -131,3 +286,6 @@
     }
   }
 }
+// .abc {
+//   background-color: red;
+// }
