@@ -3,7 +3,6 @@ import React from "react";
 import EyeOpenIcon from "../../Assets/EyeOpenIcon.svg";
 import EyeCloseIcon from "../../Assets/EyeCloseIcon.svg";
 import style from "./style.module.scss";
-import Scanner from "../../Assets/scanner.svg";
 import { Link } from "react-router-dom";
 function InputFieldSimple({ placeholder }) {
   return (

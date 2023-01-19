@@ -230,7 +230,7 @@ function MenuFooter() {
             <div className={style.sttings__left}>
               <img src={Wallet} width={30} height={30} />
               <div className={style.sttings__left__texts}>
-                <div className={style.sttings__left__textsTop}>coinName</div>
+                <div className={style.sttings__left__textsTop}>Manage Wallet</div>
               </div>
             </div>
           
@@ -242,14 +242,14 @@ function MenuFooter() {
           </Link>
         <SocialAccount />
       </Drawer>
-      {/* {path === "" ||
-        (path === "createNewWallet" && (
+      {(path === "" ||
+        path === "createNewWallet" || path === "unlockWelcome" )&& (
           <div className={style.menuItems__needHelp}>
             <p>
               Need help? Contact <a>Support</a>
             </p>
           </div>
-        ))} */}
+        )} 
       {path === "beforebegin" && <FooterStepOne />}
       {path === "createwalletchain" && <FooterStepTwo />}
       {path === "setPassword" && <FooterStepThree />}

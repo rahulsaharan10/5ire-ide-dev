@@ -2,7 +2,6 @@
 import { Layout } from "antd";
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Logo from "../Assets/Logo.png";
 import MenuFooter from "../Components/MenuFooter/MenuFooter";
 import style from "../Pages/WelcomeScreens/style.module.scss";
 

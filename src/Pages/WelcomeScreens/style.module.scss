@@ -120,6 +120,12 @@
         font-size: 24px;
         padding-top: 10px;
       }
+      span {
+        color: #8fa2b7;
+        font-size: 18px;
+        padding-top: 10px;
+        display: flex;
+      }
     }
   }
 
@@ -286,6 +292,13 @@
         }
       }
     }
+  }
+}
+.forgotLink{
+  padding-top: 40px;
+  a{
+    color: #1098FC;
+    font-size: 14px;
   }
 }
 .congratScreen {
