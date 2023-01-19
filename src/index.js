@@ -1,5 +1,3 @@
-/* global chrome */
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
@@ -10,7 +8,7 @@ import { Provider } from "react-redux";
 import { Store } from "webext-redux";
 import { CONNECTION_NAME, PORT_NAME } from "./Constants";
 import reduxStore from "./Store/store";
-import browser from "./chrome/pollyfill";
+import browser from "./Scripts/pollyfill";
 const isDev = process.env.NODE_ENV === "development";
 console.log("which env", isDev);
 
@@ -46,7 +44,7 @@ const initApp = () => {
   reportWebVitals();
 };
 
-if (true) {
+if (isDev) {
   browser.runtime.connect({ name: CONNECTION_NAME });
 
   // Listens for when the store gets initialized

@@ -2,9 +2,25 @@ import { Store, applyMiddleware } from "webext-redux";
 import thunkMiddleware from "redux-thunk";
 import { increment } from "../Store/reducer/counter";
 import browser from "./pollyfill";
+import { WindowPostMessageStream } from "./stream";
+import { CONTENT_SCRIPT, INPAGE } from "./constants";
+import { engine } from "./jsonrpc";
+
+engine.push(function (req, res, next, end) {
+  res.result = 42;
+  console.log("In content js", req);
+  return end();
+});
+
+const contentStream = new WindowPostMessageStream({
+  name: CONTENT_SCRIPT,
+  target: INPAGE,
+});
+
+contentStream.on("data", (data) => console.log(data + ", world in content js"));
 
 // Proxy store
-const store = new Store();
+export const store = new Store();
 
 // // Apply middleware to proxy store
 // const middleware = [thunkMiddleware];
@@ -34,7 +50,7 @@ const messagesFromReactAppListener = (message, sender, response) => {
 /**
  * Fired when a message is sent from either an extension process or a content script.
  */
-window.chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
+browser.runtime.onMessage.addListener(messagesFromReactAppListener);
 
 const port = browser.runtime.connect({ name: "HelloWorld" });
 
@@ -56,6 +72,7 @@ const listener = async (event) => {
   }
 };
 window.addEventListener("message", listener, false);
+
 port.onDisconnect.addListener(function () {
   // clean up when content script gets disconnected
   window.removeEventListener("message", listener);

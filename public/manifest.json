@@ -15,8 +15,15 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
-
+    "storage",
+      "alarms",
+      "clipboardWrite",
+      "notifications",
+      "scripting",
+      "storage",
+      "unlimitedStorage",
+      "webRequest"
+  
   ],
 "host_permissions": [
   "<all_urls>"

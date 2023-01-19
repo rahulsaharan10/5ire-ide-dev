@@ -8,9 +8,25 @@ import counterReducer, {
 } from "../Store/reducer/counter";
 import { CONNECTION_NAME, PORT_NAME } from "../Constants";
 import logger from "redux-logger";
-
+import { engine } from "./jsonrpc";
+import { WindowPostMessageStream } from "./stream";
+import { INPAGE, BACKGROUND } from "./constants";
 export {};
 
+const contentStream = new WindowPostMessageStream({
+  name: BACKGROUND,
+  target: INPAGE,
+});
+
+contentStream.on("data", (data) =>
+  console.log(data + ", world in background js")
+);
+
+engine.push(function (req, res, next, end) {
+  res.result = 42;
+  console.log("In background js", req);
+  return end();
+});
 const browser = chrome?.runtime
   ? chrome
   : browser?.runtime
@@ -62,6 +78,22 @@ browser.runtime.onConnect.addListener((port) => {
       browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
     });
   }
+
+  port.onMessage.addListener(function (msg) {
+    console.log("I am in background", port);
+    if (port.name === "uiOps") {
+      const idToQuery = msg.id;
+      if (document.getElementById(idToQuery)) {
+        port.postMessage({
+          exists: true,
+        });
+      } else {
+        port.postMessage({
+          exists: false,
+        });
+      }
+    }
+  });
 });
 
 /** Fired when the extension is first installed,
@@ -106,3 +138,28 @@ browser.runtime.onMessage.addListener(function (message, sender) {
 browser.runtime.onSuspend.addListener(() => {
   console.log("[background.js] onSuspend");
 });
+
+async function initScript() {
+  try {
+    await browser.scripting.registerContentScripts([
+      {
+        id: "inpage",
+        matches: ["file://*/*", "http://*/*", "https://*/*"],
+        js: ["./static/js/injected.js"],
+        runAt: "document_start",
+        world: "MAIN",
+      },
+    ]);
+  } catch (err) {
+    /**
+     * An error occurs when app-init.js is reloaded. Attempts to avoid the duplicate script error:
+     * 1. registeringContentScripts inside runtime.onInstalled - This caused a race condition
+     *    in which the provider might not be loaded in time.
+     * 2. await chrome.scripting.getRegisteredContentScripts() to check for an existing
+     *    inpage script before registering - The provider is not loaded on time.
+     */
+    console.warn(`Dropped attempt to register inpage content script. ${err}`);
+  }
+}
+
+initScript();
