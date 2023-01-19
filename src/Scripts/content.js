@@ -4,20 +4,21 @@ import { increment } from "../Store/reducer/counter";
 import browser from "./pollyfill";
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE } from "./constants";
-import { engine } from "./jsonrpc";
-
-engine.push(function (req, res, next, end) {
-  res.result = 42;
-  console.log("In content js", req);
-  return end();
-});
 
 const contentStream = new WindowPostMessageStream({
   name: CONTENT_SCRIPT,
   target: INPAGE,
 });
 
-contentStream.on("data", (data) => console.log(data + ", world in content js"));
+contentStream.on("data", (data) => {
+  console.log(JSON.stringify(data) + ", world in content js");
+
+  contentStream.write({
+    id: data.id,
+    response: "I return back result to you",
+    error: null,
+  });
+});
 
 // Proxy store
 export const store = new Store();
@@ -64,7 +65,6 @@ const listener = async (event) => {
     console.log("Content script received: " + event.data.text);
     browser.runtime.sendMessage({ msg: "showPageAction" });
 
-    // var response = await rt.sendMessage({ greeting: "hello" });
     store.dispatch(increment());
     // do something with response here, not outside the function
     const msg = port.postMessage(event.data.text);

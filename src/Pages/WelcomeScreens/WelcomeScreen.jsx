@@ -1,14 +1,21 @@
 import React from "react";
 import style from "./style.module.scss";
 import PlaceLogo from "../../Assets/PlaceLog.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
-import { increment } from "../../Store/reducer/counter";
+import { setLogin } from "../../Store/reducer/counter";
 function WelcomeScreen() {
   const count = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log("this is iside components", count);
+  function handleLogin() {
+    dispatch(setLogin(true));
+    setTimeout(() => {
+      navigate("/wallet");
+    }, 2000);
+  }
   return (
     <div className={style.cardWhite}>
       <MenuRestofHeaders logosilver={true} title="5ire Non-Custodial Wallet" />
@@ -29,6 +36,7 @@ function WelcomeScreen() {
           <Link className="grayBtn" to="/watch-list">
             Import Wallet
           </Link>
+          <button onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>

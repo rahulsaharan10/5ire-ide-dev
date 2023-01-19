@@ -10,7 +10,6 @@ import { CONNECTION_NAME, PORT_NAME } from "./Constants";
 import reduxStore from "./Store/store";
 import browser from "./Scripts/pollyfill";
 const isDev = process.env.NODE_ENV === "development";
-console.log("which env", isDev);
 
 const initApp = () => {
   const store = new Store({ portName: PORT_NAME });
@@ -44,7 +43,7 @@ const initApp = () => {
   reportWebVitals();
 };
 
-if (isDev) {
+if (!isDev) {
   browser.runtime.connect({ name: CONNECTION_NAME });
 
   // Listens for when the store gets initialized

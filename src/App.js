@@ -33,6 +33,7 @@ import ManageWallet from "./Components/Setting/ManageWallet.jsx";
 import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
+import { useSelector } from "react-redux";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -42,11 +43,14 @@ function getParameterByName(name, url = window.location.href) {
   if (!results[2]) return "";
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
 function App() {
   const navigate = useNavigate();
+  const st = useSelector((state) => state);
+  console.log("HHHHH", st);
+  const isLogin = useSelector((state) => state?.counter?.login);
   useEffect(() => {
     const type = getParameterByName("type");
-    console.log("I AM FIRST TIME", window.location.pathname, type);
 
     if (type === "helloworld") {
       navigate("/add-secret-phrase");
@@ -55,48 +59,57 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="" element={<WelcomeLayout />}>
-          <Route index path="/" element={<WelcomeScreen />} />
-          <Route path="/setPassword" element={<SetPasswordScreen />} />
-          <Route path="/beforebegin" element={<Beforebegin />} />
-          <Route path="/createwalletchain" element={<CreateWalletChain />} />
-          <Route path="/createNewWallet" element={<CreateNewWallet />} />
-        </Route>
-        <Route path="" element={<FixWidthLayout />}>
-          <Route index path="/wallet" element={<Wallet />} />
-          <Route index path="/swapapprove" element={<SwapApprove />} />
-          <Route path="/defi" element={<Defi />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/setting" element={<Setting />} />
-        </Route>
-        <Route path="/" element={<OnlyContent />}>
-          <Route index path="/send" element={<Send />} />
-          <Route index path="/sendCurrency" element={<SendCoins />} />
-          <Route path="/import-phrase" element={<ImportPhrase />} />
-          <Route path="/address-book" element={<AddresBook />} />
-          <Route index path="/confirmCurrency" element={<SendConfirm />} />
-          <Route index path="/manage" element={<Manage />} />
-          <Route index path="/buy" element={<Buy />} />
-          <Route index path="/swap" element={<Swap />} />
-          <Route index path="/swapDetails" element={<SwapDetails />} />
-          <Route index path="/currencyDetails" element={<CurrencyDetails />} />
-          <Route index path="/add-token" element={<CustomTocken />} />
-          <Route index path="/editWalletName" element={<EditWallet />} />
-          <Route
-            index
-            path="/showSecretPhrase"
-            element={<ShowSecretPhrase />}
-          />
-          <Route
-            index
-            path="/currencyPreference"
-            element={<CurrencyPrefrence />}
-          />
+        {!isLogin ? (
+          <Route path="" element={<WelcomeLayout />}>
+            <Route index path="/" element={<WelcomeScreen />} />
+            <Route path="/setPassword" element={<SetPasswordScreen />} />
+            <Route path="/beforebegin" element={<Beforebegin />} />
+            <Route path="/createwalletchain" element={<CreateWalletChain />} />
+            <Route path="/createNewWallet" element={<CreateNewWallet />} />
+          </Route>
+        ) : (
+          <>
+            <Route path="" element={<FixWidthLayout />}>
+              <Route index path="/" element={<Wallet />} />
+              <Route index path="/swapapprove" element={<SwapApprove />} />
+              <Route path="/defi" element={<Defi />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/setting" element={<Setting />} />
+            </Route>
+            <Route path="/" element={<OnlyContent />}>
+              <Route index path="/send" element={<Send />} />
+              <Route index path="/sendCurrency" element={<SendCoins />} />
+              <Route path="/import-phrase" element={<ImportPhrase />} />
+              <Route path="/address-book" element={<AddresBook />} />
+              <Route index path="/confirmCurrency" element={<SendConfirm />} />
+              <Route index path="/manage" element={<Manage />} />
+              <Route index path="/buy" element={<Buy />} />
+              <Route index path="/swap" element={<Swap />} />
+              <Route index path="/swapDetails" element={<SwapDetails />} />
+              <Route
+                index
+                path="/currencyDetails"
+                element={<CurrencyDetails />}
+              />
+              <Route index path="/add-token" element={<CustomTocken />} />
+              <Route index path="/editWalletName" element={<EditWallet />} />
+              <Route
+                index
+                path="/showSecretPhrase"
+                element={<ShowSecretPhrase />}
+              />
+              <Route
+                index
+                path="/currencyPreference"
+                element={<CurrencyPrefrence />}
+              />
 
-          <Route index path="/manage-wallet" element={<ManageWallet />} />
-          <Route index path="/enter-password" element={<EnterPassword />} />
-          <Route index path="/private-key" element={<PrivateKey />} />
-        </Route>
+              <Route index path="/manage-wallet" element={<ManageWallet />} />
+              <Route index path="/enter-password" element={<EnterPassword />} />
+              <Route index path="/private-key" element={<PrivateKey />} />
+            </Route>
+          </>
+        )}
       </Routes>
     </div>
   );

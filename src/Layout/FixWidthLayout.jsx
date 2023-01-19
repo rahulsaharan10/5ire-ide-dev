@@ -7,23 +7,21 @@ import MenuRestofHeaders from "../Components/BalanceDetails/MenuRestofHeaders/Me
 import MenuFooter from "../Components/MenuFooter/MenuFooter";
 import style from "./style.module.scss";
 
-function FixWidthLayout() {
   const { Content } = Layout;
   const getLocation = useLocation();
+
   const path = getLocation.pathname.replace("/", "");
   return (
     <div className={`${style.fixedLayout}`}>
-      <div
-        className={style.fixedLayout__inner }
-      >
+      <div className={style.fixedLayout__inner}>
         {(path === "wallet" || path === "swapapprove") && (
-            <div className={style.fixedLayout__inner__walletLayout}>
-              <div className={style.decoratedBg} style={{ textAlign: "left" }}>
-                {/* <img src={LogoHorizontal} width={155} height={20} /> */}
-                <BalanceDetails />
-              </div>
+          <div className={style.fixedLayout__inner__walletLayout}>
+            <div className={style.decoratedBg} style={{ textAlign: "left" }}>
+              {/* <img src={LogoHorizontal} width={155} height={20} /> */}
+              <BalanceDetails />
             </div>
-          )}
+          </div>
+        )}
 
         {path === "history" && (
           <MenuRestofHeaders backTo={"/"} title={"History"} />
