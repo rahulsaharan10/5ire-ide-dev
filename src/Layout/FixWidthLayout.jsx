@@ -9,7 +9,9 @@ import style from "./style.module.scss";
 function FixWidthLayout() {
   const { Content } = Layout;
   const getLocation = useLocation();
+
   const path = getLocation.pathname.replace("/", "");
+
   return (
     <div className={`${style.fixedLayout}`}>
       <div className={style.fixedLayout__inner}>
