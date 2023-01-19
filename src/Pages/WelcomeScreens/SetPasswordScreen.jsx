@@ -1,11 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useState,useEffect } from "react";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
-import { UserContext } from "../../Context";
+import { setPassword } from '../../Store/reducer/counter';
+import { useDispatch } from 'react-redux';
 
 function SetPasswordScreen() {
-  let { setPass } = useContext(UserContext);
-  // const [pass, setPass] = useState();
+
+  const [pass, setPass] = useState({pass:"",confirmPass:""});
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    if (pass.pass === pass.confirmPass) {
+      dispatch(setPassword(pass.pass));      
+    }
+  },[pass,dispatch]);
 
   const handleChange = (e) => {
     setPass((prev) => {
@@ -13,7 +21,7 @@ function SetPasswordScreen() {
         ...prev,
         [e.target.name]: e.target.value
       }
-    })
+    });
   }
 
   return (
@@ -27,7 +35,7 @@ function SetPasswordScreen() {
         </p>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
-            name="p1"
+            name="pass"
             onChange={handleChange}
             placeholder={"Enter Password"}
             placeholderBaseColor={true}
@@ -36,7 +44,7 @@ function SetPasswordScreen() {
         </div>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
-            name="p2"
+            name="confirmPass"
             onChange={handleChange}
             placeholder={"Confirm  Password"}
             placeholderBaseColor={true}

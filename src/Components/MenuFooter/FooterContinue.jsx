@@ -1,13 +1,13 @@
 import { Spin } from "antd";
-import bcrypt from 'bcryptjs';
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
-import { UserContext } from "../../Context";
-import KeyringController from 'eth-keyring-controller';
-import SimpleKeyring from '@metamask/eth-simple-keyring';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLogin } from "../../Store/reducer/counter";
+import bcrypt from 'bcryptjs';
+
 
 function FooterStepOne() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function FooterStepOne() {
     <>
       <div className={style.menuItems__cancleContinue}>
         <ButtonComp
-          onClick={() => navigate("/createNewWallet")}
+          // onClick={() => Navigate("/confirmCurrency")}
           bordered={true}
           text={"Cancel"}
           maxWidth={"100%"}
@@ -29,14 +29,18 @@ function FooterStepOne() {
     </>
   );
 }
+
 export default FooterStepOne;
 
-export const FooterStepTwo = () => {
+export const FooterStepTwo = ({ }) => {
   const navigate = useNavigate();
+  const handleCancle = () => {
+    navigate("/beforebegin");
+  }
   return (
     <>
       <div className={style.menuItems__cancleContinue}>
-        <ButtonComp bordered={true} text={"Cancel"} maxWidth={"100%"} />
+        <ButtonComp bordered={true} text={"Cancel"} maxWidth={"100%"} onClick={handleCancle} />
         <ButtonComp
           onClick={() => navigate("/setPassword")}
           text={"Continue"}
@@ -46,11 +50,12 @@ export const FooterStepTwo = () => {
     </>
   );
 };
-
 export const FooterStepThree = () => {
-  const { pass, setPassmatch } = useContext(UserContext);
   const [loader, setLoader] = useState(false);
   const [show, setShow] = useState(false);
+  const selector = useSelector((state) => state.password);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,34 +63,42 @@ export const FooterStepThree = () => {
       setTimeout(() => {
         setShow(false);
         navigate('/wallet')
-      }, 4000);
+      }, 2000);
     }
   }, [show]);
 
-  const handleSubmit = () => {
-    console.log(pass);
+  const handleCancle = () => {
+    navigate("/createwalletchain");
+  }
 
-    if (pass.p1 === pass.p2) {
-      setPassmatch(true);
-      // bcrypt.genSalt(10, function (err, salt) {
-      //   if (salt)
-      //     bcrypt.hash("", salt, function (err, hash) {
-      //       if (hash)
-      //         // Store hash in your password DB.
-      //         window.chrome.storage.local.set({ password: hash })
-      //       // localStorage.setItem("pass", hash);
-      //       if (err) console.log("Error : ", err)
-      //     });
-      //   if (err) console.log("Error : ", err)
-      // });
-      setLoader(!loader);
-      setTimeout(() => {
-        setLoader(false);
-        setShow(!show);
-      }, 1000);
-    } else {
-      setPassmatch(false);
-    }
+  const handleSubmit = () => {
+    let pass = selector.pass;
+
+    // console.log("accDetails : ",accDetails);
+
+    bcrypt.genSalt(10, function (err, salt) {
+      if (salt)
+        bcrypt.hash(pass, salt, function (err, hash) {
+          if (hash) {
+
+            window.chrome.storage.local.set({ password: hash });
+            window.chrome.storage.local.set({ login: true })
+            dispatch(setLogin(true));
+          }
+          if (err) console.log("Error : ", err)
+        });
+      if (err) console.log("Error : ", err)
+    });
+
+    window.chrome.storage.local.get(["password"]).then((result) => {
+      console.log("Result : ", result);
+    })
+
+    setLoader(!loader);
+    setTimeout(() => {
+      setLoader(false);
+      setShow(!show);
+    }, 1000);
 
   };
 
@@ -103,8 +116,8 @@ export const FooterStepThree = () => {
   return (
     <>
       <div className={style.menuItems__cancleContinue}>
-        <ButtonComp bordered={true} text={"Cancel"} maxWidth={"100%"} />
-        {show && <div className="loader"><CongratulationsScreen /></div>}
+        <ButtonComp bordered={true} text={"Cancel"} maxWidth={"100%"} onClick={handleCancle} />
+        {/* {show && <div className="loader"><CongratulationsScreen /></div>} */}
 
         <ButtonComp
           onClick={handleSubmit}

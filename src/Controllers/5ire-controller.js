@@ -1,11 +1,11 @@
-import KeyringController from ('@metamask/eth-keyring-controller');
-import SimpleKeyring from ('@metamask/eth-simple-keyring');
+import KeyringController from '@metamask/eth-keyring-controller';
+import SimpleKeyring from '@metamask/eth-simple-keyring';
 import Event from 'events';
 
-class Controller extends Event {
+export default class Controller extends Event {
 
     constructor(initState) {
-
+        super();
         this.keyringController = new KeyringController({
             keyringTypes: [SimpleKeyring], // optional array of types to support.
             initState: initState.KeyringController, // Last emitted persisted state.

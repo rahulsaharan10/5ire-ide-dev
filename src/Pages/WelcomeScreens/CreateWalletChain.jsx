@@ -1,18 +1,41 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import style from "./style.module.scss";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import Wallet from "../../Hooks/wallet";
+import { setAccountDetails } from '../../Store/reducer/counter';
+import { useDispatch, useSelector } from "react-redux";
 
 function CreateWalletChain() {
-  // const navigate = useNavigate();
-  let {walletSignUp, authData} = Wallet();
+  const dispatch = useDispatch();
+  const selector = useSelector((state => state.password))
+  const { walletSignUp, authData } = Wallet();
+  const [data, setData] = useState({
+    mnemonic: "",
+    evmPrivatekey: "",
+    evmAddress: "",
+    nativeAddress: ""
+  });
 
+  useEffect(() => {
+    console.log("selector.accDetails.mnemonic : ", selector.accDetails.mnemonic);
+    if (selector.accDetails.mnemonic === "") {
+      walletSignUp();
+    }
 
-  useEffect(()=>{
-    walletSignUp();
-    console.log("authData : ",authData);
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    console.log("AuthData : ",authData.mnemonic);
+    
+    if (authData.mnemonic) {
+      dispatch(setAccountDetails(authData));
+      setData(authData);      
+    }
+    else{
+      setData(selector.accDetails);
+    }
+
+  }, [authData]);
 
   return (
     <div className={style.cardWhite}>
@@ -22,29 +45,29 @@ function CreateWalletChain() {
       <div className={style.cardWhite__addressInput}>
         <label>EVM Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{authData.evmAddress}</span>
+          <span>{data.evmAddress}</span>
           <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Native Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{authData.nativeAddress}</span>
-          <img src={CopyIcon} alt="copyIcon"/>{" "}
+          <span>{data.nativeAddress}</span>
+          <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Mnemonic Phrase:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{authData.mnemonic}</span>
-          <img src={CopyIcon} alt="copyIcon"/>{" "}
+          <span>{data.mnemonic}</span>
+          <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Ethereum Private Key:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{authData.evmPrivatekey}</span>
-          <img src={CopyIcon} alt="copyIcon"/>{" "}
+          <span>{data.evmPrivatekey}</span>
+          <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__noteSec}>
