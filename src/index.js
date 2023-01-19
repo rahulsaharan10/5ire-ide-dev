@@ -48,6 +48,7 @@ if (!isDev) {
 
   // Listens for when the store gets initialized
   browser.runtime.onMessage.addListener((req) => {
+    console.log("In main compoenent", req);
     if (req.type === "STORE_INITIALIZED") {
       // Initializes the popup logic
       initApp();

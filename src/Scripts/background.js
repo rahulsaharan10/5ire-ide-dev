@@ -2,7 +2,7 @@
 
 import { wrapStore } from "webext-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer, { userState } from "../Store/reducer/auth";
+import authReducer, { userState, setUIdata } from "../Store/reducer/auth";
 import { CONNECTION_NAME, PORT_NAME } from "../Constants";
 import logger from "redux-logger";
 
@@ -19,9 +19,10 @@ let isInitialized = false;
 //   chrome.action.setBadgeText({ text: `${state.value}` });
 // });
 
+let store;
 // Initializes the Redux store
 const init = (preloadedState) => {
-  const store = configureStore({
+  store = configureStore({
     reducer: { auth: authReducer },
     preloadedState,
     middleware: [logger],
@@ -51,6 +52,7 @@ browser.runtime.onConnect.addListener((port) => {
       }
       // 2. Sends a message to notify that the store is ready.
       browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
+      console.log("PORT", port);
     });
   }
 
@@ -85,9 +87,10 @@ browser.runtime.onStartup.addListener(() => {
 browser.runtime.onMessage.addListener(function (message, sender) {
   if (message.msg == "showPageAction") {
     let extensionURL = browser.runtime.getURL("index.html");
+    store.dispatch(setUIdata(message.data));
     browser.windows.create(
       {
-        url: extensionURL + `?type=helloworld`,
+        url: extensionURL + `?route=private-key`,
         type: "popup",
         focused: true,
         width: 400,
@@ -99,6 +102,14 @@ browser.runtime.onMessage.addListener(function (message, sender) {
         console.log("Opened popup!");
       }
     );
+    browser.notifications.create({
+      options: {
+        iconUrl: browser.runtime.getURL("logo192.png"),
+        message: "Your request to process data approved",
+        title: "Opened 5ire Window",
+        type: "basic",
+      },
+    });
   }
 });
 /**

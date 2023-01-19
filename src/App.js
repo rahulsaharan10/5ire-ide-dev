@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
@@ -18,6 +18,7 @@ import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
 import UnlockWelcome from "./Pages/WelcomeScreens/UnlockWelcome";
+import { useEffect } from "react";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -30,13 +31,22 @@ function getParameterByName(name, url = window.location.href) {
 
 function App() {
   const auth = useSelector((state) => state.auth);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    const route = getParameterByName("route");
+    console.log("HERE ROUTE AND ", route, window.location.href);
+    if (route) {
+      navigate("/" + route);
+    } else if (auth?.isLogin) {
+      navigate("/wallet");
+    }
+  }, []);
   console.log("isLogin : ", auth);
 
   return (
     <div className="App">
       <Routes>
-        {!auth.isLogin ? (
+        {!auth?.isLogin ? (
           <>
             <Route
               index

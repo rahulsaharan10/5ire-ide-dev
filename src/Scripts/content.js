@@ -11,12 +11,22 @@ const contentStream = new WindowPostMessageStream({
 
 contentStream.on("data", (data) => {
   console.log(JSON.stringify(data) + ", world in content js");
-
-  contentStream.write({
-    id: data.id,
-    response: "I return back result to you",
-    error: null,
-  });
+  switch (data.method) {
+    case "request":
+      contentStream.write({
+        id: data.id,
+        response: "I return back result to you",
+        error: null,
+      });
+    case "ui":
+      browser.runtime.sendMessage({ msg: "showPageAction", data });
+      contentStream.write({
+        id: data.id,
+        response: "I return back result to UI",
+        error: null,
+      });
+    default:
+  }
 });
 
 // Proxy store
@@ -62,7 +72,6 @@ const listener = async (event) => {
 
   if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
     console.log("Content script received: " + event.data.text);
-    browser.runtime.sendMessage({ msg: "showPageAction" });
 
     // do something with response here, not outside the function
     const msg = port.postMessage(event.data.text);

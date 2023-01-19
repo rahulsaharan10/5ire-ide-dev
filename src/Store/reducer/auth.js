@@ -9,7 +9,7 @@ export const userState = {
     evmAddress: "",
     nativeAddress: "",
   },
-
+  uiData: {},
   isLogin: false,
 };
 
@@ -28,10 +28,14 @@ export const userSlice = createSlice({
     setLogin: (state, action) => {
       state.isLogin = action.payload;
     },
+    setUIdata: (state, action) => {
+      state.uiData = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setPassword, setAccountDetails, setLogin } = userSlice.actions;
+export const { setPassword, setAccountDetails, setLogin, setUIdata } =
+  userSlice.actions;
 
 export default userSlice.reducer;
