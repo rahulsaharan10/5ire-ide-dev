@@ -1,15 +1,16 @@
 import { Layout } from "antd";
 import React from "react";
-import { Outlet } from "react-router-dom";
 import style from "./style.module.scss";
 
-function OnlyContent() {
+function OnlyContent({ children }) {
   const { Content } = Layout;
   return (
     <div className={`${style.fixedLayout}`}>
       <div className={style.fixedLayout__inner}>
-        <Content className={`${style.fixedLayout__content} ${style.fixedLayout__content__paddingX}`}>
-          <Outlet />
+        <Content
+          className={`${style.fixedLayout__content} ${style.fixedLayout__content__paddingX}`}
+        >
+          {children}
         </Content>
       </div>
     </div>

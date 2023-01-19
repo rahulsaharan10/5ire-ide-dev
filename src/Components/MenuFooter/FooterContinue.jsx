@@ -79,9 +79,9 @@ export const FooterStepThree = () => {
             setShow(true);
 
             dispatch(setLogin(true));
-            setTimeout(() => {
-              navigate("/wallet");
-            }, 1000);
+            // setTimeout(() => {
+            navigate("/wallet");
+            // }, 1000);
           }
           if (err) console.log("Error : ", err);
           setLoader(false);

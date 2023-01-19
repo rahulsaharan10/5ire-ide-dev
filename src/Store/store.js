@@ -6,7 +6,7 @@ import userSlice from "./reducer/auth";
 import logger from "redux-logger";
 
 const rootReducer = combineReducers({
-  password: userSlice,
+  auth: userSlice,
 });
 
 const store = configureStore({

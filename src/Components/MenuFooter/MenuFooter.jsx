@@ -224,32 +224,33 @@ function MenuFooter() {
         open={open2}
         closeIcon={<img src={ModalCloseIcon} />}
       >
-         <Link to="/manage-wallet">
-        <div className={style.sttings}>
-         
+        <Link to="/manage-wallet">
+          <div className={style.sttings}>
             <div className={style.sttings__left}>
               <img src={Wallet} width={30} height={30} />
               <div className={style.sttings__left__texts}>
-                <div className={style.sttings__left__textsTop}>Manage Wallet</div>
+                <div className={style.sttings__left__textsTop}>
+                  Manage Wallet
+                </div>
               </div>
             </div>
-          
-          <div className={style.sttings__right}>
-            <img src={BackArrow} width={8} height={15} />
+
+            <div className={style.sttings__right}>
+              <img src={BackArrow} width={8} height={15} />
             </div>
-         
           </div>
-          </Link>
+        </Link>
         <SocialAccount />
       </Drawer>
       {(path === "" ||
-        path === "createNewWallet" || path === "unlockWelcome" )&& (
-          <div className={style.menuItems__needHelp}>
-            <p>
-              Need help? Contact <a>Support</a>
-            </p>
-          </div>
-        )} 
+        path === "createNewWallet" ||
+        path === "unlockWelcome") && (
+        <div className={style.menuItems__needHelp}>
+          <p>
+            Need help? Contact <a>Support</a>
+          </p>
+        </div>
+      )}
       {path === "beforebegin" && <FooterStepOne />}
       {path === "createwalletchain" && <FooterStepTwo />}
       {path === "setPassword" && <FooterStepThree />}

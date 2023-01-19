@@ -37,28 +37,71 @@ function App() {
     <div className="App">
       <Routes>
         {!auth.isLogin ? (
-          <Route path="" element={<WelcomeLayout />}>
-            <Route index path="/" element={<WelcomeScreen />} />
-            <Route path="/setPassword" element={<SetPasswordScreen />} />
-            <Route path="/beforebegin" element={<Beforebegin />} />
-            <Route path="/createwalletchain" element={<CreateWalletChain />} />
-            <Route path="/createNewWallet" element={<CreateNewWallet />} />
-            <Route path="/unlockWelcome" element={<UnlockWelcome />} />
-          </Route>
+          <>
+            <Route
+              index
+              path="/"
+              element={<WelcomeLayout children={<WelcomeScreen />} />}
+            />
+            <Route
+              path="/setPassword"
+              element={<WelcomeLayout children={<SetPasswordScreen />} />}
+            />
+            <Route
+              path="/beforebegin"
+              element={<WelcomeLayout children={<Beforebegin />} />}
+            />
+            <Route
+              path="/createwalletchain"
+              element={<WelcomeLayout children={<CreateWalletChain />} />}
+            />
+            <Route
+              path="/createNewWallet"
+              element={<WelcomeLayout children={<CreateNewWallet />} />}
+            />
+            <Route
+              path="/unlockWelcome"
+              element={<WelcomeLayout children={<UnlockWelcome />} />}
+            />
+          </>
         ) : (
           <>
-            <Route path="/" element={<FixWidthLayout />}>
-              <Route index path="/wallet" element={<Wallet />} />
-              <Route index path="/swapapprove" element={<SwapApprove />} />
-            </Route>
-            <Route path="/" element={<OnlyContent />}>
-              <Route index path="/send" element={<Send />} />
-              <Route index path="/swap" element={<Swap />} />
+            <Route
+              index
+              path="/wallet"
+              element={<FixWidthLayout children={<Wallet />} />}
+            />
+            <Route
+              index
+              path="/swapapprove"
+              element={<FixWidthLayout children={<SwapApprove />} />}
+            />
+            <Route
+              index
+              path="/send"
+              element={<OnlyContent children={<Send />} />}
+            />
+            <Route
+              index
+              path="/swap"
+              element={<OnlyContent children={<Swap />} />}
+            />
 
-              <Route index path="/manage-wallet" element={<ManageWallet />} />
-              <Route index path="/enter-password" element={<EnterPassword />} />
-              <Route index path="/private-key" element={<PrivateKey />} />
-            </Route>
+            <Route
+              index
+              path="/manage-wallet"
+              element={<OnlyContent children={<ManageWallet />} />}
+            />
+            <Route
+              index
+              path="/enter-password"
+              element={<OnlyContent children={<EnterPassword />} />}
+            />
+            <Route
+              index
+              path="/private-key"
+              element={<OnlyContent children={<PrivateKey />} />}
+            />
           </>
         )}
       </Routes>

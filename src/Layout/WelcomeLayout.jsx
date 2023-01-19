@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import MenuFooter from "../Components/MenuFooter/MenuFooter";
 import style from "../Pages/WelcomeScreens/style.module.scss";
 
-function WelcomeLayout() {
+function WelcomeLayout({ children }) {
   const { Content } = Layout;
   const getLocation = useLocation();
   const path = getLocation.pathname.replace("/", "");
@@ -20,19 +20,17 @@ function WelcomeLayout() {
             <p>1 of 3</p>
           </div>
         )}
-         {path === "createwalletchain" && (
+        {path === "createwalletchain" && (
           <div className={style.cardWhite__numberingSec}>
             <p>2 of 3</p>
           </div>
         )}
-            {path === "setPassword" && (
+        {path === "setPassword" && (
           <div className={style.cardWhite__numberingSec}>
             <p>3 of 3</p>
           </div>
         )}
-        <Content className="WelcomeLayout__content">
-          <Outlet />
-        </Content>
+        <Content className="WelcomeLayout__content">{children}</Content>
         <MenuFooter />
       </div>
     </div>

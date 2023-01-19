@@ -12,7 +12,7 @@ function ManageWallet() {
   return (
     <>
       <div className={`scrollableCont`}>
-        <MenuRestofHeaders backTo={"/wallet"} title={"Manage Wallet"} />
+        <MenuRestofHeaders backTo={"/"} title={"Manage Wallet"} />
         <div className={`flexedContent`}>
           <InputFieldOnly
             placeholder={"Type Wallet Name"}

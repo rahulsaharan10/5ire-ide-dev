@@ -6,7 +6,7 @@ import MenuRestofHeaders from "../Components/BalanceDetails/MenuRestofHeaders/Me
 import MenuFooter from "../Components/MenuFooter/MenuFooter";
 import style from "./style.module.scss";
 
-function FixWidthLayout() {
+function FixWidthLayout({ children }) {
   const { Content } = Layout;
   const getLocation = useLocation();
 
@@ -30,9 +30,7 @@ function FixWidthLayout() {
         {path === "setting" && (
           <MenuRestofHeaders backTo={"/"} title={"Setting"} searchTo="/" />
         )}
-        <Content className={style.fixedLayout__content}>
-          <Outlet />
-        </Content>
+        <Content className={style.fixedLayout__content}>{children} </Content>
         {path === "wallet" && <MenuFooter />}
       </div>
     </div>
