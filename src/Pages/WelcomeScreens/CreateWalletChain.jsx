@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import Wallet from "../../Hooks/wallet";
-import { setAccountDetails } from "../../Store/reducer/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { setCurrentAcc, setAccounts } from "../../Store/reducer/auth";
+import { useDispatch, useSelector, } from "react-redux";
 
 function CreateWalletChain() {
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state.auth);
   const { walletSignUp, authData } = Wallet();
+  const selector = useSelector((state) => state.auth);
+
   const [data, setData] = useState({
+
     mnemonic: "",
     evmPrivatekey: "",
     evmAddress: "",
@@ -18,22 +20,29 @@ function CreateWalletChain() {
 
   useEffect(() => {
     console.log(
-      "selector.accDetails.mnemonic : ",
-      selector.accDetails.mnemonic
+      "selector.currentAccount.mnemonic : ",
+      selector
     );
-    if (selector.accDetails.mnemonic === "") {
+    if (selector.currentAccount.mnemonic === "") {
       walletSignUp();
     }
   }, []);
 
   useEffect(() => {
-    console.log("AuthData : ", authData.mnemonic);
-
+    
+    let accountName = selector.accountName;
+    
     if (authData.mnemonic) {
-      dispatch(setAccountDetails(authData));
-      setData(authData);
+      let data_ = {
+        ...authData,
+        accountName        
+      }
+      console.log("data to be set : ",data_);
+      dispatch(setCurrentAcc(data_));
+      dispatch(setAccounts(data_));
+      setData(data_);
     } else {
-      setData(selector.accDetails);
+      setData(selector.currentAccount);
     }
   }, [authData]);
 

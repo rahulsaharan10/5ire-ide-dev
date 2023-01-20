@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import React, { useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BalanceDetails from "../Components/BalanceDetails/BalanceDetails";
 import MenuRestofHeaders from "../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 import MenuFooter from "../Components/MenuFooter/MenuFooter";
@@ -9,8 +9,15 @@ import style from "./style.module.scss";
 function FixWidthLayout({ children }) {
   const { Content } = Layout;
   const getLocation = useLocation();
+  const navigate = useNavigate();
 
   const path = getLocation.pathname.replace("/", "");
+
+  useEffect(()=>{
+    if(!path){
+      navigate("/wallet");
+    }
+  },[path]);
 
   return (
     <div className={`${style.fixedLayout}`}>

@@ -12,9 +12,12 @@ import ScannerImg from "../../Assets/qrimg.svg";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import { Select } from "antd";
 import ButtonComp from "../ButtonComp/ButtonComp";
+import { useSelector } from "react-redux";
+
 function BalanceDetails({ className, textLeft, mt0 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEvmModal, setIsEvmModal] = useState(false);
+  const { accountName, currentAccount } = useSelector(state => state.auth);
 
   const getLocation = useLocation();
   const path = getLocation.pathname.replace("/", "");
@@ -37,6 +40,11 @@ function BalanceDetails({ className, textLeft, mt0 }) {
     setIsEvmModal(false);
   };
 
+  const handleNetworkChange = (e) =>{
+      console.log("network :: ",e);
+
+  }
+
   return (
     <>
       {(path === "wallet" || path === "swapapprove") && (
@@ -48,13 +56,15 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 <div className={style.balanceDetails__accountName}>
                   <p>
                     <img src={GreenCircle} />
-                    Account Name
+                    {accountName}
                   </p>
-                  <span>0x0a....12sd</span>
+                  <span>0xefcrd....jubh</span>
+                  {/* <span>{currentAccount.evmAddress}</span> */}
                 </div>
               )}
               <div className={style.balanceDetails__selectStyle}>
                 <Select
+                  onChange={handleNetworkChange}
                   suffixIcon={<img src={DownArrowSuffix} />}
                   defaultValue={[
                     {
@@ -66,12 +76,12 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                   }}
                   options={[
                     {
-                      value: "BTC",
-                      label: <span className="flexedItemSelect">BTC</span>,
+                      value: "qa",
+                      label: <span className="flexedItemSelect">QA</span>,
                     },
                     {
-                      value: "usdt",
-                      label: <span className="flexedItemSelect">BTC</span>,
+                      value: "testnet",
+                      label: <span className="flexedItemSelect">Testnet</span>,
                     },
                   ]}
                 />
@@ -155,7 +165,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 </p>
                 <div className={style.balanceDetails__nativemodal__wrapedText}>
                   <p>
-                    0x9db871CCfC1aCF472asddadada60F
+                    {currentAccount.nativeAddress}
                     <img src={CopyIcon} />
                   </p>
                 </div>
@@ -189,7 +199,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 </p>
                 <div className={style.balanceDetails__nativemodal__wrapedText}>
                   <p>
-                    0x9db871CCfC1aCF472asddadada60F
+                    {currentAccount.evmAddress}
                     <img src={CopyIcon} />
                   </p>
                 </div>

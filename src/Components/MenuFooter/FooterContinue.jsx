@@ -5,7 +5,7 @@ import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScr
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin } from "../../Store/reducer/auth";
+import { setLogin, setPassword } from "../../Store/reducer/auth";
 import bcrypt from "bcryptjs";
 
 function FooterStepOne() {
@@ -34,7 +34,7 @@ export default FooterStepOne;
 export const FooterStepTwo = ({}) => {
   const navigate = useNavigate();
   const handleCancle = () => {
-    navigate("/beforebegin");
+    navigate("/createNewWallet");
   };
   return (
     <>
@@ -59,36 +59,41 @@ export const FooterStepThree = () => {
   const [show, setShow] = useState(false);
   const selector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleCancle = () => {
     navigate("/createwalletchain");
   };
 
+  console.log("selector.passError : ", selector.passError);
+
   const handleSubmit = () => {
     let pass = selector.pass;
-    setLoader(true);
-    // console.log("accDetails : ",accDetails);
+    const passError = selector.passError;
 
-    bcrypt.genSalt(10, function (err, salt) {
-      if (salt)
-        bcrypt.hash(pass, salt, function (err, hash) {
-          if (hash) {
-            //tood store in reduxx
-            setShow(true);
+    if (!passError) {
+      setLoader(true);
 
-            dispatch(setLogin(true));
-            // setTimeout(() => {
-            navigate("/wallet");
-            // }, 1000);
-          }
-          if (err) console.log("Error : ", err);
-          setLoader(false);
-        });
-      if (err) console.log("Error : ", err);
-      setLoader(false);
-    });
+      bcrypt.genSalt(10, function (err, salt) {
+        if (salt)
+          bcrypt.hash(pass, salt, function (err, hash) {
+            if (hash) {
+              //tood store in reduxx
+              setShow(true);
+
+              dispatch(setLogin(true));
+              dispatch(setPassword(hash));
+              window.chrome.storage.session.set({ hash: hash });
+
+              navigate("/wallet");
+            }
+            if (err) console.log("Error : ", err);
+            setLoader(false);
+          });
+        if (err) console.log("Error : ", err);
+        setLoader(false);
+      });
+    }
   };
 
   if (loader)
