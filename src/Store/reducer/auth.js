@@ -15,6 +15,18 @@ export const userState = {
   },
   uiData: {},
 
+  availableNetworks: {
+    qa: "wss://qa-wss-nodes.5ire.network",
+    testnet: "https://chain-node.5ire.network"
+  },
+
+  balance: {
+    evmBalance: 0,
+    nativeBalance: 0
+  },
+
+  currentNetwork: "testnet",
+
   accountName: "",
 
   isLogin: false,
@@ -52,6 +64,18 @@ export const userSlice = createSlice({
     setPassError: (state, action) => {
       state.passError = action.payload;
     },
+
+    setCurrentNetwork: (state, action) => {
+      state.currentNetwork = action.payload;
+    },
+
+    setBalance: (state, action) => {
+      if (action.payload.of === "evm")
+        state.balance.evmBalance = action.payload.balance;
+
+      else if (action.payload.of === "native")
+        state.balance.nativeBalance = action.payload.balance;
+    }
   },
 });
 
@@ -62,8 +86,10 @@ export const {
   setLogin,
   setAccountName,
   setAccounts,
+  setCurrentNetwork,
   setPassError,
   setUIdata,
+  setBalance,
 } = userSlice.actions;
 
 export default userSlice.reducer;

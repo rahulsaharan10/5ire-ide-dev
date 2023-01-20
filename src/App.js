@@ -41,7 +41,6 @@ function App() {
       navigate("/wallet");
     }
   }, []);
-  console.log("isLogin : ", auth);
 
   return (
     <div className="App">

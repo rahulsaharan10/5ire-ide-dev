@@ -3,16 +3,28 @@ import {
     mnemonicGenerate,
     mnemonicToMiniSecret,
     mnemonicValidate,
-    ed25519PairFromSeed
+    ed25519PairFromSeed,
+    cryptoWaitReady
 } from '@polkadot/util-crypto';
-import { decodeAddress, encodeAddress, } from "@polkadot/keyring";
+import { ApiPromise } from "@polkadot/api";
+import { HttpProvider, WsProvider } from "@polkadot/rpc-provider";
 import { u8aToHex } from "@polkadot/util";
 import { ethers } from "ethers";
+import { useSelector, useDispatch } from 'react-redux';
+import { setBalance } from "../Store/reducer/auth";
+import { QA_NETWORK, TEST_NETWORK } from "../Constants/index";
+import { decodeAddress, encodeAddress, } from "@polkadot/keyring";
+import Web3 from "web3";
 // import Web3 from "web3";
 // import { Keyring } from "@polkadot/keyring";
 
 
 export default function Wallet() {
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state.auth);
+    const [evmApi, setEvmApi] = useState(new Web3(selector.availableNetworks.testnet));
+    const [nativeApi, setNativeApi] = useState(null);
+    const [isApiReady, setReady] = useState(false);
 
     const [authData, setAuthData] = useState({
         mnemonic: "",
@@ -21,6 +33,47 @@ export default function Wallet() {
         privatekey: "",
         evmPrivatekey: "",
     });
+
+    useEffect(() => {
+        setUpApi(selector.availableNetworks.testnet);
+    }, [])
+
+    useEffect(() => {
+
+        if (selector.currentNetwork === TEST_NETWORK)
+            setUpApi(selector.availableNetworks.testnet);
+
+        else if (selector.currentNetwork === QA_NETWORK)
+            setUpApi(selector.availableNetworks.qa);
+
+    }, [selector.currentNetwork]);
+
+
+    useEffect(() => {
+        console.log("nativeApi : ",nativeApi);
+        if (nativeApi)
+            setReady(true);
+
+    }, [nativeApi]);
+
+
+    const setUpApi = async (network) => {
+
+        let evm_api = new Web3(network);
+        setEvmApi(evm_api);
+
+        let provider;
+        if (network.startsWith("wss"))
+            provider = new WsProvider(network);
+        else
+            provider = new HttpProvider(network);
+
+        console.log("Provider :: ", provider);
+
+        await cryptoWaitReady()
+        setNativeApi(await ApiPromise.create({ provider: provider }));
+    }
+
 
     const walletSignUp = async () => {
         try {
@@ -47,10 +100,39 @@ export default function Wallet() {
         }
     }
 
+    const evmBalance = async () => {
+        try {
+
+            const w3balance = await evmApi?.eth.getBalance(selector.currentAccount.evmAddress);
+            let payload = {
+                of: "evm",
+                balance: Number(w3balance)
+            }
+            dispatch(setBalance(payload));
+
+        } catch (error) {
+            console.log("error : ", error);
+        }
+    }
+
+    const nativeBalance = async () => {
+        console.log("Native Api : ", nativeApi);
+        const nbalance = await nativeApi?.derive.balances.all(selector.currentAccount.nativeAddress);
+        console.log("nativeBalance : ",nbalance);
+        let payload = {
+            of: "native",
+            balance: Number(nbalance)
+        }
+        dispatch(setBalance(payload));
+
+    }
+
     return {
         walletSignUp,
         setAuthData,
-        authData
-
+        authData,
+        evmBalance,
+        nativeBalance,
+        isApiReady
     }
 }
