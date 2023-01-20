@@ -22,6 +22,7 @@ module.exports = {
           runtimeChunk: false,
         },
         resolve: {
+          ...webpackConfig.resolve,
           fallback: {
             ...webpackConfig.resolve.fallback,
             path: require.resolve("path-browserify"),

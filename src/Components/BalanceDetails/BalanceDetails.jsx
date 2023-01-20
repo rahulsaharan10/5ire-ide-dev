@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import DarkLogo from "../../Assets/DarkLogo.svg";
@@ -12,12 +12,31 @@ import ScannerImg from "../../Assets/qrimg.svg";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import { Select } from "antd";
 import ButtonComp from "../ButtonComp/ButtonComp";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentNetwork } from "../../Store/reducer/auth";
+import wallet from "../../Hooks/wallet";
 
 function BalanceDetails({ className, textLeft, mt0 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEvmModal, setIsEvmModal] = useState(false);
-  const { accountName, currentAccount } = useSelector(state => state.auth);
+  const [evm_balance, setEvmBalance] = useState(0);
+  const [native_balance, setNativeBalance] = useState(0);
+  const { evmBalance, nativeBalance, isApiReady } = wallet();
+  const dispatch = useDispatch();
+  const { accountName, currentAccount, currentNetwork, balance } = useSelector(state => state.auth);
+
+  console.log("Balance : ", balance);
+
+  useEffect(() => {
+    console.log("Is ready : ",isApiReady);
+    if (isApiReady) {
+      evmBalance();
+      setEvmBalance(balance.evmBalance);
+      nativeBalance();
+      setNativeBalance(balance.nativeBalance);
+    }
+
+  }, [currentNetwork, balance, isApiReady]);
 
   const getLocation = useLocation();
   const path = getLocation.pathname.replace("/", "");
@@ -40,9 +59,8 @@ function BalanceDetails({ className, textLeft, mt0 }) {
     setIsEvmModal(false);
   };
 
-  const handleNetworkChange = (e) =>{
-      console.log("network :: ",e);
-
+  const handleNetworkChange = (network) => {
+    dispatch(setCurrentNetwork(network));
   }
 
   return (
@@ -68,7 +86,8 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                   suffixIcon={<img src={DownArrowSuffix} />}
                   defaultValue={[
                     {
-                      value: <span className="flexedItemSelect">Network</span>,
+                      value: "testnet",
+                      label: <span className="flexedItemSelect">Testnet</span>,
                     },
                   ]}
                   style={{
@@ -76,13 +95,13 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                   }}
                   options={[
                     {
-                      value: "qa",
-                      label: <span className="flexedItemSelect">QA</span>,
-                    },
-                    {
                       value: "testnet",
                       label: <span className="flexedItemSelect">Testnet</span>,
                     },
+                    {
+                      value: "qa",
+                      label: <span className="flexedItemSelect">QA</span>,
+                    }
                   ]}
                 />
               </div>
@@ -104,7 +123,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
             <div className={style.balanceDetails__innerBalance}>
               <div className={style.balanceDetails__innerBalance__totalBalnce}>
                 <p>
-                  Total Balance : <span>5000 </span>
+                  Total Balance : <span>{native_balance+evm_balance} </span>
                 </p>
               </div>
               <div className={style.balanceDetails__innerBalance__chainBalance}>
@@ -117,7 +136,9 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>Native Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      3000{" "}
+                      {native_balance?native_balance:0}
+                      {/* 3000 */}
+                      {" "}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>
@@ -133,7 +154,9 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>EVM Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      3000{" "}
+                      {evm_balance?evm_balance:0}
+                      {/* 3000 */}
+                      {" "}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>

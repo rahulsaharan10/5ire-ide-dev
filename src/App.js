@@ -41,16 +41,13 @@ function App() {
       navigate("/wallet");
     }
   }, []);
-  console.log("isLogin : ", auth);
 
   return (
     <div className="App">
-      <Routes >
-        
+      <Routes>
         {!auth?.isLogin ? (
           <>
             <Route
-            
               index
               path="/"
               element={<WelcomeLayout children={<WelcomeScreen />} />}
