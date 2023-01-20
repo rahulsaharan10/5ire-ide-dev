@@ -21,6 +21,14 @@ module.exports = {
           ...webpackConfig.optimization,
           runtimeChunk: false,
         },
+        resolve: {
+          fallback: {
+            ...webpackConfig.resolve.fallback,
+            path: require.resolve("path-browserify"),
+            crypto: require.resolve("crypto-browserify"),
+            stream: require.resolve("stream-browserify"),
+          },
+        },
       };
     },
   },
