@@ -94,7 +94,7 @@ browser.runtime.onMessage.addListener(function (message, sender) {
         type: "popup",
         focused: true,
         width: 400,
-        height: 700,
+        height: 600,
         top: 0,
         left: 800,
       },

@@ -18,6 +18,7 @@
     }
   }
 }
+
 .inputField {
   &__coloredBg {
     background-color: $blue-08132C !important;
@@ -33,9 +34,6 @@
     border: 1px solid #404058;
     color: $white;
     font-size: 14px;
-    // .ant-input {
-    //   height: 30px !important;
-    // }
 
     .ant-input-wrapper {
       padding: 0;
@@ -60,7 +58,6 @@
   &:last-child {
     margin-bottom: 0;
   }
- 
 }
 .mb0 {
   margin-bottom: 0;
