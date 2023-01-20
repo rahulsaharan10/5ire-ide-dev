@@ -3,7 +3,7 @@ import style from "./style.module.scss";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import Wallet from "../../Hooks/wallet";
 import { setCurrentAcc, setAccounts } from "../../Store/reducer/auth";
-import { useDispatch, useSelector, } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function CreateWalletChain() {
   const dispatch = useDispatch();
@@ -11,7 +11,6 @@ function CreateWalletChain() {
   const selector = useSelector((state) => state.auth);
 
   const [data, setData] = useState({
-
     mnemonic: "",
     evmPrivatekey: "",
     evmAddress: "",
@@ -19,25 +18,21 @@ function CreateWalletChain() {
   });
 
   useEffect(() => {
-    console.log(
-      "selector.currentAccount.mnemonic : ",
-      selector
-    );
+    console.log("selector.currentAccount.mnemonic : ", selector);
     if (selector.currentAccount.mnemonic === "") {
       walletSignUp();
     }
   }, []);
 
   useEffect(() => {
-    
     let accountName = selector.accountName;
-    
+
     if (authData.mnemonic) {
       let data_ = {
         ...authData,
-        accountName        
-      }
-      console.log("data to be set : ",data_);
+        accountName,
+      };
+      console.log("data to be set : ", data_);
       dispatch(setCurrentAcc(data_));
       dispatch(setAccounts(data_));
       setData(data_);
@@ -54,21 +49,21 @@ function CreateWalletChain() {
       <div className={style.cardWhite__addressInput}>
         <label>EVM Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{data.evmAddress}</span>
+          <span>{data?.evmAddress}</span>
           <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Native Chain Address:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{data.nativeAddress}</span>
+          <span>{data?.nativeAddress}</span>
           <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>
       <div className={style.cardWhite__addressInput}>
         <label>Mnemonic Phrase:</label>
         <p className={style.cardWhite__addressInput__copyText}>
-          <span>{data.mnemonic}</span>
+          <span>{data?.mnemonic}</span>
           <img src={CopyIcon} alt="copyIcon" />{" "}
         </p>
       </div>

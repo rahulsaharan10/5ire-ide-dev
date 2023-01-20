@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate,RouterProvider } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
 import OnlyContent from "./Layout/OnlyContent";
@@ -45,10 +45,12 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
+      <Routes >
+        
         {!auth?.isLogin ? (
           <>
             <Route
+            
               index
               path="/"
               element={<WelcomeLayout children={<WelcomeScreen />} />}

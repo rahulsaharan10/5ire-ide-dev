@@ -77,34 +77,30 @@ export const FooterStepThree = () => {
       bcrypt.genSalt(10, function (err, salt) {
         if (salt)
           bcrypt.hash(pass, salt, function (err, hash) {
+            setLoader(false);
+
             if (hash) {
               //tood store in reduxx
               setShow(true);
 
-              dispatch(setLogin(true));
-              dispatch(setPassword(hash));
-              window.chrome.storage.session.set({ hash: hash });
+              setTimeout(() => {
+                dispatch(setPassword(hash));
+                window.chrome.storage.session.set({ hash: hash });
+                setShow(false);
+                dispatch(setLogin(true));
 
-              navigate("/wallet");
+                navigate("/wallet");
+              }, 2000);
             }
             if (err) console.log("Error : ", err);
-            setLoader(false);
           });
-        if (err) console.log("Error : ", err);
-        setLoader(false);
+        if (err) {
+          console.log("Error : ", err);
+          setLoader(false);
+        }
       });
     }
   };
-
-  if (loader)
-    return (
-      <>
-        <div className="loader">
-          {" "}
-          <Spin size="large" />
-        </div>
-      </>
-    );
 
   return (
     <>
@@ -115,6 +111,13 @@ export const FooterStepThree = () => {
           maxWidth={"100%"}
           onClick={handleCancle}
         />
+
+        {loader && (
+          <div className="loader">
+            <Spin size="large" />
+          </div>
+        )}
+
         {show && (
           <div className="loader">
             <CongratulationsScreen />

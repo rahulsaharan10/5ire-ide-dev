@@ -42,25 +42,26 @@ export const store = new Store();
 //   dispatch(increment());
 // });
 
-const messagesFromReactAppListener = (message, sender, response) => {
+const messageFromExtensionUI = (message, sender, cb) => {
   console.log("[content.js]. Message received", {
     message,
     sender,
   });
+
 
   if (
     sender.id === browser.runtime.id &&
     message.from === "React" &&
     message.message === "Hello from React"
   ) {
-    response("Hello from content.js");
+    cb("Hello from content.js");
   }
 };
 
 /**
  * Fired when a message is sent from either an extension process or a content script.
  */
-browser.runtime.onMessage.addListener(messagesFromReactAppListener);
+browser.runtime.onMessage.addListener(messageFromExtensionUI);
 
 // const port = browser.runtime.connect({ name: "HelloWorld" });
 

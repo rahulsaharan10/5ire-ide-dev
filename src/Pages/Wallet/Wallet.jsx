@@ -12,10 +12,7 @@ function Wallet() {
   };
   return (
     <div className={style.wallet}>
-     
-       <div
-        className={style.wallet__sendSwapSec }
-      >
+      <div className={style.wallet__sendSwapSec}>
         <div className={style.wallet__multiSwapBtn}>
           <div className={style.wallet__sendSwapbtn}>
             <button
@@ -45,12 +42,11 @@ function Wallet() {
             <Send />
           </div>
         )}
-           {activeTab === "swap" && (
+        {activeTab === "swap" && (
           <div>
-            <Swap/>
+            <Swap />
           </div>
         )}
-        
       </div>
     </div>
   );
