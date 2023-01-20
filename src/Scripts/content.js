@@ -62,25 +62,25 @@ const messagesFromReactAppListener = (message, sender, response) => {
  */
 browser.runtime.onMessage.addListener(messagesFromReactAppListener);
 
-const port = browser.runtime.connect({ name: "HelloWorld" });
+// const port = browser.runtime.connect({ name: "HelloWorld" });
 
-const listener = async (event) => {
-  // We only accept messages from ourselves
-  if (event.source != window) {
-    return;
-  }
+// const listener = async (event) => {
+//   // We only accept messages from ourselves
+//   if (event.source != window) {
+//     return;
+//   }
 
-  if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
-    console.log("Content script received: " + event.data.text);
+//   if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
+//     console.log("Content script received: " + event.data.text);
 
-    // do something with response here, not outside the function
-    const msg = port.postMessage(event.data.text);
-    console.log(msg);
-  }
-};
-window.addEventListener("message", listener, false);
+//     // do something with response here, not outside the function
+//     const msg = port.postMessage(event.data.text);
+//     console.log(msg);
+//   }
+// };
+// window.addEventListener("message", listener, false);
 
-port.onDisconnect.addListener(function () {
-  // clean up when content script gets disconnected
-  window.removeEventListener("message", listener);
-});
+// port.onDisconnect.addListener(function () {
+//   // clean up when content script gets disconnected
+//   window.removeEventListener("message", listener);
+// });

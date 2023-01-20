@@ -14,11 +14,6 @@ const browser = chrome?.runtime
 
 let isInitialized = false;
 
-// chrome.storage.local.get("state", (storage) => {
-//   const state = storage.state || initialState;
-//   chrome.action.setBadgeText({ text: `${state.value}` });
-// });
-
 let store;
 // Initializes the Redux store
 const init = (preloadedState) => {

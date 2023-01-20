@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { action } from "webextension-polyfill";
 
 export const userState = {
   pass: "",
