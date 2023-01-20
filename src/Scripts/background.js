@@ -102,13 +102,12 @@ browser.runtime.onMessage.addListener(function (message, sender) {
         console.log("Opened popup!");
       }
     );
-    browser.notifications.create({
-      options: {
-        iconUrl: browser.runtime.getURL("logo192.png"),
-        message: "Your request to process data approved",
-        title: "Opened 5ire Window",
-        type: "basic",
-      },
+    console.log("HERE WE", browser.notifications.create);
+    browser.notifications.create("", {
+      iconUrl: browser.runtime.getURL("logo192.png"),
+      message: "Your request to process data approved",
+      title: "Opened 5ire Window",
+      type: "basic",
     });
   }
 });
