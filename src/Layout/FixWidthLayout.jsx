@@ -22,7 +22,7 @@ function FixWidthLayout({ children }) {
   return (
     <div className={`${style.fixedLayout}`}>
       <div className={style.fixedLayout__inner}>
-        {(path === "wallet" || path === "swapapprove") && (
+        {(path === "wallet" || path === "swapapprove" || path === "rejectnotification") && (
           <div className={style.fixedLayout__inner__walletLayout}>
             <div className={style.decoratedBg} style={{ textAlign: "left" }}>
               {/* <img src={LogoHorizontal} width={155} height={20} /> */}

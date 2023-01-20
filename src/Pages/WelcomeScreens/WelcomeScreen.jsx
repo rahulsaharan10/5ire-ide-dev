@@ -21,7 +21,7 @@ function WelcomeScreen() {
           <Link to="/createNewWallet" className="bluegradient">
             Create a new wallet
           </Link>
-          <Link className="grayBtn" to="/watch-list">
+          <Link className="grayBtn" to="/importwallet">
             Import Wallet
           </Link>
         </div>
