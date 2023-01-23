@@ -1,6 +1,7 @@
 import React from "react";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import style from "./style.module.scss";
+
 function Approve({ onClick }) {
   return (
     <div>

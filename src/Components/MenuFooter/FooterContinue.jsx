@@ -14,10 +14,11 @@ function FooterStepOne() {
     <>
       <div className={style.menuItems__cancleContinue}>
         <ButtonComp
-          // onClick={() => Navigate("/confirmCurrency")}
+          onClick={() => navigate("/")}
           bordered={true}
           text={"Cancel"}
           maxWidth={"100%"}
+
         />
         <ButtonComp
           onClick={() => navigate("/createwalletchain")}
@@ -31,10 +32,10 @@ function FooterStepOne() {
 
 export default FooterStepOne;
 
-export const FooterStepTwo = ({}) => {
+export const FooterStepTwo = () => {
   const navigate = useNavigate();
   const handleCancle = () => {
-    navigate("/createNewWallet");
+    navigate("/beforebegin");
   };
   return (
     <>
@@ -80,7 +81,6 @@ export const FooterStepThree = () => {
             setLoader(false);
 
             if (hash) {
-              //tood store in reduxx
               setShow(true);
 
               setTimeout(() => {

@@ -8,37 +8,52 @@ import WalletCardLogo from "../../Assets/walletcardLogo.svg";
 import WalletQr from "../../Assets/walletqr.png";
 import ModalCustom from "../ModalCustom/ModalCustom";
 import ModelLogo from "../../Assets/modalLogo.svg";
-import ScannerImg from "../../Assets/qrimg.svg";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import { Select } from "antd";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentNetwork } from "../../Store/reducer/auth";
 import wallet from "../../Hooks/wallet";
+import QRCode from "react-qr-code";
+import { NATIVE, EVM } from "../../Constants/index"
+import { toast } from "react-toastify";
+import { shortner } from "../../Helper/TxShortner";
+// import ScannerImg from "../../Assets/qrimg.svg";
 
 function BalanceDetails({ className, textLeft, mt0 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEvmModal, setIsEvmModal] = useState(false);
+  const [addresses, setAddresses] = useState({ evmAddress: "", nativeAddress: "" });
   const [evm_balance, setEvmBalance] = useState(0);
   const [native_balance, setNativeBalance] = useState(0);
-  const { evmBalance, nativeBalance, isApiReady } = wallet();
+  const { getEvmBalance, getNativeBalance, isApiReady } = wallet();
   const dispatch = useDispatch();
   const { accountName, currentAccount, currentNetwork, balance } = useSelector(state => state.auth);
+  const getLocation = useLocation();
 
-  console.log("Balance : ", balance);
 
   useEffect(() => {
-    console.log("Is ready : ",isApiReady);
+    console.log("Is ready : ", isApiReady);
     if (isApiReady) {
-      evmBalance();
-      setEvmBalance(balance.evmBalance);
-      nativeBalance();
-      setNativeBalance(balance.nativeBalance);
+      getEvmBalance();
+      getNativeBalance();
     }
 
-  }, [currentNetwork, balance, isApiReady]);
+  }, [isApiReady, currentNetwork]);
 
-  const getLocation = useLocation();
+  useEffect(() => {
+    const evmAdd = shortner(currentAccount?.evmAddress);
+    const nativeAdd = shortner(currentAccount?.nativeAddress);
+    setAddresses({ evmAddress: evmAdd, nativeAddress: nativeAdd });
+  }, [currentAccount]);
+
+  useEffect(() => {
+    setEvmBalance(balance?.evmBalance);
+    setNativeBalance(balance?.nativeBalance);
+
+  }, [balance?.evmBalance, balance?.nativeBalance])
+
+
   const path = getLocation.pathname.replace("/", "");
   const showModal = () => {
     setIsModalOpen(true);
@@ -63,6 +78,17 @@ function BalanceDetails({ className, textLeft, mt0 }) {
     dispatch(setCurrentNetwork(network));
   }
 
+  const handleCopy = (e) => {
+    if (e.target.name === NATIVE)
+      navigator.clipboard.writeText(currentAccount.nativeAddress);
+
+    if (e.target.name === EVM)
+      navigator.clipboard.writeText(currentAccount.evmAddress);
+
+    toast.success("Copied!");
+
+  }
+
   return (
     <>
       {(path === "wallet" || path === "swapapprove") && (
@@ -76,7 +102,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <img src={GreenCircle} />
                     {accountName}
                   </p>
-                  <span>0xefcrd....jubh</span>
+                  <span>{addresses.evmAddress}</span>
                   {/* <span>{currentAccount.evmAddress}</span> */}
                 </div>
               )}
@@ -123,7 +149,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
             <div className={style.balanceDetails__innerBalance}>
               <div className={style.balanceDetails__innerBalance__totalBalnce}>
                 <p>
-                  Total Balance : <span>{native_balance+evm_balance} </span>
+                  Total Balance : <span>{native_balance + evm_balance} </span>
                 </p>
               </div>
               <div className={style.balanceDetails__innerBalance__chainBalance}>
@@ -136,7 +162,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>Native Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {native_balance?native_balance:0}
+                      {native_balance ? native_balance : "loading.."}
                       {/* 3000 */}
                       {" "}
                     </h3>
@@ -154,7 +180,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>EVM Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {evm_balance?evm_balance:0}
+                      {evm_balance ? evm_balance : "loading.."}
                       {/* 3000 */}
                       {" "}
                     </h3>
@@ -173,12 +199,19 @@ function BalanceDetails({ className, textLeft, mt0 }) {
           >
             <div className={style.balanceDetails__nativemodal}>
               <div className={style.balanceDetails__nativemodal__innerContact}>
-                <img src={ModelLogo} />
+                <img src={ModelLogo} alt="logo"/>
                 <p className={style.balanceDetails__nativemodal__title}>
                   5ire Native Chain
                 </p>
                 <div className={style.balanceDetails__nativemodal__scanner}>
-                  <img src={ScannerImg} />
+                  <QRCode
+                    size={200}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    viewBox={`0 0 256 256`}
+                    value={currentAccount.nativeAddress}
+                  />
+                  {/* <img src={ScannerImg} />
+                   */}
                 </div>
                 <div className={style.balanceDetails__nativemodal__modalOr}>
                   <p>or</p>
@@ -188,14 +221,14 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 </p>
                 <div className={style.balanceDetails__nativemodal__wrapedText}>
                   <p>
-                    {currentAccount.nativeAddress}
-                    <img src={CopyIcon} />
+                    {addresses.nativeAddress}
+                    <img src={CopyIcon} alt="copyIcon" name={NATIVE} onClick={handleCopy} />
                   </p>
                 </div>
                 <div
                   className={style.balanceDetails__nativemodal__footerbuttons}
                 >
-                  <ButtonComp text={"Share Address"} />
+                  {/* <ButtonComp text={"Share Address"} /> */}
                 </div>
               </div>
             </div>
@@ -212,7 +245,13 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                   5ire EVM Chain
                 </p>
                 <div className={style.balanceDetails__nativemodal__scanner}>
-                  <img src={ScannerImg} />
+                  {/* <img src={ScannerImg} /> */}
+                  <QRCode
+                    size={200}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    viewBox={`0 0 256 256`}
+                    value={currentAccount.evmAddress}
+                  />
                 </div>
                 <div className={style.balanceDetails__nativemodal__modalOr}>
                   <p>or</p>
@@ -222,14 +261,14 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 </p>
                 <div className={style.balanceDetails__nativemodal__wrapedText}>
                   <p>
-                    {currentAccount.evmAddress}
-                    <img src={CopyIcon} />
+                    {addresses.evmAddress}
+                    <img src={CopyIcon} alt="copyIcon" name={EVM} onClick={handleCopy} />
                   </p>
                 </div>
                 <div
                   className={style.balanceDetails__nativemodal__footerbuttons}
                 >
-                  <ButtonComp text={"Share Address"} />
+                  {/* <ButtonComp text={"Share Address"} /> */}
                 </div>
               </div>
             </div>
