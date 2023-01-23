@@ -1,6 +1,6 @@
 @import "../../styles/__vars.scss";
 .swap {
-  padding: 30px 37px;
+  padding: 20px 37px;
   &__swapSec {
     background: #0e1e41;
     border-radius: 12px;
@@ -71,8 +71,8 @@
   &__swapAccount{
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    padding-top: 25px;
+    gap: 8px;
+    padding-top: 10px;
   }
   &__transactionFee{
     color: $white;

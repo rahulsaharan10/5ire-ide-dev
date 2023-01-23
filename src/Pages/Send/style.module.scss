@@ -1,7 +1,7 @@
 @import "../../styles/__vars.scss";
 
 .sendSec {
-  padding: 30px 37px;
+  padding: 20px 37px;
   &__sourceLabel {
     display: flex;
     gap: 30px;
@@ -15,7 +15,7 @@
   &__inputInnerSec {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    // gap: 16px;
     padding-top: 16px;
   }
   &__sendSwapbtn {
