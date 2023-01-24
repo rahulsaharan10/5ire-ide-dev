@@ -45,21 +45,16 @@ window.fire = {
       console.log("My window worked", result);
     });
   },
-
   isInstalled: true,
 };
 
 injectedStream.on("data", (data) => {
-  console.log(
-    JSON.stringify(data) + ",INJECTED page js",
-    JSON.stringify(handlers)
-  );
+  console.log(JSON.stringify(data) + ",INJECTED page response");
   console.log("HERE HANDLERS", handlers);
   if (data?.method === "keepAlive") {
-    console.log("HERE KEEP ALIVE", data);
     setTimeout(() => {
       injectedStream.write({ method: "keepAlive" });
-    }, 1000 * 60);
+    }, 1000 * 30);
   }
   if (data.id) {
     const handler = handlers[data.id];

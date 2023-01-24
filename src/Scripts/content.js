@@ -23,22 +23,15 @@ contentStream.on("data", async (data) => {
         });
       case "ui":
         browser.runtime.sendMessage({
-          msg: "showPageAction",
-          data,
+          action: "showPageAction",
+          ...data,
         });
-
-        contentStream.write({
-          id: data.id,
-          response: "I return back result to UI",
-          error: null,
-        });
-
       case "keepAlive":
         setTimeout(() => {
           contentStream.write({
             method: "keepAlive",
           });
-        }, 1000 * 60);
+        }, 1000 * 30);
 
       default:
     }
@@ -60,18 +53,10 @@ contentStream.on("data", async (data) => {
 // });
 
 const messageFromExtensionUI = (message, sender, cb) => {
-  console.log("[content.js]. Message received", message);
+  console.log("[content.js]. Message received", JSON.stringify(message));
   if (message?.id) {
     contentStream.write(message);
     cb("I Recevie and ack");
-  }
-
-  if (
-    sender.id === browser.runtime.id &&
-    message.from === "React" &&
-    message.message === "Hello from React"
-  ) {
-    cb("Hello from content.js");
   }
 };
 
@@ -79,37 +64,3 @@ const messageFromExtensionUI = (message, sender, cb) => {
  * Fired when a message is sent from either an extension process or a content script.
  */
 browser.runtime.onMessage.addListener(messageFromExtensionUI);
-
-const port = browser.runtime.connect({ name: "knockknock" });
-port.onMessage.addListener(function (msg) {
-  console.log("I get it", JSON.parse(JSON.stringify(msg)));
-  const message = JSON.parse(JSON.stringify(msg));
-
-  // contentStream.write({
-  //   id: message.id,
-  //   response: message,
-  //   error: null,
-  // });
-});
-// const port = browser.runtime.connect({ name: "HelloWorld" });
-
-// const listener = async (event) => {
-//   // We only accept messages from ourselves
-//   if (event.source != window) {
-//     return;
-//   }
-
-//   if (event.data.type && event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT") {
-//     console.log("Content script received: " + event.data.text);
-
-//     // do something with response here, not outside the function
-//     const msg = port.postMessage(event.data.text);
-//     console.log(msg);
-//   }
-// };
-// window.addEventListener("message", listener, false);
-
-// port.onDisconnect.addListener(function () {
-//   // clean up when content script gets disconnected
-//   window.removeEventListener("message", listener);
-// });
