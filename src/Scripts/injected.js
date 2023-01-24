@@ -1,6 +1,5 @@
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE, getId } from "./constants";
-
 const injectedStream = new WindowPostMessageStream({
   name: INPAGE,
   target: CONTENT_SCRIPT,
@@ -8,20 +7,27 @@ const injectedStream = new WindowPostMessageStream({
 
 const handlers = {};
 
+injectedStream.write({ method: "keepAlive" });
+
 function sendMessage(method, message) {
   return new Promise((resolve, reject) => {
-    const id = getId();
+    try {
+      const id = getId();
 
-    handlers[id] = { reject, resolve };
+      handlers[id] = { reject, resolve, id };
 
-    const transportRequestMessage = {
-      id,
-      message,
-      origin: INPAGE,
-      method,
-    };
+      const transportRequestMessage = {
+        id,
+        message,
+        origin: INPAGE,
+        method,
+      };
 
-    injectedStream.write(transportRequestMessage);
+      injectedStream.write(transportRequestMessage);
+    } catch (err) {
+      console.log("Here error got", err);
+      reject(err);
+    }
   });
 }
 
@@ -39,16 +45,28 @@ window.fire = {
       console.log("My window worked", result);
     });
   },
+
   isInstalled: true,
 };
 
 injectedStream.on("data", (data) => {
-  console.log(data + ", world in page js");
-
-  const handler = handlers[data.id];
-  if (data.error) {
-    handler.reject(data.error);
-  } else {
-    handler.resolve(data.response);
+  console.log(
+    JSON.stringify(data) + ",INJECTED page js",
+    JSON.stringify(handlers)
+  );
+  console.log("HERE HANDLERS", handlers);
+  if (data?.method === "keepAlive") {
+    console.log("HERE KEEP ALIVE", data);
+    setTimeout(() => {
+      injectedStream.write({ method: "keepAlive" });
+    }, 1000 * 60);
+  }
+  if (data.id) {
+    const handler = handlers[data.id];
+    if (data.error) {
+      handler.reject(data.error);
+    } else {
+      handler.resolve(data.response);
+    }
   }
 });

@@ -48,7 +48,6 @@ export default function Wallet() {
   }, [selector.currentNetwork]);
 
   useEffect(() => {
-    console.log("nativeApi : ", nativeApi);
     if (nativeApi) setReady(true);
   }, [nativeApi]);
 
@@ -59,8 +58,6 @@ export default function Wallet() {
     let provider;
     if (network?.startsWith("wss")) provider = new WsProvider(network);
     else provider = new HttpProvider(network);
-
-    console.log("Provider :: ", provider);
 
     await cryptoWaitReady();
     await waitReady();
@@ -116,7 +113,6 @@ export default function Wallet() {
     const nbalance = await nativeApi?.derive.balances.all(
       selector?.currentAccount?.nativeAddress
     );
-    console.log("nativeBalance : ", nbalance);
     let payload = {
       of: "native",
       balance: Number(nbalance),

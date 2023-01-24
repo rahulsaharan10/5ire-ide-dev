@@ -36,6 +36,8 @@ const init = (preloadedState) => {
   });
 };
 
+let ports = {};
+
 browser.runtime.onConnect.addListener((port) => {
   if (port.name === CONNECTION_NAME) {
     // Gets the current state from the storage.
@@ -47,24 +49,14 @@ browser.runtime.onConnect.addListener((port) => {
       }
       // 2. Sends a message to notify that the store is ready.
       browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
-      console.log("PORT", port);
     });
   }
-
+  if (port.name === "knockknock") {
+    ports[port.name] = port;
+  }
   port.onMessage.addListener(function (msg) {
-    console.log("I am in background", port);
-    if (port.name === "uiOps") {
-      const idToQuery = msg.id;
-      if (document.getElementById(idToQuery)) {
-        port.postMessage({
-          exists: true,
-        });
-      } else {
-        port.postMessage({
-          exists: false,
-        });
-      }
-    }
+    console.assert(port.name === "knockknock");
+    port.postMessage({ question: "Who's there?" });
   });
 });
 
@@ -79,10 +71,21 @@ browser.runtime.onStartup.addListener(() => {
   console.log("[background.js] onStartup");
 });
 
-browser.runtime.onMessage.addListener(function (message, sender) {
+browser.runtime.onMessage.addListener(function (message, sender, cb) {
+  console.log("Here i am getting message", message);
+  if (message?.id) {
+    ports["knockknock"].postMessage(message);
+  }
   if (message.msg == "showPageAction") {
     let extensionURL = browser.runtime.getURL("index.html");
-    store.dispatch(setUIdata(message.data));
+    // store.dispatch(
+    //   setUIdata({
+    //     ...message.data,
+    //     cb: (rs) => {
+    //       cb(rs);
+    //     },
+    //   })
+    // );
     browser.windows.create(
       {
         url: extensionURL + `?route=private-key`,
@@ -97,15 +100,16 @@ browser.runtime.onMessage.addListener(function (message, sender) {
         console.log("Opened popup!");
       }
     );
-    console.log("HERE WE", browser.notifications.create);
-    browser.notifications.create("", {
-      iconUrl: browser.runtime.getURL("logo192.png"),
-      message: "Your request to process data approved",
-      title: "Opened 5ire Window",
-      type: "basic",
-    });
+
+    // browser.notifications.create("", {
+    //   iconUrl: browser.runtime.getURL("logo192.png"),
+    //   message: "Your request to process data approved",
+    //   title: "Opened 5ire Window",
+    //   type: "basic",
+    // });
   }
 });
+
 /**
  *  Sent to the event page just before it is unloaded.
  *  This gives the extension opportunity to do some clean up.

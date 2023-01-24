@@ -23,19 +23,17 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   const [native_balance, setNativeBalance] = useState(0);
   const { evmBalance, nativeBalance, isApiReady } = wallet();
   const dispatch = useDispatch();
-  const { accountName, currentAccount, currentNetwork, balance } = useSelector(state => state.auth);
-
-  console.log("Balance : ", balance);
+  const { accountName, currentAccount, currentNetwork, balance } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
-    console.log("Is ready : ",isApiReady);
     if (isApiReady) {
       evmBalance();
       setEvmBalance(balance.evmBalance);
       nativeBalance();
       setNativeBalance(balance.nativeBalance);
     }
-
   }, [currentNetwork, balance, isApiReady]);
 
   const getLocation = useLocation();
@@ -61,7 +59,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
 
   const handleNetworkChange = (network) => {
     dispatch(setCurrentNetwork(network));
-  }
+  };
 
   return (
     <>
@@ -101,7 +99,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     {
                       value: "qa",
                       label: <span className="flexedItemSelect">QA</span>,
-                    }
+                    },
                   ]}
                 />
               </div>
@@ -123,7 +121,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
             <div className={style.balanceDetails__innerBalance}>
               <div className={style.balanceDetails__innerBalance__totalBalnce}>
                 <p>
-                  Total Balance : <span>{native_balance+evm_balance} </span>
+                  Total Balance : <span>{native_balance + evm_balance} </span>
                 </p>
               </div>
               <div className={style.balanceDetails__innerBalance__chainBalance}>
@@ -136,9 +134,8 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>Native Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {native_balance?native_balance:0}
-                      {/* 3000 */}
-                      {" "}
+                      {native_balance ? native_balance : 0}
+                      {/* 3000 */}{" "}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>
@@ -154,9 +151,8 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>EVM Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {evm_balance?evm_balance:0}
-                      {/* 3000 */}
-                      {" "}
+                      {evm_balance ? evm_balance : 0}
+                      {/* 3000 */}{" "}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>

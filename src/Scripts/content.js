@@ -9,28 +9,45 @@ const contentStream = new WindowPostMessageStream({
   target: INPAGE,
 });
 
-contentStream.on("data", (data) => {
-  console.log(JSON.stringify(data) + ", world in content js");
-  switch (data.method) {
-    case "request":
-      contentStream.write({
-        id: data.id,
-        response: "I return back result to you",
-        error: null,
-      });
-    case "ui":
-      browser.runtime.sendMessage({ msg: "showPageAction", data });
-      contentStream.write({
-        id: data.id,
-        response: "I return back result to UI",
-        error: null,
-      });
-    default:
+export const store = new Store();
+
+contentStream.on("data", async (data) => {
+  try {
+    console.log(JSON.stringify(data) + ", world in content js");
+    switch (data.method) {
+      case "request":
+        contentStream.write({
+          id: data.id,
+          response: "I return back result to you",
+          error: null,
+        });
+      case "ui":
+        browser.runtime.sendMessage({
+          msg: "showPageAction",
+          data,
+        });
+
+        contentStream.write({
+          id: data.id,
+          response: "I return back result to UI",
+          error: null,
+        });
+
+      case "keepAlive":
+        setTimeout(() => {
+          contentStream.write({
+            method: "keepAlive",
+          });
+        }, 1000 * 60);
+
+      default:
+    }
+  } catch (err) {
+    console.log("Error under content script", err);
   }
 });
 
 // Proxy store
-export const store = new Store();
 
 // // Apply middleware to proxy store
 // const middleware = [thunkMiddleware];
@@ -43,11 +60,11 @@ export const store = new Store();
 // });
 
 const messageFromExtensionUI = (message, sender, cb) => {
-  console.log("[content.js]. Message received", {
-    message,
-    sender,
-  });
-
+  console.log("[content.js]. Message received", message);
+  if (message?.id) {
+    contentStream.write(message);
+    cb("I Recevie and ack");
+  }
 
   if (
     sender.id === browser.runtime.id &&
@@ -63,6 +80,17 @@ const messageFromExtensionUI = (message, sender, cb) => {
  */
 browser.runtime.onMessage.addListener(messageFromExtensionUI);
 
+const port = browser.runtime.connect({ name: "knockknock" });
+port.onMessage.addListener(function (msg) {
+  console.log("I get it", JSON.parse(JSON.stringify(msg)));
+  const message = JSON.parse(JSON.stringify(msg));
+
+  // contentStream.write({
+  //   id: message.id,
+  //   response: message,
+  //   error: null,
+  // });
+});
 // const port = browser.runtime.connect({ name: "HelloWorld" });
 
 // const listener = async (event) => {
