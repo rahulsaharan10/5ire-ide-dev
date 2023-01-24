@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     mnemonicGenerate,
     mnemonicToMiniSecret,
@@ -6,17 +6,18 @@ import {
     ed25519PairFromSeed,
     cryptoWaitReady,
 } from "@polkadot/util-crypto";
+import { u8aToHex } from "@polkadot/util";
 import { waitReady } from "@polkadot/wasm-crypto";
 import { ApiPromise } from "@polkadot/api";
 import { HttpProvider, WsProvider } from "@polkadot/rpc-provider";
 import { ethers } from "ethers";
 import { useSelector, useDispatch } from "react-redux";
-// import { setBalance } from "../Store/reducer/auth";
 import { QA_NETWORK, TEST_NETWORK } from "../Constants/index";
 import { decodeAddress, encodeAddress } from "@polkadot/keyring";
 import { Keyring } from "@polkadot/keyring";
 import { setCurrentAcc, setAccounts, setLogin, setBalance } from "../Store/reducer/auth";
 import Web3 from "web3";
+// import { setBalance } from "../Store/reducer/auth";
 // import { u8aToHex } from "@polkadot/util";
 
 export default function Wallet() {
@@ -205,14 +206,125 @@ export default function Wallet() {
 
     const nativeToEvmSwap = async (amount) => {
         try {
-            const seedAlice = mnemonicToMiniSecret(currentAccount.mnemonic);
-            const keyring = new Keyring({ type: "ed25519" });
-            const alice = keyring.addFromPair(ed25519PairFromSeed(seedAlice));
+            console.log("nativeToEvmSwap Amount", amount);
+            if (amount) {
+                amount = Number(
+                    Math.round(Number(amount) * Math.pow(10, 18) * 100) / 100
+                ).toString();
+
+                const seedAlice = mnemonicToMiniSecret(currentAccount.mnemonic);
+                const keyring = new Keyring({ type: "ed25519" });
+                const alice = keyring.addFromPair(ed25519PairFromSeed(seedAlice));
+
+                let deposit = await nativeApi.tx.evm.deposit(currentAccount?.evmAddress, amount);
+                const transferRes = await deposit.signAndSend(alice);
+                console.log(transferRes.toHex());
+                const tx = transferRes.toHex();
+
+                if (tx) {
+                    return {
+                        error: false,
+                        data: tx
+                    }
+                } else {
+                    return {
+                        error: true,
+                        data: "error"
+                    }
+                }
+
+            } else {
+                return {
+                    error: true,
+                    data: "error"
+                }
+            }
+
         } catch (error) {
             console.log("Error : ", error);
             return {
                 error: true,
-                data: "Error occured while sending!"
+                data: "Error occured while swapping!"
+            }
+        }
+    };
+
+    const evmToNativeSwap = async (amount) => {
+        try {
+            if (amount) {
+                console.log("evmToNativeSwap Amount", amount);
+
+                const seedAlice = mnemonicToMiniSecret(currentAccount.mnemonic);
+                const keyring = new Keyring({ type: "ed25519" });
+                const alice = keyring.addFromPair(ed25519PairFromSeed(seedAlice));
+
+                amount = Number(
+                    Math.round(Number(amount) * Math.pow(10, 18) * 100) / 100
+                ).toString();
+                const publicKey = u8aToHex(alice.publicKey);
+                const transaction = {
+                    to: publicKey.slice(0, 42),
+                    value: amount.toString(),
+                    gas: 21000,
+                    nonce: await evmApi.eth.getTransactionCount(currentAccount?.evmAddress),
+                };
+
+                const signedTx = await evmApi.eth.accounts.signTransaction(
+                    transaction,
+                    currentAccount?.evmPrivatekey
+                );
+
+                let txHash;
+
+                const isSuccess = await evmApi.eth.sendSignedTransaction(
+                    signedTx.rawTransaction,
+                    async function (error, hash) {
+
+                        if (!error) {
+                            txHash = hash;
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                );
+
+                if (isSuccess) {
+
+                    const withdraw = await nativeApi.tx.evm.withdraw(
+                        publicKey.slice(0, 42),
+                        amount.toString()
+                    );
+
+                    const transferRes = await withdraw.signAndSend(alice);
+
+                }
+                if (txHash) {
+                    return {
+                        error: false,
+                        data: txHash
+                    }
+                }
+                else {
+                    return {
+                        error: true,
+                        data: "error occured while swapping!"
+                    }
+                }
+
+            }
+            else {
+                return {
+                    error: true,
+                    data: "error occured while swapping!"
+                }
+            }
+
+        } catch (error) {
+            console.log("Error : ", error);
+            return {
+                error: true,
+                data: "Error occured while swapping!"
             }
         }
     }
@@ -266,6 +378,70 @@ export default function Wallet() {
         }
     };
 
+    const retriveEvmFee = async (toAddress, amount) => {
+        try {
+
+            toAddress = toAddress ? toAddress : currentAccount?.nativeAddress;
+
+            if (toAddress.startsWith("5")) toAddress = (u8aToHex(toAddress)).slice(0, 42);
+
+            const gasAmount = await evmApi.eth.estimateGas({
+                to: toAddress,
+                from: currentAccount?.evmAddress,
+                value: amount
+            })
+            const gasPrice = await evmApi.eth.getGasPrice();
+            let fee = (Number(gasPrice * gasAmount / 10 ** 18));
+            return fee ? fee : 0;
+
+        }
+        catch (error) {
+            console.log("error", error.toString())
+            return 0;
+        }
+    }
+
+    const retriveNativeFee = async (toAddress, amount) => {
+        try {
+
+            toAddress = toAddress ? toAddress : currentAccount?.evmAddress;
+            let transferTx;
+            const keyring = new Keyring({ type: "ed25519" });
+            const seedAlice = mnemonicToMiniSecret(currentAccount?.mnemonic);
+            console.log("Seed Alice : ", seedAlice);
+            const alice = keyring.addFromPair(ed25519PairFromSeed(seedAlice));
+
+            amount = Number(
+                Math.round(Number(amount) * Math.pow(10, 18) * 100) / 100
+            )
+            if (toAddress.startsWith("0x")) {
+                transferTx = await nativeApi.tx.evm.deposit(
+                    toAddress,
+                    amount.toString()
+                );
+
+            }
+            if (toAddress.startsWith("5")) {
+                transferTx = nativeApi.tx.balances.transferKeepAlive(
+                    toAddress,
+                    amount.toString()
+                )
+            }
+
+            const info = await transferTx?.paymentInfo(alice);
+            const adjFee = info?.partialFee;
+            const fee = Number(adjFee) / Math.pow(10, 18);
+            console.log("Fee : ", fee);
+
+            return fee ? fee : 0;
+
+        } catch (error) {
+            console.log("Error : ", error);
+            return 0;
+        }
+    }
+
+
     return {
         walletSignUp,
         setAuthData,
@@ -276,6 +452,9 @@ export default function Wallet() {
         evmTransfer,
         nativeTransfer,
         importAccount,
-
+        nativeToEvmSwap,
+        evmToNativeSwap,
+        retriveEvmFee,
+        retriveNativeFee
     };
 }

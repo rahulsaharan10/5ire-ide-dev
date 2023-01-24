@@ -21,6 +21,7 @@ function UnlockWelcome() {
         </div>
         <div className={style.cardWhite__linkOuter}>
           <InputFieldOnly
+            
             placeholder={"Enter Password"}
             placeholderBaseColor={true}
             coloredBg={true}

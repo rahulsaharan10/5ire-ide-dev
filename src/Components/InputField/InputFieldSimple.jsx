@@ -32,19 +32,21 @@ export const InputField = ({
   placeholderBaseColor,
   coloredBg,
   onChange,
-  name
+  name,
+  value,
+  type
 }) => {
   return (
     <div className={`${style.boxStyle} inputField ${mb0 ? style.mb0 : ""}`}>
       <label htmlFor={name} className={`${style.boxStyle__label}`}>{label}</label>
       <Input
         name={name}
+        type={type ? type : "text"}
+        value={value}
         onChange={onChange}
-        className={`${style.inputField__input} ${
-          inputSelect ? style.inputField__inputSelect : ""
-        }  ${placeholderBaseColor ? "placeholderBaseColor" : ""} ${
-          coloredBg ? style.inputField__coloredBg : ""
-        }`}
+        className={`${style.inputField__input} ${inputSelect ? style.inputField__inputSelect : ""
+          }  ${placeholderBaseColor ? "placeholderBaseColor" : ""} ${coloredBg ? style.inputField__coloredBg : ""
+          }`}
         addonAfter={addonAfter}
         defaultValue={defaultValue}
         placeholder={placeholder}
@@ -60,15 +62,18 @@ export const InputFieldOnly = ({
   placeholderBaseColor,
   coloredBg,
   onChange,
-  name
+  name,
+  value,
+  type
 }) => {
   return (
     <div className={`${style.boxStyle} inputFieldOnly `}>
       <label className={style.boxStyle__label}>{label}</label>
       <Input
-        className={`${style.inputSimple} ${
-          placeholderBaseColor ? "placeholderBaseColor" : ""
-        } ${coloredBg ? style.inputField__coloredBg : ""}`}
+        value={value}
+        type={type ? type : "text"}
+        className={`${style.inputSimple} ${placeholderBaseColor ? "placeholderBaseColor" : ""
+          } ${coloredBg ? style.inputField__coloredBg : ""}`}
         placeholder={placeholder}
         style={{ minHeight: minHeight }}
         onChange={onChange}

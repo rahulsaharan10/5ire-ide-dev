@@ -24,8 +24,8 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEvmModal, setIsEvmModal] = useState(false);
   const [addresses, setAddresses] = useState({ evmAddress: "", nativeAddress: "" });
-  const [evm_balance, setEvmBalance] = useState(0);
-  const [native_balance, setNativeBalance] = useState(0);
+  const [evm_balance, setEvmBalance] = useState("");
+  const [native_balance, setNativeBalance] = useState("");
   const { getEvmBalance, getNativeBalance, isApiReady } = wallet();
   const dispatch = useDispatch();
   const { accountName, currentAccount, currentNetwork, balance } = useSelector(state => state.auth);

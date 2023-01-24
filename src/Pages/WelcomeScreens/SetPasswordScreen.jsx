@@ -66,6 +66,7 @@ function SetPasswordScreen() {
         <p style={{color:"red"}}>{isError?error:""}</p>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
+            type="password"
             name="pass"
             onChange={handleChange}
             placeholder={"Enter Password"}
@@ -75,6 +76,7 @@ function SetPasswordScreen() {
         </div>
         <div className={style.cardWhite__beginText__passInputSec}>
           <InputFieldOnly
+            type="password"
             name="confirmPass"
             onChange={handleChange}
             placeholder={"Confirm  Password"}

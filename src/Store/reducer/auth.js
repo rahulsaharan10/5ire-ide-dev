@@ -34,6 +34,7 @@ export const userState = {
 };
 
 export const userSlice = createSlice({
+
   name: "auth",
   initialState: userState,
   reducers: {
@@ -52,6 +53,7 @@ export const userSlice = createSlice({
     setLogin: (state, action) => {
       state.isLogin = action.payload;
     },
+    
     setUIdata: (state, action) => {
       state.uiData = action.payload;
     },

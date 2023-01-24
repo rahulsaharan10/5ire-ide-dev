@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WalletCardLogo from "../../Assets/walletcardLogo.svg";
 import style from "./style.module.scss";
 import Approve from "../Approve/Approve";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import ModalCustom from "../../Components/ModalCustom/ModalCustom";
 import ComplSwap from "../../Assets/tranCompl.svg";
-import Wallet from "../../Hooks/wallet";
+import useWallet from "../../Hooks/wallet";
 import { shortner } from "../../Helper/TxShortner";
-import CopyIcon from "../../Assets/CopyIcon.svg"; 
-import {toast} from "react-toastify";
+import CopyIcon from "../../Assets/CopyIcon.svg";
+import { toast } from "react-toastify";
+import { NATIVE, EVM } from "../../Constants/index";
 import {
   InputField,
   InputFieldOnly,
@@ -17,17 +18,44 @@ import {
 
 function Send() {
 
-  const { evmTransfer, nativeTransfer, getEvmBalance, getNativeBalance } = Wallet();
+  const { evmTransfer, nativeTransfer, getEvmBalance, getNativeBalance, retriveEvmFee, retriveNativeFee } = useWallet();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("native");
   const [txHash, setTxHash] = useState("");
   const [data, setData] = useState({ to: "", amount: "", memo: "" });
   const [err, setErr] = useState({ err: "", to: "", amount: "" });
+  const [gassFee, setGassFee] = useState("");
+
+  useEffect(() => {
+
+    if (data.to && data.amount) {
+      getFee();
+    }else{
+      setGassFee("0")
+    }
+  }, [data, activeTab])
+
+
+  const getFee = async () => {
+    let fee = 0;
+
+    if ((activeTab).toLocaleLowerCase() === NATIVE.toLowerCase()) {
+      fee = await retriveNativeFee(data.to, data.amount);
+    }
+    if ((activeTab).toLocaleLowerCase() === EVM.toLowerCase()) {
+      fee = await retriveEvmFee(data.to, data.amount);
+    }
+    setGassFee(fee);
+  }
+
 
   const activeSend = (e) => {
     setActiveTab(e.target.name);
+    setData({ to: "", amount: "", memo: "" });
+    setGassFee(0);
     setErr({ err: "", to: "", amount: "" });
   };
+
 
   const handleChange = (e) => {
     setData(p => ({
@@ -43,7 +71,7 @@ function Send() {
       if (!(data.amount) || isNaN(data.amount))
         setErr(p => ({ ...p, amount: "Please enter amount correctly!" }));
 
-      if (activeTab === "evm") {
+      if (activeTab.toLowerCase() === EVM.toLowerCase()) {
 
         if (!(data.to) || !(data.to.startsWith("0x")))
           setErr(p => ({ ...p, to: "Please enter to address correctly!" }));
@@ -66,7 +94,7 @@ function Send() {
         }
       }
 
-      if (activeTab === "native") {
+      if (activeTab?.toLowerCase() === NATIVE.toLowerCase()) {
 
         if (!(data.to) || !(data.to.startsWith("5")))
           setErr(p => ({ ...p, to: "Please enter to address correctly!" }));
@@ -84,7 +112,6 @@ function Send() {
             getNativeBalance();
             setTxHash(res.data);
             setIsModalOpen(true);
-
           }
         }
       }
@@ -110,11 +137,9 @@ function Send() {
   };
 
   const handleCopy = () => {
-    console.log("TX Hash : ",txHash );
+    console.log("TX Hash : ", txHash);
     navigator.clipboard.writeText(txHash);
     toast.success("Copied!");
-
-
   }
 
 
@@ -152,6 +177,7 @@ function Send() {
           <span style={{ color: "red" }}>{err.to}</span>
           <InputFieldOnly
             name="to"
+            value = {data.to}
             placeholder={"Please enter recipient address"}
             placeholderBaseColor={true}
             coloredBg={true}
@@ -161,6 +187,7 @@ function Send() {
             <span style={{ color: "red" }}>{err.amount}</span>
             <InputField
               name="amount"
+              value = {data.amount}
               placeholder={"Enter Amount"}
               onChange={handleChange}
               addonAfter={
@@ -171,9 +198,9 @@ function Send() {
               }
             />
 
-            <span className={style.sendSec__spanbalanceText}>
+            {/* <span className={style.sendSec__spanbalanceText}>
               Balance 00.0000 5IRE
-            </span>
+            </span> */}
           </div>
           <InputFieldOnly
             name="memo"
@@ -184,7 +211,7 @@ function Send() {
           />
         </div>
         <div className={style.sendSec__transactionFee}>
-          <p>Transaction Fee : 0.0002 5IRE</p>
+          <p>Transaction Fee : {gassFee} 5IRE</p>
         </div>
       </div>
       <Approve onClick={handleApprove} />
