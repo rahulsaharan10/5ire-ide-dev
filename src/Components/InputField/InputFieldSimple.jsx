@@ -31,11 +31,15 @@ export const InputField = ({
   mb0,
   placeholderBaseColor,
   coloredBg,
+  onChange,
+  name
 }) => {
   return (
     <div className={`${style.boxStyle} inputField ${mb0 ? style.mb0 : ""}`}>
-      <label className={`${style.boxStyle__label}`}>{label}</label>
+      <label htmlFor={name} className={`${style.boxStyle__label}`}>{label}</label>
       <Input
+        name={name}
+        onChange={onChange}
         className={`${style.inputField__input} ${
           inputSelect ? style.inputField__inputSelect : ""
         }  ${placeholderBaseColor ? "placeholderBaseColor" : ""} ${

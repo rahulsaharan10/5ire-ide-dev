@@ -9,6 +9,7 @@ import { Store } from "webext-redux";
 import { CONNECTION_NAME, PORT_NAME } from "./Constants";
 import reduxStore from "./Store/store";
 import browser from "./Scripts/pollyfill";
+import { ToastContainer } from "react-toastify";
 const isDev = process.env.NODE_ENV === "development";
 
 const initApp = () => {
@@ -31,6 +32,18 @@ const initApp = () => {
         <MemoryRouter>
           {/* <React.StrictMode> */}
           <App />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
           {/* </React.StrictMode> */}
         </MemoryRouter>
       </Provider>
@@ -60,6 +73,18 @@ if (!isDev) {
       <MemoryRouter>
         {/* <React.StrictMode> */}
         <App />
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         {/* </React.StrictMode> */}
       </MemoryRouter>
     </Provider>

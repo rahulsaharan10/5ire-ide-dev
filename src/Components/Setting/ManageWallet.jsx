@@ -9,6 +9,19 @@ import { useNavigate } from "react-router-dom";
 
 function ManageWallet() {
     const navigate = useNavigate();
+    // const handleCopy = (e) =>{
+    //   console.log(e.target.name, "clicked");
+  
+    //   if (e.target.name === NATIVE) {
+    //     navigator.clipboard.writeText(currentAccount.nativeAddress);
+        
+    //   }
+    //   if (e.target.name === EVM) {
+    //     navigator.clipboard.writeText(currentAccount.evmAddress);
+    //   }
+  
+    // }
+
   return (
     <>
       <div className={`scrollableCont`}>

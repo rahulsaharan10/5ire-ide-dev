@@ -11,6 +11,7 @@ import Swap from "./Pages/Swap/Swap";
 import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
+import ImportWallet from "./Pages/WelcomeScreens/ImportWallet";
 import { useSelector } from "react-redux";
 
 import ManageWallet from "./Components/Setting/ManageWallet.jsx";
@@ -51,6 +52,10 @@ function App() {
               index
               path="/"
               element={<WelcomeLayout children={<WelcomeScreen />} />}
+            />
+            <Route
+              path="/importWallet"
+              element={<WelcomeLayout children={<ImportWallet />} />}
             />
             <Route
               path="/setPassword"
