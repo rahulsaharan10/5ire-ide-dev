@@ -8,34 +8,32 @@ import style from "./style.module.scss";
 // import { useDispatch } from "react-redux";
 import useWallet from "../../Hooks/wallet";
 
-function CreateNewWallet() {
+function ImportWallet() {
   const navigate = useNavigate();
   const { importAccount } = useWallet();
   const [data, setData] = useState("");
-  const [warrning, setWarrning] = useState("")
+  const [warrning, setWarrning] = useState("");
   // const dispatch = useDispatch();
 
   const handleChange = (e) => {
-
     setData(e.target.value);
     setWarrning("");
-  }
+  };
 
-  const handleClick = async() => {
+  const handleClick = async () => {
     if (data.length === 0) setWarrning("Please enter your secret mnemonics!");
     else {
-
       let res = await importAccount(data);
-      console.log("Response : ",res);
+      console.log("Response : ", res);
       if (res.error) {
         setWarrning(res.data);
       } else {
         setWarrning("");
         navigate("/wallet");
-        console.log("Error : ",res.data);
+        console.log("Error : ", res.data);
       }
     }
-  }
+  };
 
   return (
     <div className={style.cardWhite}>
@@ -55,14 +53,11 @@ function CreateNewWallet() {
           />
         </div>
         <div className={style.setPassword__footerbuttons}>
-          <ButtonComp
-            onClick={handleClick}
-            text={"Import"}
-          />
+          <ButtonComp onClick={handleClick} text={"Import"} />
         </div>
       </div>
     </div>
   );
 }
 
-export default CreateNewWallet;
+export default ImportWallet;

@@ -20,6 +20,7 @@ import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
 import UnlockWelcome from "./Pages/WelcomeScreens/UnlockWelcome";
 import { useEffect } from "react";
+import RejectNotification from "./Pages/RejectNotification/RejectNotification";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
@@ -77,6 +78,15 @@ function App() {
               path="/unlockWelcome"
               element={<WelcomeLayout children={<UnlockWelcome />} />}
             />
+            <Route
+              path="/importwallet"
+              element={<WelcomeLayout children={<ImportWallet />} />}
+            />
+            <Route
+              index
+              path="/rejectnotification"
+              element={<FixWidthLayout children={<RejectNotification />} />}
+            />
           </>
         ) : (
           <>
@@ -90,6 +100,7 @@ function App() {
               path="/swapapprove"
               element={<FixWidthLayout children={<SwapApprove />} />}
             />
+
             <Route
               index
               path="/send"

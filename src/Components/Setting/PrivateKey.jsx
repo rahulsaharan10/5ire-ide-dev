@@ -12,7 +12,6 @@ function PrivateKey() {
      * For sending messages from React we need to specify which tab to send it to.
      */
     console.log("HERE APPROVE", auth.uiData);
-    auth.uiData.cb("Approve");
     browser.runtime.sendMessage({ ...auth.uiData, result: "Approve" });
     // browser?.tabs.query(
     //   {

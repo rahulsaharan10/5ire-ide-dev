@@ -91,7 +91,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
 
   return (
     <>
-      {(path === "wallet" || path === "swapapprove") && (
+      {(path === "wallet" || path === "swapapprove" || path === "rejectnotification") && (
         <div className={`${style.balanceDetails} ${mt0 ? mt0 : ""}`}>
           <div className={style.balanceDetails__decoratedSec}>
             <>
