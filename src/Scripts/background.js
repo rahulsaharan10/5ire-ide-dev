@@ -36,36 +36,28 @@ const init = (preloadedState) => {
   });
 };
 
-browser.runtime.onConnect.addListener((port) => {
-  if (port.name === CONNECTION_NAME) {
-    // Gets the current state from the storage.
+// let ports = {};
+
+function loadStore(sendStoreMessage = true) {
+  return new Promise((resolve) => {
     browser.storage.local.get("state", (storage) => {
       if (!isInitialized) {
         // 1. Initializes the redux store and the message passing.
         init(storage.state || { auth: userState });
-        isInitialized = false;
+        isInitialized = true;
       }
       // 2. Sends a message to notify that the store is ready.
-      browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
-      console.log("PORT", port);
+      sendStoreMessage &&
+        browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
+      resolve();
     });
-  }
-
-  port.onMessage.addListener(function (msg) {
-    console.log("I am in background", port);
-    if (port.name === "uiOps") {
-      const idToQuery = msg.id;
-      if (document.getElementById(idToQuery)) {
-        port.postMessage({
-          exists: true,
-        });
-      } else {
-        port.postMessage({
-          exists: false,
-        });
-      }
-    }
   });
+}
+
+browser.runtime.onConnect.addListener((port) => {
+  if (port.name === CONNECTION_NAME) {
+    loadStore();
+  }
 });
 
 /** Fired when the extension is first installed,
@@ -79,10 +71,22 @@ browser.runtime.onStartup.addListener(() => {
   console.log("[background.js] onStartup");
 });
 
-browser.runtime.onMessage.addListener(function (message, sender) {
-  if (message.msg == "showPageAction") {
+browser.runtime.onMessage.addListener(async function (message, sender, cb) {
+  console.log("Here i am getting message", message);
+
+  console.log("Is started store", isInitialized);
+
+  if (!isInitialized) {
+    await loadStore(false);
+  }
+  if (message?.action == "showPageAction") {
     let extensionURL = browser.runtime.getURL("index.html");
-    store.dispatch(setUIdata(message.data));
+    store.dispatch(
+      setUIdata({
+        ...message,
+        tabId: sender.tab.id,
+      })
+    );
     browser.windows.create(
       {
         url: extensionURL + `?route=private-key`,
@@ -93,19 +97,20 @@ browser.runtime.onMessage.addListener(function (message, sender) {
         top: 0,
         left: 800,
       },
-      () => {
+      (id) => {
         console.log("Opened popup!");
       }
     );
-    console.log("HERE WE", browser.notifications.create);
-    browser.notifications.create("", {
-      iconUrl: browser.runtime.getURL("logo192.png"),
-      message: "Your request to process data approved",
-      title: "Opened 5ire Window",
-      type: "basic",
-    });
+
+    // browser.notifications.create("", {
+    //   iconUrl: browser.runtime.getURL("logo192.png"),
+    //   message: "Your request to process data approved",
+    //   title: "Opened 5ire Window",
+    //   type: "basic",
+    // });
   }
 });
+
 /**
  *  Sent to the event page just before it is unloaded.
  *  This gives the extension opportunity to do some clean up.
@@ -117,6 +122,7 @@ browser.runtime.onMessage.addListener(function (message, sender) {
  *  be sent and the page won't be unloaded. */
 browser.runtime.onSuspend.addListener(() => {
   console.log("[background.js] onSuspend");
+  isInitialized = false;
 });
 
 async function initScript() {

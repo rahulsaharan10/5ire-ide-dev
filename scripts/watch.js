@@ -13,16 +13,45 @@ const paths = require("react-scripts/config/paths");
 const webpack = require("webpack");
 const configFactory = require("react-scripts/config/webpack.config");
 const ExtensionReloader = require("webpack-extension-reloader");
-
+const cracoConfig = require("../craco.config");
 // Create the Webpack config usings the same settings used by the "start" script of create-react-app.
 const config = configFactory("development");
 
 // Add the webpack-extension-reloader plugin to the Webpack config.
 // It notifies and reloads the extension on code changes.
 config.plugins.push(new ExtensionReloader());
-
+const edited = {
+  ...config,
+  entry: {
+    main: [
+      require.resolve("react-dev-utils/webpackHotDevClient"),
+      paths.appIndexJs,
+    ].filter(Boolean),
+    content: "./src/Scripts/content.js",
+    background: "./src/Scripts/background.js",
+    injected: "./src/Scripts/injected.js",
+  },
+  output: {
+    ...config.output,
+    filename: "static/js/[name].js",
+  },
+  optimization: {
+    ...config.optimization,
+    runtimeChunk: false,
+  },
+  resolve: {
+    ...config.resolve,
+    fallback: {
+      ...config.resolve.fallback,
+      path: require.resolve("path-browserify"),
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+    },
+  },
+};
+// delete edited.devtool;
 // Start Webpack in watch mode.
-const compiler = webpack(config);
+const compiler = webpack(edited);
 const watcher = compiler.watch({}, function (err) {
   if (err) {
     console.error(err);

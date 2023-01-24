@@ -2095,7 +2095,7 @@
     "@polkadot/util-crypto" "^10.2.6"
     rxjs "^7.8.0"
 
-"@polkadot/api@9.12.1", "@polkadot/api@^10.2.6":
+"@polkadot/api@9.12.1", "@polkadot/api@^9.11.3":
   version "9.12.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-9.12.1.tgz#5a7da60060bfb33e68c8b3bd2a85e2e7839aba14"
   integrity sha512-nFO71jEDbgixGTnX081x4nW4rbCsqYBOGecscHC0J2MIx/KKzfJZd+68coZSka52c7qdpyIor7kbnprx+eYxpw==
