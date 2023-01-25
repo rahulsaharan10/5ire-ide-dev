@@ -54,107 +54,109 @@ function App() {
       "length : ",
       auth.accounts.length
     );
-    if (route) {
+    if (!auth?.isLogin && auth.accounts.length > 0) {
+      navigate("/unlockWallet", {
+        state: {
+          redirectRoute: route ? "/" + route : "",
+        },
+      });
+    } else if (route) {
       navigate("/" + route);
-    } else if (!auth?.isLogin && auth.accounts.length > 0) {
-      navigate("/unlockWallet");
     } else if (auth?.isLogin) {
       navigate("/wallet");
+    } else {
+      navigate("/");
     }
-    fetchLogin();
+    // fetchLogin();
   }, [auth?.login]);
 
   console.log("IS Login : ", auth?.isLogin);
 
   return (
     <div className="App">
-      {loading ? (
-        <div>loading .....</div>
-      ) : (
-        <Routes>
-          {!auth?.isLogin ? (
-            <>
-              <Route
-                index
-                path="/"
-                element={<WelcomeLayout children={<WelcomeScreen />} />}
-              />
-              <Route
-                path="/importWallet"
-                element={<WelcomeLayout children={<ImportWallet />} />}
-              />
-              <Route
-                path="/setPassword"
-                element={<WelcomeLayout children={<SetPasswordScreen />} />}
-              />
-              <Route
-                path="/beforebegin"
-                element={<WelcomeLayout children={<Beforebegin />} />}
-              />
-              <Route
-                path="/createwalletchain"
-                element={<WelcomeLayout children={<CreateWalletChain />} />}
-              />
-              <Route
-                path="/createNewWallet"
-                element={<WelcomeLayout children={<CreateNewWallet />} />}
-              />
-              <Route
-                path="/unlockWallet"
-                element={<WelcomeLayout children={<UnlockWelcome />} />}
-              />
+      <Routes>
+        {!auth?.isLogin ? (
+          <>
+            <Route
+              index
+              path="/"
+              element={<WelcomeLayout children={<WelcomeScreen />} />}
+            />
+            <Route
+              path="/importWallet"
+              element={<WelcomeLayout children={<ImportWallet />} />}
+            />
+            <Route
+              path="/setPassword"
+              element={<WelcomeLayout children={<SetPasswordScreen />} />}
+            />
+            <Route
+              path="/beforebegin"
+              element={<WelcomeLayout children={<Beforebegin />} />}
+            />
+            <Route
+              path="/createwalletchain"
+              element={<WelcomeLayout children={<CreateWalletChain />} />}
+            />
+            <Route
+              path="/createNewWallet"
+              element={<WelcomeLayout children={<CreateNewWallet />} />}
+            />
+            <Route
+              path="/unlockWallet"
+              element={<WelcomeLayout children={<UnlockWelcome />} />}
+            />
 
-              <Route
-                index
-                path="/enter-password"
-                element={<OnlyContent children={<EnterPassword />} />}
-              />
-            </>
-          ) : (
-            <>
-              <Route
-                index
-                path="/wallet"
-                element={<FixWidthLayout children={<Wallet />} />}
-              />
-              <Route
-                index
-                path="/swapapprove"
-                element={<FixWidthLayout children={<SwapApprove />} />}
-              />
+            <Route
+              index
+              path="/enter-password"
+              element={<OnlyContent children={<EnterPassword />} />}
+            />
+          </>
+        ) : (
+          <>
+            <Route
+              index
+              path="/wallet"
+              element={<FixWidthLayout children={<Wallet />} />}
+            />
+            <Route
+              index
+              path="/swapapprove"
+              element={<FixWidthLayout children={<SwapApprove />} />}
+            />
 
-              <Route
-                index
-                path="/send"
-                element={<OnlyContent children={<Send />} />}
-              />
-              <Route
-                index
-                path="/swap"
-                element={<OnlyContent children={<Swap />} />}
-              />
+            <Route
+              index
+              path="/send"
+              element={<OnlyContent children={<Send />} />}
+            />
+            <Route
+              index
+              path="/swap"
+              element={<OnlyContent children={<Swap />} />}
+            />
 
-              <Route
-                index
-                path="/manage-wallet"
-                element={<OnlyContent children={<ManageWallet />} />}
-              />
+            <Route
+              index
+              path="/manage-wallet"
+              element={<OnlyContent children={<ManageWallet />} />}
+            />
 
-              <Route
-                index
-                path="/private-key"
-                element={<OnlyContent children={<PrivateKey />} />}
-              />
+            <Route
+              index
+              path="/private-key"
+              element={<OnlyContent children={<PrivateKey />} />}
+            />
 
-              <Route
-                index
-                path="/rejectnotification"
-                element={<FixWidthLayout children={<RejectNotification />} />}
-              />
-            </>
-          )}
-        </Routes>
-      )}
+            <Route
+              index
+              path="/rejectnotification"
+              element={<FixWidthLayout children={<RejectNotification />} />}
+            />
+          </>
+        )}
+      </Routes>
     </div>
   );
 }

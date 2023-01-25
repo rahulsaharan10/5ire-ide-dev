@@ -23,6 +23,7 @@ function RejectNotification() {
       },
       (response) => {
         console.log(response);
+        window.close();
       }
     );
   }

@@ -2,7 +2,11 @@
 
 import { wrapStore } from "webext-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer, { userState, setUIdata } from "../Store/reducer/auth";
+import authReducer, {
+  userState,
+  setUIdata,
+  setLogin,
+} from "../Store/reducer/auth";
 import { CONNECTION_NAME, PORT_NAME } from "../Constants";
 import logger from "redux-logger";
 
@@ -17,33 +21,43 @@ let isInitialized = false;
 let store;
 // Initializes the Redux store
 const init = (preloadedState) => {
-  store = configureStore({
-    reducer: { auth: authReducer },
-    preloadedState,
-    middleware: [logger],
-  });
+  return new Promise((resolve, reject) => {
+    store = configureStore({
+      reducer: { auth: authReducer },
+      preloadedState,
+      middleware: [logger],
+    });
 
-  wrapStore(store, { portName: PORT_NAME });
+    wrapStore(store, { portName: PORT_NAME });
 
-  // Subscribes to the redux store changes. For each state
-  // change, we want to store the new state to the storage.
-  store.subscribe(() => {
-    browser.storage.local.set({ state: store.getState() });
+    // Subscribes to the redux store changes. For each state
+    // change, we want to store the new state to the storage.
+    store.subscribe(() => {
+      browser.storage.local.set({ state: store.getState() });
 
-    // Optional: other things we want to do on state change
-    // Here we update the badge text with the counter value.
-    //    browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
+      // Optional: other things we want to do on state change
+      // Here we update the badge text with the counter value.
+      //    browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
+    });
+    browser.storage.session
+      .get(["login"])
+      .then((res) => {
+        console.log("Login response from session :::::: ", res?.login);
+        store.dispatch(setLogin(res?.login ? res.login : false));
+        resolve(true);
+      })
+      .catch(reject);
   });
 };
 
 // let ports = {};
 
 function loadStore(sendStoreMessage = true) {
-  return new Promise((resolve) => {
-    browser.storage.local.get("state", (storage) => {
+  return new Promise(async (resolve) => {
+    browser.storage.local.get("state", async (storage) => {
       if (!isInitialized) {
         // 1. Initializes the redux store and the message passing.
-        init(storage.state || { auth: userState });
+        await init(storage.state || { auth: userState });
         isInitialized = true;
       }
       // 2. Sends a message to notify that the store is ready.
@@ -54,9 +68,9 @@ function loadStore(sendStoreMessage = true) {
   });
 }
 
-browser.runtime.onConnect.addListener((port) => {
+browser.runtime.onConnect.addListener(async (port) => {
   if (port.name === CONNECTION_NAME) {
-    loadStore();
+    await loadStore();
   }
 });
 
