@@ -1,127 +1,52 @@
 /*global chrome,browser,msBrowser a*/
 
-import { wrapStore } from "webext-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer, {
-  userState,
-  setUIdata,
-  setLogin,
-} from "../Store/reducer/auth";
-import { CONNECTION_NAME, PORT_NAME } from "../Constants";
-import logger from "redux-logger";
+import { setUIdata } from "../Store/reducer/auth";
+import { CONNECTION_NAME } from "../Constants";
+import {
+  createFireWindow,
+  initScript,
+  loadStore,
+  showNotification,
+} from "./controller";
+import Browser from "webextension-polyfill";
 
-const browser = chrome?.runtime
-  ? chrome
-  : browser?.runtime
-  ? browser
-  : msBrowser;
+let isInitialized = false,
+  store;
 
-let isInitialized = false;
-
-let store;
-// Initializes the Redux store
-const init = (preloadedState) => {
-  return new Promise((resolve, reject) => {
-    store = configureStore({
-      reducer: { auth: authReducer },
-      preloadedState,
-      middleware: [logger],
-    });
-
-    wrapStore(store, { portName: PORT_NAME });
-
-    // Subscribes to the redux store changes. For each state
-    // change, we want to store the new state to the storage.
-    store.subscribe(() => {
-      browser.storage.local.set({ state: store.getState() });
-
-      // Optional: other things we want to do on state change
-      // Here we update the badge text with the counter value.
-      //    browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
-    });
-    browser.storage.session
-      .get(["login"])
-      .then((res) => {
-        console.log("Login response from session :::::: ", res?.login);
-        store.dispatch(setLogin(res?.login ? res.login : false));
-        resolve(true);
-      })
-      .catch(reject);
-  });
-};
-
-// let ports = {};
-
-function loadStore(sendStoreMessage = true) {
-  return new Promise(async (resolve) => {
-    browser.storage.local.get("state", async (storage) => {
-      if (!isInitialized) {
-        // 1. Initializes the redux store and the message passing.
-        await init(storage.state || { auth: userState });
-        isInitialized = true;
-      }
-      // 2. Sends a message to notify that the store is ready.
-      sendStoreMessage &&
-        browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
-      resolve();
-    });
-  });
-}
-
-browser.runtime.onConnect.addListener(async (port) => {
+Browser.runtime.onConnect.addListener(async (port) => {
   if (port.name === CONNECTION_NAME) {
-    await loadStore();
+    store = await loadStore();
+    isInitialized = true;
   }
 });
 
 /** Fired when the extension is first installed,
  *  when the extension is updated to a new version,
  *  and when Chrome is updated to a new version. */
-browser.runtime.onInstalled.addListener((details) => {
+Browser.runtime.onInstalled.addListener((details) => {
   console.log("[background.js] onInstalled", details);
 });
 
-browser.runtime.onStartup.addListener(() => {
+Browser.runtime.onStartup.addListener(() => {
   console.log("[background.js] onStartup");
 });
 
-browser.runtime.onMessage.addListener(async function (message, sender, cb) {
+Browser.runtime.onMessage.addListener(async function (message, sender, cb) {
   console.log("Here i am getting message", message);
 
-  console.log("Is started store", isInitialized);
-
   if (!isInitialized) {
-    await loadStore(false);
+    store = await loadStore(false);
+    isInitialized = true;
   }
-  if (message?.action == "showPageAction") {
-    let extensionURL = browser.runtime.getURL("index.html");
+  if (message?.method == "connect") {
     store.dispatch(
       setUIdata({
         ...message,
         tabId: sender.tab.id,
       })
     );
-    browser.windows.create(
-      {
-        url: extensionURL + `?route=rejectnotification`,
-        type: "popup",
-        focused: true,
-        width: 400,
-        height: 600,
-        top: 0,
-        left: 200,
-      },
-      (id) => {
-        console.log("Opened popup!");
-      }
-    );
-
-    // browser.notifications.create("", {
-    //   iconUrl: browser.runtime.getURL("logo192.png"),
-    //   message: "Your request to process data approved",
-    //   title: "Opened 5ire Window",
-    //   type: "basic",
-    // });
+    createFireWindow("rejectnotification");
+    showNotification("test");
   }
 });
 
@@ -134,32 +59,9 @@ browser.runtime.onMessage.addListener(async function (message, sender, cb) {
  *  If more activity for the event page occurs before it gets
  *  unloaded the onSuspendCanceled event will
  *  be sent and the page won't be unloaded. */
-browser.runtime.onSuspend.addListener(() => {
+Browser.runtime.onSuspend.addListener(() => {
   console.log("[background.js] onSuspend");
   isInitialized = false;
 });
-
-async function initScript() {
-  try {
-    await browser.scripting.registerContentScripts([
-      {
-        id: "inpage",
-        matches: ["file://*/*", "http://*/*", "https://*/*"],
-        js: ["./static/js/injected.js"],
-        runAt: "document_start",
-        world: "MAIN",
-      },
-    ]);
-  } catch (err) {
-    /**
-     * An error occurs when app-init.js is reloaded. Attempts to avoid the duplicate script error:
-     * 1. registeringContentScripts inside runtime.onInstalled - This caused a race condition
-     *    in which the provider might not be loaded in time.
-     * 2. await chrome.scripting.getRegisteredContentScripts() to check for an existing
-     *    inpage script before registering - The provider is not loaded on time.
-     */
-    console.log(`Dropped attempt to register inpage content script. ${err}`);
-  }
-}
 
 initScript();

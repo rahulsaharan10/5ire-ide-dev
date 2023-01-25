@@ -1,6 +1,6 @@
 import { Store, applyMiddleware } from "webext-redux";
 import thunkMiddleware from "redux-thunk";
-import browser from "./pollyfill";
+import Browser from "webextension-polyfill";
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE } from "./constants";
 
@@ -21,11 +21,9 @@ contentStream.on("data", async (data) => {
           response: "I return back result to you",
           error: null,
         });
-      case "ui":
-        browser.runtime.sendMessage({
-          action: "showPageAction",
-          ...data,
-        });
+      case "connect":
+        Browser.runtime.sendMessage(data);
+
       case "keepAlive":
         setTimeout(() => {
           contentStream.write({
@@ -63,4 +61,4 @@ const messageFromExtensionUI = (message, sender, cb) => {
 /**
  * Fired when a message is sent from either an extension process or a content script.
  */
-browser.runtime.onMessage.addListener(messageFromExtensionUI);
+Browser.runtime.onMessage.addListener(messageFromExtensionUI);

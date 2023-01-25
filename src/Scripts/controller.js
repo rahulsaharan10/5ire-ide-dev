@@ -1,0 +1,110 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { wrapStore } from "webext-redux";
+import Browser from "webextension-polyfill";
+import { PORT_NAME } from "../Constants";
+import logger from "redux-logger";
+import authReducer, {
+  userState,
+  setUIdata,
+  setLogin,
+} from "../Store/reducer/auth";
+
+// Initializes the Redux store
+function init(preloadedState) {
+  return new Promise((resolve, reject) => {
+    const store = configureStore({
+      reducer: { auth: authReducer },
+      preloadedState,
+      middleware: [logger],
+    });
+
+    wrapStore(store, { portName: PORT_NAME });
+
+    // Subscribes to the redux store changes. For each state
+    // change, we want to store the new state to the storage.
+    store.subscribe(() => {
+      Browser.storage.local.set({ state: store.getState() });
+
+      // Optional: other things we want to do on state change
+      // Here we update the badge text with the counter value.
+      //    Browser.action.setBadgeText({ text: `${store.getState().counter?.value}` });
+    });
+    Browser.storage.session
+      .get(["login"])
+      .then((res) => {
+        console.log("Login response from session :::::: ", res?.login);
+        store.dispatch(setLogin(res?.login ? res.login : false));
+        resolve(store);
+      })
+      .catch(reject);
+  });
+}
+
+// let ports = {};
+
+export function loadStore(sendStoreMessage = true) {
+  return new Promise(async (resolve) => {
+    Browser.storage.local.get("state").then(async (storage) => {
+      // 1. Initializes the redux store and the message passing.
+      const store = await init(storage.state || { auth: userState });
+
+      // 2. Sends a message to notify that the store is ready.
+      sendStoreMessage &&
+        Browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
+      resolve(store);
+    });
+  });
+}
+
+export async function initScript() {
+  try {
+    await Browser.scripting.registerContentScripts([
+      {
+        id: "inpage",
+        matches: ["file://*/*", "http://*/*", "https://*/*"],
+        js: ["./static/js/injected.js"],
+        runAt: "document_start",
+        world: "MAIN",
+      },
+    ]);
+  } catch (err) {
+    /**
+     * An error occurs when app-init.js is reloaded. Attempts to avoid the duplicate script error:
+     * 1. registeringContentScripts inside runtime.onInstalled - This caused a race condition
+     *    in which the provider might not be loaded in time.
+     * 2. await chrome.scripting.getRegisteredContentScripts() to check for an existing
+     *    inpage script before registering - The provider is not loaded on time.
+     */
+    console.log(`Dropped attempt to register inpage content script. ${err}`);
+  }
+}
+
+export function createFireWindow(route = "") {
+  const extensionURL = Browser.runtime.getURL("index.html");
+
+  Browser.windows.create(
+    {
+      url: extensionURL + `?route=${route}`,
+      type: "popup",
+      focused: true,
+      width: 400,
+      height: 600,
+      top: 0,
+      left: 200,
+    },
+    (id) => {}
+  );
+}
+
+export function showNotification(
+  message = "",
+  title = "Fire Notification",
+  type = "basic"
+) {
+  Browser.notifications.create("", {
+    iconUrl: Browser.runtime.getURL("logo192.png"),
+    message,
+    title,
+    type,
+  });
+}

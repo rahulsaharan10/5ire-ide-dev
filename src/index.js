@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { Store } from "webext-redux";
 import { CONNECTION_NAME, PORT_NAME } from "./Constants";
 import reduxStore from "./Store/store";
-import browser from "./Scripts/pollyfill";
+import browser from "webextension-polyfill";
 import { ToastContainer } from "react-toastify";
 const isDev = process.env.NODE_ENV === "development";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "./style.module.scss";
 import { useSelector } from "react-redux";
-import browser from "../../Scripts/pollyfill";
+import browser from "webextension-polyfill";
 
 function RejectNotification() {
   const [activeTab, setActiveTab] = useState("detail");

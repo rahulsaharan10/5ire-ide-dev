@@ -9,7 +9,7 @@ const handlers = {};
 
 injectedStream.write({ method: "keepAlive" });
 
-function sendMessage(method, message) {
+function sendMessage(method, message = "") {
   return new Promise((resolve, reject) => {
     try {
       const id = getId();
@@ -40,11 +40,7 @@ window.fire = {
       console.log("My promise worked", result);
     });
   },
-  showUI: () => {
-    sendMessage("ui", { data: "Just show window" }).then((result) => {
-      console.log("My window worked", result);
-    });
-  },
+  connect: () => sendMessage("connect", window.location.origin),
   isInstalled: true,
 };
 
