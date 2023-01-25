@@ -5,7 +5,7 @@ import Approve from "../Approve/Approve";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import ModalCustom from "../../Components/ModalCustom/ModalCustom";
 import ComplSwap from "../../Assets/tranCompl.svg";
-import useWallet from "../../Hooks/wallet";
+import useWallet from "../../Hooks/useWallet";
 import { shortner } from "../../Helper/TxShortner";
 import CopyIcon from "../../Assets/CopyIcon.svg";
 import { toast } from "react-toastify";

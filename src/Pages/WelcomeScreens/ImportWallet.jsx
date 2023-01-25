@@ -6,7 +6,7 @@ import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
 // import { setAccountName } from "../../Store/reducer/auth";
 import { useSelector } from "react-redux";
-import useWallet from "../../Hooks/wallet";
+import useWallet from "../../Hooks/useWallet";
 
 function ImportWallet() {
   const navigate = useNavigate();

@@ -1,4 +1,6 @@
 import React from "react";
+import { Spin } from "antd";
+import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
@@ -6,12 +8,15 @@ import style from "./style.module.scss";
 import PlaceLogo from "../../Assets/PlaceLog.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import { verifyPass } from "../../Hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
+// import { useDispatch, useSelector } from "react-redux";
 
 function UnlockWelcome() {
 
   const navigate = useNavigate();
+  const { verifyPass } = useAuth();
+  const [loader, setLoader] = useState(false);
+  const [show, setShow] = useState(false);
   // const dispatch = useDispatch();
   const [data, setData] = useState("");
 
@@ -20,20 +25,21 @@ function UnlockWelcome() {
     console.log(e.target.value);
   }
 
-  const handleClick = async() => {
-    // let res = await verifyPass(data);
+  const handleClick = async () => {
+    let res = await verifyPass(data);
 
-    // if (!(res.error)) {
-    //   console.log("res : ",res.data);
+    console.log("res : ", res.data);
+    if (!(res.error)) {
       navigate("/wallet");
-    // }
-    // else{
-    //   console.log("Error",res.data);
-    // }
+    }
+    else {
+      console.log("Error", res.data);
+    }
 
   }
   return (
     <div className={style.cardWhite}>
+
       <MenuRestofHeaders logosilver={true} title="5ire Non-Custodial Wallet" />
       <div className={style.cardWhite__cardInner}>
         <div className={style.cardWhite__cardInner__centerLogo}>
@@ -65,6 +71,19 @@ function UnlockWelcome() {
           <Link to="">Forgot password?</Link>
         </div>
       </div>
+{/* 
+      {loader && (
+        <div className="loader">
+          <Spin size="large" />
+        </div>
+      )}
+
+      {show && (
+        <div className="loader">
+          <CongratulationsScreen />
+        </div>
+      )} */}
+
     </div>
   );
 }
