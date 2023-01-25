@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Send from "../Send/Send";
 import Swap from "../Swap/Swap.jsx";
 import style from "./style.module.scss";
+
 function Wallet() {
+  
   const [activeTab, setActiveTab] = useState("send");
   const activeSend = () => {
     setActiveTab("send");

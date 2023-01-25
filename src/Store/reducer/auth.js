@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userState = {
-  pass: "",
+  pass: null,
 
   accounts: [],
 
@@ -30,6 +30,8 @@ export const userState = {
 
   isLogin: false,
 
+  hash : null,
+
   passError: true,
 };
 
@@ -53,7 +55,7 @@ export const userSlice = createSlice({
     setLogin: (state, action) => {
       state.isLogin = action.payload;
     },
-    
+
     setUIdata: (state, action) => {
       state.uiData = action.payload;
     },
@@ -68,6 +70,10 @@ export const userSlice = createSlice({
 
     setCurrentNetwork: (state, action) => {
       state.currentNetwork = action.payload;
+    },
+
+    setHash: (state, action) => {
+        state.hash = action.payload;
     },
 
     setBalance: (state, action) => {
@@ -90,6 +96,7 @@ export const {
   setPassError,
   setUIdata,
   setBalance,
+  
 } = userSlice.actions;
 
 export default userSlice.reducer;

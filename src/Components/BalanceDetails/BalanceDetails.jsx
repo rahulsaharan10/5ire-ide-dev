@@ -29,9 +29,10 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   });
   const [evm_balance, setEvmBalance] = useState(0);
   const [native_balance, setNativeBalance] = useState(0);
+  // const [accountName, setAccName] = useState("");
   const { getEvmBalance, getNativeBalance, isApiReady } = wallet();
   const dispatch = useDispatch();
-  const { accountName, currentAccount, currentNetwork, balance } = useSelector(
+  const { currentAccount, currentNetwork, balance } = useSelector(
     (state) => state.auth
   );
   const getLocation = useLocation();
@@ -100,7 +101,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                 <div className={style.balanceDetails__accountName}>
                   <p>
                     <img src={GreenCircle} />
-                    {accountName}
+                    {currentAccount.accountName}
                   </p>
                   <span>{addresses.evmAddress}</span>
                   {/* <span>{currentAccount.evmAddress}</span> */}

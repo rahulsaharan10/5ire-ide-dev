@@ -16,9 +16,9 @@ import { QA_NETWORK, TEST_NETWORK } from "../Constants/index";
 import { decodeAddress, encodeAddress } from "@polkadot/keyring";
 import { Keyring } from "@polkadot/keyring";
 import { setCurrentAcc, setAccounts, setLogin, setBalance } from "../Store/reducer/auth";
+import { setAccountName } from "../Store/reducer/auth";
 import Web3 from "web3";
-// import { setBalance } from "../Store/reducer/auth";
-// import { u8aToHex } from "@polkadot/util";
+
 
 export default function Wallet() {
 
@@ -296,7 +296,7 @@ export default function Wallet() {
                         amount.toString()
                     );
 
-                    const transferRes = await withdraw.signAndSend(alice);
+                    await withdraw.signAndSend(alice);
 
                 }
                 if (txHash) {
@@ -329,34 +329,37 @@ export default function Wallet() {
         }
     }
 
-    const importAccount = async (key) => {
+    const importAccount = async (data) => {
 
         try {
+            dispatch(setAccountName(data.accName));
+
+            console.log("data");
 
             const SS58Prefix = 6;
-            const isValidMnemonic = mnemonicValidate(key);
+            const isValidMnemonic = mnemonicValidate(data.key);
             console.log("Is mnemonics is valid: ", isValidMnemonic);
 
             if (isValidMnemonic) {
 
                 // Create valid Substrate-compatible seed from mnemonic
-                const seedAlice = mnemonicToMiniSecret(key);
+                const seedAlice = mnemonicToMiniSecret(data.key);
 
                 // Generate new public/secret keypair for Alice from the supplied seed
                 const { publicKey } = ed25519PairFromSeed(seedAlice);
 
                 const address = encodeAddress(decodeAddress(publicKey, SS58Prefix));
-                const ethAddress = ethers.Wallet.fromMnemonic(key);
+                const ethAddress = ethers.Wallet.fromMnemonic(data.key);
 
                 const payload = {
-                    mnemonic: key,
+                    accountName: data.accName,
+                    mnemonic: data.key,
                     nativeAddress: address,
                     evmAddress: ethAddress.address,
                     evmPrivatekey: ethAddress.privateKey,
                 };
                 dispatch(setCurrentAcc(payload));
                 dispatch(setAccounts(payload));
-                dispatch(setLogin(true));
 
                 return {
                     error: false,

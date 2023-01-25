@@ -1,12 +1,28 @@
-import React from "react";
 import MenuRestofHeaders from "../BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 import { InputFieldOnly } from "../InputField/InputFieldSimple.jsx";
 import ButtonComp from "../ButtonComp/ButtonComp";
-import { Navigate } from "react-router-dom";
 import style from "./style.module.scss";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {useDispatch, useSelector } from "react-redux";
+
+
 function EnterPassword() {
-    const navigate = useNavigate();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {pass} = useSelector(state => state.auth); 
+  const [data,setData] = useState("");
+
+  const handleChange = (e) => {
+    setData(e.target.value);
+  }
+
+  const handleClick = () => {
+    
+    navigate("/private-key")
+  }
+
   return (
     <>
       <div className={`scrollableCont`}>
@@ -24,11 +40,13 @@ function EnterPassword() {
               placeholder={"Enter Password"}
               placeholderBaseColor={true}
               coloredBg={true}
-              // label="Wallet Name:"
+              onChange={handleChange}
+              type="password"
+              name="pass"
             />
             <div>
               <ButtonComp
-                onClick={() => navigate("/private-key")}
+                onClick={handleClick}
                 text="Continue"
               ></ButtonComp>
             </div>

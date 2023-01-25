@@ -5,32 +5,36 @@ import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
 // import { setAccountName } from "../../Store/reducer/auth";
-// import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import useWallet from "../../Hooks/wallet";
 
 function ImportWallet() {
   const navigate = useNavigate();
   const { importAccount } = useWallet();
-  const [data, setData] = useState("");
+  const [data, setData] = useState({ accName: "", key: "" });
   const [warrning, setWarrning] = useState("");
-  // const dispatch = useDispatch();
+  const { isLogin } = useSelector(state => state.auth);
 
-  const handleChange = (e) => {
-    setData(e.target.value);
-    setWarrning("");
+const handleChange = (e) => {
+  setData(p => ({ ...p, [e.target.name]: e.target.value }));
+  setWarrning("");
   };
 
   const handleClick = async () => {
-    if (data.length === 0) setWarrning("Please enter your secret mnemonics!");
+    if (data.accName.length === 0) setWarrning("Please enter your account name!");
+    else if (data.key.length === 0) setWarrning("Please enter your secret mnemonic!");
     else {
       let res = await importAccount(data);
-      console.log("Response : ", res);
       if (res.error) {
         setWarrning(res.data);
       } else {
         setWarrning("");
-        navigate("/wallet");
-        console.log("Error : ", res.data);
+        if (isLogin) {
+          navigate("/wallet");
+        }
+        else{
+          navigate("/setPassword");
+        }
       }
     }
   };
@@ -40,16 +44,23 @@ function ImportWallet() {
       <MenuRestofHeaders logosilver={true} title="Import Account" />
       <div className={style.cardWhite__cardInner}>
         <div className={style.cardWhite__cardInner__innercontact}>
-          <h1>Enter your mnemonic </h1>
+          <h1>Enter your credentials </h1>
         </div>
         <div className={style.cardWhite__linkOuter}>
           <p style={{ color: "red" }}>{warrning}</p>
           <InputFieldOnly
-            type = "password"
+            placeholder={"Enter Account name"}
+            placeholderBaseColor={true}
+            coloredBg={true}
+            name="accName"
+            onChange={handleChange}
+          />
+          <InputFieldOnly
+            type="password"
             placeholder={"Enter mnemonic here"}
             placeholderBaseColor={true}
             coloredBg={true}
-            name="mnemonic"
+            name="key"
             onChange={handleChange}
           />
         </div>

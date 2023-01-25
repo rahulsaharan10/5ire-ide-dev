@@ -244,8 +244,8 @@ function MenuFooter() {
       </Drawer>
       {(path === "" ||
         path === "createNewWallet" ||
-        path === "unlockWelcome" ||
-        path === "importwallet") && (
+        path === "unlockWallet" ||
+        path === "importWallet") && (
         <div className={style.menuItems__needHelp}>
           <p>
             Need help? Contact <a>Support</a>

@@ -7,6 +7,8 @@ import style from "./style.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setPassword } from "../../Store/reducer/auth";
 import bcrypt from "bcryptjs";
+import {toast} from "react-toastify";
+import useAuth from "../../Hooks/useAuth";
 
 function FooterStepOne() {
   const navigate = useNavigate();
@@ -61,44 +63,35 @@ export const FooterStepThree = () => {
   const selector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {setUserPass} = useAuth();
 
   const handleCancle = () => {
     navigate("/createwalletchain");
   };
 
-  console.log("selector.passError : ", selector.passError);
-
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     let pass = selector.pass;
     const passError = selector.passError;
 
     if (!passError) {
       setLoader(true);
+      let res = await setUserPass(pass);
 
-      bcrypt.genSalt(10, function (err, salt) {
-        if (salt)
-          bcrypt.hash(pass, salt, function (err, hash) {
-            setLoader(false);
+      console.log("response : ",res);
 
-            if (hash) {
-              setShow(true);
+      if(!(res.error)){
+        setShow(true);
+        setTimeout(() => {
+          setShow(false);
+          navigate("/wallet");
+        }, 2000);
+      }
 
-              setTimeout(() => {
-                dispatch(setPassword(hash));
-                window.chrome.storage.session.set({ hash: hash });
-                setShow(false);
-                dispatch(setLogin(true));
+      if(res.error){
+        setLoader(false);
+        toast.error(res.data);
+      }
 
-                navigate("/wallet");
-              }, 2000);
-            }
-            if (err) console.log("Error : ", err);
-          });
-        if (err) {
-          console.log("Error : ", err);
-          setLoader(false);
-        }
-      });
     }
   };
 
