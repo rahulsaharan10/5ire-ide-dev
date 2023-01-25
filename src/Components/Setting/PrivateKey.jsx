@@ -1,24 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MenuRestofHeaders from "../BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 import style from "./style.module.scss";
 import CopyIcon from "../../Assets/CopyIcon.svg";
-import { useSelector } from "react-redux";
-import browser from "../../Scripts/pollyfill";
+
 function PrivateKey() {
-  const auth = useSelector((state) => state.auth);
-  function handleClick() {
-    browser.tabs.sendMessage(
-      auth.uiData.tabId,
-      {
-        id: auth.uiData.id,
-        response: "Approved",
-        error: null,
-      },
-      (response) => {
-        console.log(response);
-      }
-    );
-  }
   return (
     <>
       <div className={`scrollableCont`}>
@@ -36,7 +21,6 @@ function PrivateKey() {
                   <img src={CopyIcon} />
                 </p>
               </div>
-              <button onClick={handleClick}>Approve</button>
             </div>
           </div>
         </div>

@@ -48,7 +48,6 @@ function App() {
   useEffect(() => {
     const route = getParameterByName("route");
     console.log("Route : ", route);
-    console.log("HERE ROUTE AND ", route, window.location.href);
     console.log(
       "Auth.accounts : ",
       auth.accounts,
@@ -104,15 +103,7 @@ function App() {
                 path="/unlockWallet"
                 element={<WelcomeLayout children={<UnlockWelcome />} />}
               />
-              <Route
-                path="/importwallet"
-                element={<WelcomeLayout children={<ImportWallet />} />}
-              />
-              <Route
-                index
-                path="/rejectnotification"
-                element={<FixWidthLayout children={<RejectNotification />} />}
-              />
+
               <Route
                 index
                 path="/enter-password"
@@ -153,6 +144,12 @@ function App() {
                 index
                 path="/private-key"
                 element={<OnlyContent children={<PrivateKey />} />}
+              />
+
+              <Route
+                index
+                path="/rejectnotification"
+                element={<FixWidthLayout children={<RejectNotification />} />}
               />
             </>
           )}

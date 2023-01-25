@@ -89,13 +89,13 @@ browser.runtime.onMessage.addListener(async function (message, sender, cb) {
     );
     browser.windows.create(
       {
-        url: extensionURL + `?route=private-key`,
+        url: extensionURL + `?route=rejectnotification`,
         type: "popup",
         focused: true,
         width: 400,
         height: 600,
         top: 0,
-        left: 800,
+        left: 200,
       },
       (id) => {
         console.log("Opened popup!");
