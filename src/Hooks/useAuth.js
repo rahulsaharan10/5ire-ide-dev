@@ -101,16 +101,6 @@ export default function useAuth() {
                 }
             }
 
-            // bcrypt.compare(p, pass, (err, success) => {
-            //     if (err) {
-            //         console.log("Error : ", err);
-            //         return {
-            //             error: true,
-            //             data: "Invalid Password!"
-            //         }
-            //     }
-
-
         } catch (error) {
             console.log("Error : ", error);
             return {
@@ -121,9 +111,7 @@ export default function useAuth() {
     }
 
     return {
-
         verifyPass,
         setUserPass
-
     }
 }

@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { shortner } from '../../Helper/TxShortner';
 import { NATIVE, EVM } from "../../Constants/index";
 import { toast } from "react-toastify";
-import useWallet from "../../Hooks/wallet";
+import useWallet from "../../Hooks/useWallet";
 
 function Swap() {
 

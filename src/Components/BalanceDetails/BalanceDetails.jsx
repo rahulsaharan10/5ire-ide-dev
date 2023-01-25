@@ -13,7 +13,7 @@ import { Select } from "antd";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentNetwork } from "../../Store/reducer/auth";
-import wallet from "../../Hooks/wallet";
+import useWallet from "../../Hooks/useWallet";
 import QRCode from "react-qr-code";
 import { NATIVE, EVM } from "../../Constants/index";
 import { toast } from "react-toastify";
@@ -30,7 +30,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   const [evm_balance, setEvmBalance] = useState(0);
   const [native_balance, setNativeBalance] = useState(0);
   // const [accountName, setAccName] = useState("");
-  const { getEvmBalance, getNativeBalance, isApiReady } = wallet();
+  const { getEvmBalance, getNativeBalance, isApiReady } = useWallet();
   const dispatch = useDispatch();
   const { currentAccount, currentNetwork, balance } = useSelector(
     (state) => state.auth

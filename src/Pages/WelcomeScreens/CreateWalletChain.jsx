@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
 import CopyIcon from "../../Assets/CopyIcon.svg";
-import Wallet from "../../Hooks/wallet";
+import Wallet from "../../Hooks/useWallet";
 import { setCurrentAcc, setAccounts } from "../../Store/reducer/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { SECRET_KEY, EVM_KEY, NATIVE, EVM } from "../../Constants/index.js";

@@ -5,8 +5,8 @@ import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScr
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin, setPassword } from "../../Store/reducer/auth";
-import bcrypt from "bcryptjs";
+// import { setLogin, setPassword } from "../../Store/reducer/auth"
+// import bcrypt from "bcryptjs";
 import {toast} from "react-toastify";
 import useAuth from "../../Hooks/useAuth";
 
