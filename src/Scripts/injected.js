@@ -45,19 +45,20 @@ window.fire = {
 };
 
 injectedStream.on("data", (data) => {
-  console.log(JSON.stringify(data) + ",INJECTED page response");
-  console.log("HERE HANDLERS", handlers);
   if (data?.method === "keepAlive") {
     setTimeout(() => {
       injectedStream.write({ method: "keepAlive" });
     }, 1000 * 30);
   }
   if (data.id) {
+    console.log(JSON.stringify(data) + ",INJECTED page response");
+    console.log("HERE HANDLERS", handlers);
     const handler = handlers[data.id];
     if (data.error) {
       handler.reject(data.error);
     } else {
       handler.resolve(data.response);
     }
+    delete handlers[data.id];
   }
 });

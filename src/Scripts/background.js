@@ -39,14 +39,30 @@ Browser.runtime.onMessage.addListener(async function (message, sender, cb) {
     isInitialized = true;
   }
   if (message?.method == "connect") {
-    store.dispatch(
-      setUIdata({
-        ...message,
-        tabId: sender.tab.id,
-      })
+    const state = store.getState();
+    const isExist = state.auth.connectedSites.find(
+      (st) => st.origin === message.message
     );
-    createFireWindow("rejectnotification");
-    showNotification("test");
+
+    if (isExist?.isConnected) {
+      Browser.tabs.sendMessage(sender.tab.id, {
+        id: message.id,
+        response: {
+          evmAddress: state.auth.currentAccount.evmAddress,
+          nativeAddress: state.auth.currentAccount.nativeAddress,
+        },
+        error: null,
+      });
+    } else {
+      store.dispatch(
+        setUIdata({
+          ...message,
+          tabId: sender.tab.id,
+        })
+      );
+      createFireWindow("rejectnotification");
+      showNotification("test");
+    }
   }
 });
 

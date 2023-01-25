@@ -1,18 +1,24 @@
 import Browser from "webextension-polyfill";
-export const getCurrentTabUrl = (callback) => {
-  const queryInfo = { active: true, lastFocusedWindow: true };
 
-  Browser.tabs &&
-    Browser.tabs.query(queryInfo, (tabs) => {
-      callback(tabs[0].url);
-    });
+export const getBaseUrl = (url) => {
+  const pathArray = url.split("/");
+  const protocol = pathArray[0];
+  const host = pathArray[2];
+  return protocol + "//" + host;
+};
+export const getCurrentTabUrl = (callback) => {
+  const queryInfo = { active: true, currentWindow: true };
+
+  Browser.tabs.query(queryInfo).then((tabs) => {
+    console.log("HEre url of current site", getBaseUrl(tabs[0]?.url));
+    callback(getBaseUrl(tabs[0]?.url));
+  });
 };
 
 export const getCurrentTabUId = (callback) => {
-  const queryInfo = { active: true, lastFocusedWindow: true };
+  const queryInfo = { active: true, currentWindow: true };
 
-  Browser.tabs &&
-    Browser.tabs.query(queryInfo, (tabs) => {
-      callback(tabs[0].id);
-    });
+  Browser.tabs.query(queryInfo).then((tabs) => {
+    callback(tabs[0].id);
+  });
 };

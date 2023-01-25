@@ -9,6 +9,7 @@ import PlaceLogo from "../../Assets/PlaceLog.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
+import { toast } from "react-toastify";
 // import { useDispatch, useSelector } from "react-redux";
 
 function UnlockWelcome() {
@@ -21,8 +22,6 @@ function UnlockWelcome() {
 
   const location = useLocation();
 
-  console.log(location, " useLocation Hook", location.state?.data);
-
   const handleChange = (e) => {
     setData(e.target.value);
     console.log(e.target.value);
@@ -31,10 +30,11 @@ function UnlockWelcome() {
   const handleClick = async () => {
     let res = await verifyPass(data);
 
-    console.log("res : ", res.data);
     if (!res.error) {
       navigate(location.state?.redirectRoute || "/wallet");
     } else {
+      toast.error(res.data);
+
       console.log("Error", res.data);
     }
   };

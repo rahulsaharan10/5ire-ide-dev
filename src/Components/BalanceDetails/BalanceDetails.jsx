@@ -3,6 +3,8 @@ import style from "./style.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import DarkLogo from "../../Assets/DarkLogo.svg";
 import GreenCircle from "../../Assets/greencircle.svg";
+import GrayCircle from "../../Assets/graycircle.svg";
+
 import DownArrowSuffix from "../../Assets/DownArrowSuffix.svg";
 import WalletCardLogo from "../../Assets/walletcardLogo.svg";
 import WalletQr from "../../Assets/walletqr.png";
@@ -18,6 +20,7 @@ import QRCode from "react-qr-code";
 import { NATIVE, EVM } from "../../Constants/index";
 import { toast } from "react-toastify";
 import { shortner } from "../../Helper/TxShortner";
+import { getCurrentTabUrl } from "../../Scripts/utils";
 // import ScannerImg from "../../Assets/qrimg.svg";
 
 function BalanceDetails({ className, textLeft, mt0 }) {
@@ -29,16 +32,22 @@ function BalanceDetails({ className, textLeft, mt0 }) {
   });
   const [evm_balance, setEvmBalance] = useState(0);
   const [native_balance, setNativeBalance] = useState(0);
+  const [isConnected, setIsConnected] = useState(false);
   // const [accountName, setAccName] = useState("");
   const { getEvmBalance, getNativeBalance, isApiReady } = useWallet();
   const dispatch = useDispatch();
-  const { currentAccount, currentNetwork, balance } = useSelector(
-    (state) => state.auth
-  );
+  const { currentAccount, currentNetwork, balance, connectedSites } =
+    useSelector((state) => state.auth);
   const getLocation = useLocation();
 
   useEffect(() => {
-    console.log("Is ready : ", isApiReady);
+    getCurrentTabUrl((cv) => {
+      console.log(cv);
+      const isExist = connectedSites.find((ct) => ct.origin === cv);
+      if (isExist) {
+        setIsConnected(isExist.isConnected);
+      }
+    });
     if (isApiReady) {
       getEvmBalance();
       getNativeBalance();
@@ -102,7 +111,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
               {path === "wallet" && (
                 <div className={style.balanceDetails__accountName}>
                   <p>
-                    <img src={GreenCircle} />
+                    <img src={isConnected ? GreenCircle : GrayCircle} />
                     {currentAccount.accountName}
                   </p>
                   <span>{addresses.evmAddress}</span>

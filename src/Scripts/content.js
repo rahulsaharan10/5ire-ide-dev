@@ -1,5 +1,3 @@
-import { Store, applyMiddleware } from "webext-redux";
-import thunkMiddleware from "redux-thunk";
 import Browser from "webextension-polyfill";
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE } from "./constants";
@@ -9,11 +7,8 @@ const contentStream = new WindowPostMessageStream({
   target: INPAGE,
 });
 
-export const store = new Store();
-
 contentStream.on("data", async (data) => {
   try {
-    console.log(JSON.stringify(data) + ", world in content js");
     switch (data.method) {
       case "request":
         contentStream.write({
@@ -23,7 +18,6 @@ contentStream.on("data", async (data) => {
         });
       case "connect":
         Browser.runtime.sendMessage(data);
-
       case "keepAlive":
         setTimeout(() => {
           contentStream.write({
@@ -38,21 +32,10 @@ contentStream.on("data", async (data) => {
   }
 });
 
-// Proxy store
-
-// // Apply middleware to proxy store
-// const middleware = [thunkMiddleware];
-// const storeWithMiddleware = applyMiddleware(store, ...middleware);
-
-// // You can now dispatch a function from the proxy store
-// storeWithMiddleware.dispatch((dispatch, getState) => {
-//   // Regular dispatches will still be routed to the background
-//   dispatch(increment());
-// });
-
 const messageFromExtensionUI = (message, sender, cb) => {
-  console.log("[content.js]. Message received", JSON.stringify(message));
   if (message?.id) {
+    console.log("[content.js]. Message received", JSON.stringify(message));
+
     contentStream.write(message);
     cb("I Recevie and ack");
   }

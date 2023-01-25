@@ -44,15 +44,19 @@ function init(preloadedState) {
 
 export function loadStore(sendStoreMessage = true) {
   return new Promise(async (resolve) => {
-    Browser.storage.local.get("state").then(async (storage) => {
-      // 1. Initializes the redux store and the message passing.
-      const store = await init(storage.state || { auth: userState });
+    try {
+      Browser.storage.local.get("state").then(async (storage) => {
+        // 1. Initializes the redux store and the message passing.
+        const store = await init(storage.state || { auth: userState });
 
-      // 2. Sends a message to notify that the store is ready.
-      sendStoreMessage &&
-        Browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
-      resolve(store);
-    });
+        // 2. Sends a message to notify that the store is ready.
+        sendStoreMessage &&
+          Browser.runtime.sendMessage({ type: "STORE_INITIALIZED" });
+        resolve(store);
+      });
+    } catch (err) {
+      console.log("Here error in store", err);
+    }
   });
 }
 
@@ -82,18 +86,15 @@ export async function initScript() {
 export function createFireWindow(route = "") {
   const extensionURL = Browser.runtime.getURL("index.html");
 
-  Browser.windows.create(
-    {
-      url: extensionURL + `?route=${route}`,
-      type: "popup",
-      focused: true,
-      width: 400,
-      height: 600,
-      top: 0,
-      left: 200,
-    },
-    (id) => {}
-  );
+  Browser.windows.create({
+    url: extensionURL + `?route=${route}`,
+    type: "popup",
+    focused: true,
+    width: 400,
+    height: 600,
+    top: 0,
+    left: 200,
+  });
 }
 
 export function showNotification(

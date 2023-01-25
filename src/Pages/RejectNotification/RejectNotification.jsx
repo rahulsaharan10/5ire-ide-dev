@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import browser from "webextension-polyfill";
+import { setSite, setUIdata, toggleSite } from "../../Store/reducer/auth";
 
 function RejectNotification() {
   const [activeTab, setActiveTab] = useState("detail");
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
   const activeDetail = () => {
     setActiveTab("detail");
   };
@@ -12,20 +16,38 @@ function RejectNotification() {
     setActiveTab("data");
   };
 
-  const auth = useSelector((state) => state.auth);
-  function handleClick() {
-    browser.tabs.sendMessage(
-      auth.uiData.tabId,
-      {
-        id: auth.uiData.id,
-        response: "Approved",
-        error: null,
-      },
-      (response) => {
-        console.log(response);
-        window.close();
+  function handleClick(isApproved) {
+    if (isApproved) {
+      const siteIndex = auth?.connectedSites.findIndex(
+        (st) => (st.origin = auth.uiData.message)
+      );
+
+      //if not connected but exists in state we will set connected property true
+      if (siteIndex > -1) {
+        dispatch(toggleSite(auth.uiData.message));
+      } else {
+        //if use connect same origin again and again we give response back in background script
+        dispatch(setSite({ origin: auth.uiData.message, isConnected: true }));
       }
-    );
+      browser.tabs.sendMessage(auth.uiData.tabId, {
+        id: auth.uiData.id,
+        response: {
+          evmAddress: auth.currentAccount.evmAddress,
+          nativeAddress: auth.currentAccount.nativeAddress,
+        },
+        error: null,
+      });
+    } else {
+      browser.tabs.sendMessage(auth.uiData.tabId, {
+        id: auth.uiData.id,
+        response: null,
+        error: "User rejected connect permission.",
+      });
+    }
+
+    dispatch(setUIdata({}));
+
+    window.close();
   }
   return (
     <div>
@@ -68,7 +90,9 @@ function RejectNotification() {
               <h4>5 5ire</h4>
             </div>
           </div>
-          <button onClick={handleClick}>Approve</button>
+          <button onClick={() => handleClick(false)}>Reject</button>
+
+          <button onClick={() => handleClick(true)}>Approve</button>
         </div>
       </div>
     </div>

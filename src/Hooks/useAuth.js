@@ -8,7 +8,6 @@ export default function useAuth() {
 
 
     const setUserPass = async (p) => {
-        debugger
         try {
             var salt = bcrypt.genSaltSync(10);
             let hash;
