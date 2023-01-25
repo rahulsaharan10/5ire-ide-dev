@@ -20,7 +20,6 @@ function FooterStepOne() {
           bordered={true}
           text={"Cancel"}
           maxWidth={"100%"}
-
         />
         <ButtonComp
           onClick={() => navigate("/createwalletchain")}
@@ -63,13 +62,13 @@ export const FooterStepThree = () => {
   const selector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {setUserPass} = useAuth();
+  const { setUserPass } = useAuth();
 
   const handleCancle = () => {
     navigate("/createwalletchain");
   };
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     let pass = selector.pass;
     const passError = selector.passError;
 
@@ -77,9 +76,10 @@ export const FooterStepThree = () => {
       setLoader(true);
       let res = await setUserPass(pass);
 
-      console.log("response : ",res);
+      console.log("response : ", res);
 
-      if(!(res.error)){
+      if (!res.error) {
+        setLoader(false);
         setShow(true);
         setTimeout(() => {
           setShow(false);
@@ -87,11 +87,10 @@ export const FooterStepThree = () => {
         }, 2000);
       }
 
-      if(res.error){
+      if (res.error) {
         setLoader(false);
         toast.error(res.data);
       }
-
     }
   };
 
