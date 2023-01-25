@@ -92,7 +92,9 @@ function BalanceDetails({ className, textLeft, mt0 }) {
 
   return (
     <>
-      {(path === "wallet" || path === "swapapprove" || path === "rejectnotification") && (
+      {(path === "wallet" ||
+        path === "swapapprove" ||
+        path === "rejectnotification") && (
         <div className={`${style.balanceDetails} ${mt0 ? mt0 : ""}`}>
           <div className={style.balanceDetails__decoratedSec}>
             <>
@@ -163,8 +165,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>Native Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {native_balance ? native_balance : "loading.."}
-                      {/* 3000 */}{" "}
+                      {native_balance}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>
@@ -180,8 +181,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
                     <p>EVM Chain Balance</p>
                     <h3>
                       <img src={WalletCardLogo} />
-                      {evm_balance ? evm_balance : "loading.."}
-                      {/* 3000 */}{" "}
+                      {evm_balance}
                     </h3>
                   </div>
                   <div className={style.balanceDetails__innerBalance__walletQa}>
