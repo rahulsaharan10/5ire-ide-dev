@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
-import { useSelector, useDispatch } from "react-redux";
-// import { setLogin, setPassword } from "../../Store/reducer/auth"
-// import bcrypt from "bcryptjs";
-import {toast} from "react-toastify";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import useAuth from "../../Hooks/useAuth";
 
+
 function FooterStepOne() {
+
   const navigate = useNavigate();
   return (
     <>
@@ -30,25 +30,38 @@ function FooterStepOne() {
     </>
   );
 }
-
 export default FooterStepOne;
 
+
 export const FooterStepTwo = () => {
+  const { isLogin } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
   const handleCancle = () => {
+    // if (isLogin) navigate("/wallet");
+    // else navigate("/beforebegin");
     navigate("/beforebegin");
   };
+
+  const handleClick = () => {
+    if (isLogin) navigate("/wallet");
+    else navigate("/setPassword");
+  }
   return (
     <>
       <div className={style.menuItems__cancleContinue}>
+        {
+          !isLogin &&
+          <ButtonComp
+            bordered={true}
+            text={"Cancel"}
+            maxWidth={"100%"}
+            onClick={handleCancle}
+          />
+        }
+
         <ButtonComp
-          bordered={true}
-          text={"Cancel"}
-          maxWidth={"100%"}
-          onClick={handleCancle}
-        />
-        <ButtonComp
-          onClick={() => navigate("/setPassword")}
+          onClick={handleClick}
           text={"Continue"}
           maxWidth={"100%"}
         />
@@ -56,11 +69,12 @@ export const FooterStepTwo = () => {
     </>
   );
 };
+
+
 export const FooterStepThree = () => {
+  const { pass, passError } = useSelector((state) => state.auth);
   const [loader, setLoader] = useState(false);
   const [show, setShow] = useState(false);
-  const selector = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setUserPass } = useAuth();
 
@@ -69,9 +83,6 @@ export const FooterStepThree = () => {
   };
 
   const handleSubmit = async () => {
-    let pass = selector.pass;
-    const passError = selector.passError;
-
     if (!passError) {
       setLoader(true);
       let res = await setUserPass(pass);

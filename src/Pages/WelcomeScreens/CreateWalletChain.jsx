@@ -5,13 +5,13 @@ import Wallet from "../../Hooks/useWallet";
 import { setCurrentAcc, setAccounts } from "../../Store/reducer/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { SECRET_KEY, EVM_KEY, NATIVE, EVM } from "../../Constants/index.js";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function CreateWalletChain() {
   const dispatch = useDispatch();
   const { walletSignUp, authData } = Wallet();
-  const selector = useSelector((state) => state.auth);
+  const {currentAccount, isLogin, accountName} = useSelector((state) => state.auth);
 
   const [data, setData] = useState({
     mnemonic: "",
@@ -21,13 +21,19 @@ function CreateWalletChain() {
   });
 
   useEffect(() => {
-    if (selector.currentAccount.mnemonic === "") {
+    // if (currentAccount?.mnemonic === "" && !(isLogin)) {
+    //   walletSignUp();
+    // }else if (isLogin){
+    //   walletSignUp();
+    // }
+
+    if (currentAccount?.mnemonic === "" && !(isLogin)) {
       walletSignUp();
     }
   }, []);
 
   useEffect(() => {
-    let accountName = selector.accountName;
+    // let accountName = accountName;
 
     if (authData.mnemonic) {
       let data_ = {
@@ -38,7 +44,7 @@ function CreateWalletChain() {
       dispatch(setAccounts(data_));
       setData(data_);
     } else {
-      setData(selector.currentAccount);
+      setData(currentAccount);
     }
   }, [authData]);
 

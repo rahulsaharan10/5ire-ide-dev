@@ -1,14 +1,11 @@
 import React from "react";
 import style from "./style.module.scss";
 
-import { Switch, Checkbox } from "antd";
-const onChange = (checked) => {
-  console.log(`switch to ${checked}`);
-};
+import { Switch, Checkbox, Radio } from "antd";
 
-function ManageCustom(props) {
-  const {edited} = props;
-  const { name, currency, img, valuecurrency } = props;
+
+function ManageCustom({ name, balance, img, checkValue, edited, onSelectAcc} ) {
+
   return (
     <>
       <div className={style.manageList}>
@@ -16,16 +13,18 @@ function ManageCustom(props) {
           <img src={img} />
           <div className={style.manageList__imgcurrency_Name}>
             <p>
-              {currency}
-              <span>{valuecurrency}</span>
+              {name}
+              {/* <span>{valuecurrency}</span> */}
             </p>
-            <span>{name}</span>
+            <span>{balance}</span>
           </div>
         </div>
         {edited ? (
-          <Switch defaultChecked onChange={onChange} />
+          <Switch defaultChecked
+          //  onChange={onChange} 
+           />
         ) : (
-          <Checkbox onChange={onChange} className={style.checkbox}></Checkbox>
+          <input type="radio" name="accounts" value={checkValue} onChange={onSelectAcc} className={style.checkbox}/>
         )}
       </div>
     </>

@@ -5,7 +5,7 @@ import DefiIcon from "../../Assets/DefiIcon.svg";
 import SettignIcon from "../../Assets/SettignIcon.svg";
 import Myaccount from "../../Assets/PNG/myaccount.png";
 import HistoryIcon from "../../Assets/PNG/histry.png";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link,useNavigate, useLocation } from "react-router-dom";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import { Drawer } from "antd";
 import FooterStepOne, {
@@ -24,11 +24,21 @@ import BackArrow from "../../Assets/PNG/arrowright.png";
 import Wallet from "../../Assets/PNG/wallet.png";
 import SocialAccount from "../SocialAccount/SocialAccount";
 import Setting from "../../Assets/PNG/setting.png";
+import { useSelector, useDispatch } from "react-redux"
+import {setCurrentAcc, setLogin} from "../../Store/reducer/auth";
+import useAuth from "../../Hooks/useAuth";
+import {toast} from "react-toastify";
+
 function MenuFooter() {
   // const [activeLink, setactiveLink] = useState("wallet");
+
+  const navigate = useNavigate();
+  const {logout} = useAuth(); 
+  const { accounts } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const getLocation = useLocation();
   const path = getLocation.pathname.replace("/", "");
-
+  const [accData, setAccData] = useState([]);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -78,33 +88,41 @@ function MenuFooter() {
     },
   ];
 
-  const data1 = [
-    {
-      name: " 312 ETH",
-      currency: "Account 1",
-      recievedSend: "Native to EVM",
-      status5ire: "50 5ire",
-      status: "Panding",
-      img: Sendhistry,
-    },
-    {
-      name: " 312 ETH",
-      currency: "Account 1",
-      recievedSend: "Native to EVM",
-      status5ire: "50 5ire",
-      status: "Panding",
-      img: Sendhistry,
-    },
+  const handleMyAccOpen = () => {
+    setOpen(true);
+    setAccData(accounts)
+  }
 
-    {
-      name: " 312 ETH",
-      currency: "Account 1",
-      recievedSend: "Native to EVM",
-      status5ire: "50 5ire",
-      status: "Panding",
-      img: Sendhistry,
-    },
-  ];
+  const hanldeCreateNewAcc = () => {
+    console.log("Clicked cerateNew acc!!");
+    navigate("/createNewWallet");
+  };
+
+  const handleImportAcc = () => {
+    navigate("/importWallet");
+    console.log("Clicked Import acc!!");
+  };
+
+  const handleLogout = async () => {
+    console.log("Clicked Logout acc!!");
+    const res =  await logout();
+    console.log("Response : ",res);
+
+    if (!res.error) {
+      navigate("/unlockWallet")
+    }else{
+      toast.error("Error while logging out!");
+    }
+  }
+
+  const onSelectAcc = (e) => {
+    let accId = e.target.value;
+    let acc = accounts[accId];
+    console.log(acc);
+    dispatch(setCurrentAcc(acc));
+  }
+
+
   const edited = false;
 
   return (
@@ -113,9 +131,8 @@ function MenuFooter() {
         <Link
           to="/wallet"
           // onClick={() => setactiveLink("wallet")}
-          className={`${style.menuItems__items} ${
-            path === "wallet" ? style.menuItems__items__active : ""
-          }`}
+          className={`${style.menuItems__items} ${path === "wallet" ? style.menuItems__items__active : ""
+            }`}
         >
           <div className={style.menuItems__items__img}>
             <img src={Walletlogo} />
@@ -127,9 +144,8 @@ function MenuFooter() {
         <Link
           to="#"
           onClick={() => setOpen1(true)}
-          className={`${style.menuItems__items} ${
-            path === "history" ? style.menuItems__items__active : ""
-          }`}
+          className={`${style.menuItems__items} ${path === "history" ? style.menuItems__items__active : ""
+            }`}
         >
           <div className={style.menuItems__items__img}>
             <img src={HistoryIcon} />
@@ -163,10 +179,10 @@ function MenuFooter() {
       {path === "wallet" && (
         <Link
           // to="/setting"
-          onClick={() => setOpen(true)}
-          className={`${style.menuItems__items} ${
-            path === "setting" ? style.menuItems__items__active : ""
-          }`}
+          // onClick={() => setOpen(true)}
+          onClick={handleMyAccOpen}
+          className={`${style.menuItems__items} ${path === "setting" ? style.menuItems__items__active : ""
+            }`}
         >
           <div className={style.menuItems__items__img}>
             <img src={Myaccount} />
@@ -180,32 +196,33 @@ function MenuFooter() {
             My Accounts
           </span>
         }
+
         placement="bottom"
         onClose={onClose}
         open={open}
         closeIcon={<img src={ModalCloseIcon} />}
       >
-        {data1.map((data1) => (
+        {accData.map((data, index) => (
           <ManageCustom
-            name={data1.name}
-            currency={data1.currency}
-            img={data1.img}
-            valuecurrency={data1.valuecurrency}
+            img={Sendhistry}
+            name={data.accountName}
+            balance={"10 5ire"}
             edited={false}
+            checkValue={index}
+            onSelectAcc={onSelectAcc}
           />
         ))}
-        <AccountSetting img={Createaccount} title="Create New Account" />
-        <AccountSetting img={Import} title="Import Account" />
-        <AccountSetting img={Logout} title="Logout" />
+        <AccountSetting img={Createaccount} title="Create New Account" onClick={hanldeCreateNewAcc} />
+        <AccountSetting img={Import} title="Import Account" onClick={handleImportAcc} />
+        <AccountSetting img={Logout} title="Logout" onClick={handleLogout} />
       </Drawer>
 
       {path === "wallet" && (
         <Link
           // to="/setting"
           onClick={() => setOpen2(true)}
-          className={`${style.menuItems__items} ${
-            path === "setting" ? style.menuItems__items__active : ""
-          }`}
+          className={`${style.menuItems__items} ${path === "setting" ? style.menuItems__items__active : ""
+            }`}
         >
           <div className={style.menuItems__items__img}>
             <img src={Setting} />
@@ -246,12 +263,12 @@ function MenuFooter() {
         path === "createNewWallet" ||
         path === "unlockWallet" ||
         path === "importWallet") && (
-        <div className={style.menuItems__needHelp}>
-          <p>
-            Need help? Contact <a>Support</a>
-          </p>
-        </div>
-      )}
+          <div className={style.menuItems__needHelp}>
+            <p>
+              Need help? Contact <a>Support</a>
+            </p>
+          </div>
+        )}
       {path === "beforebegin" && <FooterStepOne />}
       {path === "createwalletchain" && <FooterStepTwo />}
       {path === "setPassword" && <FooterStepThree />}

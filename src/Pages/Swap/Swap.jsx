@@ -38,7 +38,6 @@ function Swap() {
   }, [currentAccount?.evmAddress, currentAccount?.nativeAddress, toFrom]);
 
   useEffect(() => {
-    console.log("amount : ",amount);
     if (amount) {
       getFee();
     }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
@@ -18,8 +19,8 @@ import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
 import UnlockWelcome from "./Pages/WelcomeScreens/UnlockWelcome";
-import { useEffect, useState } from "react";
 import RejectNotification from "./Pages/RejectNotification/RejectNotification";
+// import Loader from "./Pages/Loader/Loader";
 import { setLogin } from "./Store/reducer/auth";
 
 function getParameterByName(name, url = window.location.href) {
@@ -37,23 +38,24 @@ function App() {
   const dispatch = useDispatch();
   const [loading, setLoding] = useState(true);
 
-  const fetchLogin = () => {
-    window.chrome.storage.session.get(["login"]).then((res) => {
-      console.log("Login response from session :::::: ", res?.login);
-      dispatch(setLogin(res?.login ? res.login : false));
-      setLoding(false);
-    });
-  };
+  // const fetchLogin = () => {
+  //   window.chrome.storage.session.get(["login"]).then((res) => {
+  //     console.log("Login response from session :::::: ", res?.login);
+  //     dispatch(setLogin(res?.login ? res.login : false));
+  //     setLoding(false);
+  //   });
+  // };
 
   useEffect(() => {
     const route = getParameterByName("route");
-    console.log("Route : ", route);
+
     console.log(
       "Auth.accounts : ",
       auth.accounts,
       "length : ",
       auth.accounts.length
     );
+
     if (!auth?.isLogin && auth.accounts.length > 0) {
       navigate("/unlockWallet", {
         state: {
@@ -83,35 +85,20 @@ function App() {
               element={<WelcomeLayout children={<WelcomeScreen />} />}
             />
             <Route
-              path="/importWallet"
-              element={<WelcomeLayout children={<ImportWallet />} />}
-            />
-            <Route
               path="/setPassword"
               element={<WelcomeLayout children={<SetPasswordScreen />} />}
             />
-            <Route
-              path="/beforebegin"
-              element={<WelcomeLayout children={<Beforebegin />} />}
-            />
-            <Route
-              path="/createwalletchain"
-              element={<WelcomeLayout children={<CreateWalletChain />} />}
-            />
-            <Route
-              path="/createNewWallet"
-              element={<WelcomeLayout children={<CreateNewWallet />} />}
-            />
+
             <Route
               path="/unlockWallet"
               element={<WelcomeLayout children={<UnlockWelcome />} />}
             />
 
-            <Route
+            {/* <Route
               index
               path="/enter-password"
               element={<OnlyContent children={<EnterPassword />} />}
-            />
+            /> */}
           </>
         ) : (
           <>
@@ -156,6 +143,23 @@ function App() {
             />
           </>
         )}
+        <Route
+          path="/importWallet"
+          element={<WelcomeLayout children={<ImportWallet />} />}
+        />
+        <Route
+          path="/createwalletchain"
+          element={<WelcomeLayout children={<CreateWalletChain />} />}
+        />
+        <Route
+          path="/beforebegin"
+          element={<WelcomeLayout children={<Beforebegin />} />}
+        />
+
+        <Route
+          path="/createNewWallet"
+          element={<WelcomeLayout children={<CreateNewWallet />} />}
+        />
       </Routes>
     </div>
   );

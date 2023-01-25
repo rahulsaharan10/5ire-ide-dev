@@ -21,6 +21,7 @@ import { shortner } from "../../Helper/TxShortner";
 // import ScannerImg from "../../Assets/qrimg.svg";
 
 function BalanceDetails({ className, textLeft, mt0 }) {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEvmModal, setIsEvmModal] = useState(false);
   const [addresses, setAddresses] = useState({
@@ -43,7 +44,7 @@ function BalanceDetails({ className, textLeft, mt0 }) {
       getEvmBalance();
       getNativeBalance();
     }
-  }, [isApiReady, currentNetwork]);
+  }, [isApiReady, currentNetwork, currentAccount]);
 
   useEffect(() => {
     const evmAdd = shortner(currentAccount?.evmAddress);

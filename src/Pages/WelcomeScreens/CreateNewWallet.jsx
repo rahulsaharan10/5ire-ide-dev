@@ -5,17 +5,18 @@ import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
 import style from "./style.module.scss";
 import { setAccountName } from "../../Store/reducer/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 
 
 function CreateNewWallet() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {isLogin} = useSelector(state => state.auth);
   const [data, setData] = useState("");
   const [warrning, setWarrning] = useState("")
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setData(e.target.value);
+     setData(e.target.value);
     setWarrning("");
   }
 

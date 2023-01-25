@@ -1,10 +1,12 @@
 import bcrypt from "bcryptjs";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setPassword } from "../Store/reducer/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function useAuth() {
     const { pass } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const setUserPass = async (p) => {
@@ -110,8 +112,31 @@ export default function useAuth() {
         }
     }
 
+    const logout = () => {
+        try {
+            console.log("logout called!!");
+            dispatch(setLogin(false));
+            window.chrome.storage.session.remove(["login"]).then((res) => {
+                console.log("logout res : ", res);
+            });
+
+            return{
+                error:false,
+                data:"Logout successfully!"
+            }
+        } catch (error) {
+            console.log("Error : ",error);
+            return{
+                error:false,
+                data:"Error while logging out!"
+            }
+        }
+
+    }
+
     return {
         verifyPass,
-        setUserPass
+        setUserPass,
+        logout
     }
 }
