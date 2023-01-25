@@ -30,13 +30,13 @@ export const userState = {
 
   isLogin: false,
 
-  hash : null,
+  hash: null,
 
   passError: true,
+  connectedSites: [],
 };
 
 export const userSlice = createSlice({
-
   name: "auth",
   initialState: userState,
   reducers: {
@@ -73,7 +73,7 @@ export const userSlice = createSlice({
     },
 
     setHash: (state, action) => {
-        state.hash = action.payload;
+      state.hash = action.payload;
     },
 
     setBalance: (state, action) => {
@@ -81,6 +81,19 @@ export const userSlice = createSlice({
         state.balance.evmBalance = action.payload.balance;
       else if (action.payload.of === "native")
         state.balance.nativeBalance = action.payload.balance;
+    },
+
+    setSite: (state, action) => {
+      state?.connectedSites.push(action.payload);
+    },
+    toggleSite: (state, action) => {
+      const siteIndex = state?.connectedSites.findIndex(
+        (st) => (st.origin = action.payload)
+      );
+      if (siteIndex > -1) {
+        state.connectedSites[siteIndex].isConnected =
+          !state?.connectedSites[siteIndex].isConnected;
+      }
     },
   },
 });
@@ -96,7 +109,8 @@ export const {
   setPassError,
   setUIdata,
   setBalance,
-  
+  setSite,
+  toggleSite,
 } = userSlice.actions;
 
 export default userSlice.reducer;

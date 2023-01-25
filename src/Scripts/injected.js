@@ -9,7 +9,7 @@ const handlers = {};
 
 injectedStream.write({ method: "keepAlive" });
 
-function sendMessage(method, message) {
+function sendMessage(method, message = "") {
   return new Promise((resolve, reject) => {
     try {
       const id = getId();
@@ -40,28 +40,25 @@ window.fire = {
       console.log("My promise worked", result);
     });
   },
-  showUI: () => {
-    sendMessage("ui", { data: "Just show window" }).then((result) => {
-      console.log("My window worked", result);
-    });
-  },
+  connect: () => sendMessage("connect", window.location.origin),
   isInstalled: true,
 };
 
 injectedStream.on("data", (data) => {
-  console.log(JSON.stringify(data) + ",INJECTED page response");
-  console.log("HERE HANDLERS", handlers);
   if (data?.method === "keepAlive") {
     setTimeout(() => {
       injectedStream.write({ method: "keepAlive" });
     }, 1000 * 30);
   }
   if (data.id) {
+    console.log(JSON.stringify(data) + ",INJECTED page response");
+    console.log("HERE HANDLERS", handlers);
     const handler = handlers[data.id];
     if (data.error) {
       handler.reject(data.error);
     } else {
       handler.resolve(data.response);
     }
+    delete handlers[data.id];
   }
 });

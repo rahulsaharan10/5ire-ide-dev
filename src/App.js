@@ -20,8 +20,6 @@ import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
 import UnlockWelcome from "./Pages/WelcomeScreens/UnlockWelcome";
 import RejectNotification from "./Pages/RejectNotification/RejectNotification";
-// import Loader from "./Pages/Loader/Loader";
-import { setLogin } from "./Store/reducer/auth";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[[\]]/g, "\\$&");
@@ -38,23 +36,8 @@ function App() {
   const dispatch = useDispatch();
   const [loading, setLoding] = useState(true);
 
-  // const fetchLogin = () => {
-  //   window.chrome.storage.session.get(["login"]).then((res) => {
-  //     console.log("Login response from session :::::: ", res?.login);
-  //     dispatch(setLogin(res?.login ? res.login : false));
-  //     setLoding(false);
-  //   });
-  // };
-
   useEffect(() => {
     const route = getParameterByName("route");
-
-    console.log(
-      "Auth.accounts : ",
-      auth.accounts,
-      "length : ",
-      auth.accounts.length
-    );
 
     if (!auth?.isLogin && auth.accounts.length > 0) {
       navigate("/unlockWallet", {
@@ -62,6 +45,8 @@ function App() {
           redirectRoute: route ? "/" + route : "",
         },
       });
+    } else if (auth.accounts.length <= 0) {
+      navigate("/");
     } else if (route) {
       navigate("/" + route);
     } else if (auth?.isLogin) {
