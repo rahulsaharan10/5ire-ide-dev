@@ -32,7 +32,6 @@ function init(preloadedState) {
     Browser.storage.session
       .get(["login"])
       .then((res) => {
-        console.log("Login response from session :::::: ", res?.login);
         store.dispatch(setLogin(res?.login ? res.login : false));
         resolve(store);
       })
@@ -108,4 +107,40 @@ export function showNotification(
     title,
     type,
   });
+}
+
+export function handleConnect(store, data) {
+  const state = store.getState();
+
+  const isEthReq = data?.message?.method === "eth_requestAccounts";
+  const isExist = state.auth.connectedSites.find(
+    (st) => st.origin === data.message.origin
+  );
+
+  if (isExist?.isConnected) {
+    Browser.tabs.sendMessage(data.tabId, {
+      id: data.id,
+      response: isEthReq
+        ? [state.auth.currentAccount.evmAddress]
+        : {
+            evmAddress: state.auth.currentAccount.evmAddress,
+            nativeAddress: state.auth.currentAccount.nativeAddress,
+          },
+      error: null,
+    });
+  } else {
+    store.dispatch(setUIdata(data));
+    createFireWindow("rejectnotification");
+    // showNotification("Your request for connect is approved");
+  }
+}
+
+export function handleEthTransaction(store, data) {
+  store.dispatch(
+    setUIdata({
+      ...data,
+      message: data?.message?.params[0],
+    })
+  );
+  createFireWindow("rejectnotification");
 }

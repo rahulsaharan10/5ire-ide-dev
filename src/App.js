@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.scss";
 import FixWidthLayout from "./Layout/FixWidthLayout";
@@ -13,13 +13,14 @@ import CreateNewWallet from "./Pages/WelcomeScreens/CreateNewWallet";
 import Beforebegin from "./Pages/WelcomeScreens/Beforebegin";
 import CreateWalletChain from "./Pages/WelcomeScreens/CreateWalletChain";
 import ImportWallet from "./Pages/WelcomeScreens/ImportWallet";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ManageWallet from "./Components/Setting/ManageWallet.jsx";
 import EnterPassword from "./Components/Setting/EnterPassword";
 import SwapApprove from "./Pages/Swap/SwapApprove/SwapApprove";
 import PrivateKey from "./Components/Setting/PrivateKey";
 import UnlockWelcome from "./Pages/WelcomeScreens/UnlockWelcome";
 import RejectNotification from "./Pages/RejectNotification/RejectNotification";
+import Loader from "./Pages/Loader/Loader";
 
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[[\]]/g, "\\$&");
@@ -33,8 +34,6 @@ function getParameterByName(name, url = window.location.href) {
 function App() {
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [loading, setLoding] = useState(true);
 
   useEffect(() => {
     const route = getParameterByName("route");
@@ -146,6 +145,7 @@ function App() {
           element={<WelcomeLayout children={<CreateNewWallet />} />}
         />
       </Routes>
+      <Loader />
     </div>
   );
 }

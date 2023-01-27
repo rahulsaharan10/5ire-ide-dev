@@ -34,6 +34,7 @@ export const userState = {
 
   passError: true,
   connectedSites: [],
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -95,6 +96,9 @@ export const userSlice = createSlice({
           !state?.connectedSites[siteIndex].isConnected;
       }
     },
+    toggleLoader: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
@@ -111,6 +115,7 @@ export const {
   setBalance,
   setSite,
   toggleSite,
+  toggleLoader,
 } = userSlice.actions;
 
 export default userSlice.reducer;

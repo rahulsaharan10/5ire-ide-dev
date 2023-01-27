@@ -10,7 +10,6 @@ export const getCurrentTabUrl = (callback) => {
   const queryInfo = { active: true, currentWindow: true };
 
   Browser.tabs.query(queryInfo).then((tabs) => {
-    console.log("HEre url of current site", getBaseUrl(tabs[0]?.url));
     callback(getBaseUrl(tabs[0]?.url));
   });
 };

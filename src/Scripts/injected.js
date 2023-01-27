@@ -16,6 +16,9 @@ function sendMessage(method, message = "") {
 
       handlers[id] = { reject, resolve, id };
 
+      if (method === "eth_requestAccounts") {
+        message.origin = window.location.origin;
+      }
       const transportRequestMessage = {
         id,
         message,
@@ -33,6 +36,7 @@ function sendMessage(method, message = "") {
 
 window.fire = {
   version: "1.0.0",
+  isInstalled: true,
   send: () => {
     sendMessage("request", {
       data: "this is sample message from injected",
@@ -40,8 +44,8 @@ window.fire = {
       console.log("My promise worked", result);
     });
   },
-  connect: () => sendMessage("connect", window.location.origin),
-  isInstalled: true,
+  connect: () => sendMessage("connect", { origin: window.location.origin }),
+  request: (params) => sendMessage(params.method, params),
 };
 
 injectedStream.on("data", (data) => {
@@ -51,7 +55,6 @@ injectedStream.on("data", (data) => {
     }, 1000 * 30);
   }
   if (data.id) {
-    console.log(JSON.stringify(data) + ",INJECTED page response");
     console.log("HERE HANDLERS", handlers);
     const handler = handlers[data.id];
     if (data.error) {

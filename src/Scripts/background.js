@@ -1,12 +1,9 @@
-/*global chrome,browser,msBrowser a*/
-
-import { setUIdata } from "../Store/reducer/auth";
 import { CONNECTION_NAME } from "../Constants";
 import {
-  createFireWindow,
+  handleConnect,
+  handleEthTransaction,
   initScript,
   loadStore,
-  showNotification,
 } from "./controller";
 import Browser from "webextension-polyfill";
 
@@ -38,31 +35,19 @@ Browser.runtime.onMessage.addListener(async function (message, sender, cb) {
     store = await loadStore(false);
     isInitialized = true;
   }
-  if (message?.method == "connect") {
-    const state = store.getState();
-    const isExist = state.auth.connectedSites.find(
-      (st) => st.origin === message.message
-    );
-
-    if (isExist?.isConnected) {
-      Browser.tabs.sendMessage(sender.tab.id, {
-        id: message.id,
-        response: {
-          evmAddress: state.auth.currentAccount.evmAddress,
-          nativeAddress: state.auth.currentAccount.nativeAddress,
-        },
-        error: null,
-      });
-    } else {
-      store.dispatch(
-        setUIdata({
-          ...message,
-          tabId: sender.tab.id,
-        })
-      );
-      createFireWindow("rejectnotification");
-      showNotification("test");
-    }
+  const data = {
+    ...message,
+    tabId: sender?.tab?.id,
+  };
+  switch (data?.method) {
+    case "connect":
+    case "eth_requestAccounts":
+      handleConnect(store, data);
+      break;
+    case "eth_sendTransaction":
+      handleEthTransaction(store, data);
+      break;
+    default:
   }
 });
 

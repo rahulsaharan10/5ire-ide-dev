@@ -1,6 +1,4 @@
 import React from "react";
-import { Spin } from "antd";
-import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import MenuRestofHeaders from "../../Components/BalanceDetails/MenuRestofHeaders/MenuRestofHeaders";
 import ButtonComp from "../../Components/ButtonComp/ButtonComp";
 import { InputFieldOnly } from "../../Components/InputField/InputFieldSimple";
@@ -10,14 +8,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { toast } from "react-toastify";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setLogin, toggleLoader } from "../../Store/reducer/auth";
 
 function UnlockWelcome() {
   const navigate = useNavigate();
   const { verifyPass } = useAuth();
-  const [loader, setLoader] = useState(false);
-  const [show, setShow] = useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [data, setData] = useState("");
 
   const location = useLocation();
@@ -28,9 +25,14 @@ function UnlockWelcome() {
   };
 
   const handleClick = async () => {
+    dispatch(toggleLoader(true));
+
     let res = await verifyPass(data);
+    dispatch(toggleLoader(false));
 
     if (!res.error) {
+      dispatch(setLogin(true));
+
       navigate(location.state?.redirectRoute || "/wallet");
     } else {
       toast.error(res.data);
@@ -68,18 +70,6 @@ function UnlockWelcome() {
           <Link to="">Forgot password?</Link>
         </div>
       </div>
-      {/* 
-      {loader && (
-        <div className="loader">
-          <Spin size="large" />
-        </div>
-      )}
-
-      {show && (
-        <div className="loader">
-          <CongratulationsScreen />
-        </div>
-      )} */}
     </div>
   );
 }

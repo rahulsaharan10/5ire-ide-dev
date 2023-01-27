@@ -1,16 +1,14 @@
-import { Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CongratulationsScreen from "../../Pages/WelcomeScreens/CongratulationsScreen";
 import ButtonComp from "../ButtonComp/ButtonComp";
 import style from "./style.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import useAuth from "../../Hooks/useAuth";
-
+import { setLogin, toggleLoader } from "../../Store/reducer/auth";
 
 function FooterStepOne() {
-
   const navigate = useNavigate();
   return (
     <>
@@ -32,7 +30,6 @@ function FooterStepOne() {
 }
 export default FooterStepOne;
 
-
 export const FooterStepTwo = () => {
   const { isLogin } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -46,37 +43,31 @@ export const FooterStepTwo = () => {
   const handleClick = () => {
     if (isLogin) navigate("/wallet");
     else navigate("/setPassword");
-  }
+  };
   return (
     <>
       <div className={style.menuItems__cancleContinue}>
-        {
-          !isLogin &&
+        {!isLogin && (
           <ButtonComp
             bordered={true}
             text={"Cancel"}
             maxWidth={"100%"}
             onClick={handleCancle}
           />
-        }
+        )}
 
-        <ButtonComp
-          onClick={handleClick}
-          text={"Continue"}
-          maxWidth={"100%"}
-        />
+        <ButtonComp onClick={handleClick} text={"Continue"} maxWidth={"100%"} />
       </div>
     </>
   );
 };
 
-
 export const FooterStepThree = () => {
   const { pass, passError } = useSelector((state) => state.auth);
-  const [loader, setLoader] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { setUserPass } = useAuth();
+  const dispatch = useDispatch();
 
   const handleCancle = () => {
     navigate("/createwalletchain");
@@ -84,22 +75,25 @@ export const FooterStepThree = () => {
 
   const handleSubmit = async () => {
     if (!passError) {
-      setLoader(true);
+      dispatch(toggleLoader(true));
       let res = await setUserPass(pass);
 
-      console.log("response : ", res);
-
       if (!res.error) {
-        setLoader(false);
+        dispatch(toggleLoader(false));
+
         setShow(true);
         setTimeout(() => {
+          dispatch(setLogin(true));
+
           setShow(false);
-          navigate("/wallet");
+          setTimeout(() => {
+            navigate("/wallet");
+          }, 500);
         }, 2000);
       }
 
       if (res.error) {
-        setLoader(false);
+        dispatch(toggleLoader(false));
         toast.error(res.data);
       }
     }
@@ -114,12 +108,6 @@ export const FooterStepThree = () => {
           maxWidth={"100%"}
           onClick={handleCancle}
         />
-
-        {loader && (
-          <div className="loader">
-            <Spin size="large" />
-          </div>
-        )}
 
         {show && (
           <div className="loader">

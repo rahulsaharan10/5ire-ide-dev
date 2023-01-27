@@ -16,16 +16,36 @@ contentStream.on("data", async (data) => {
           response: "I return back result to you",
           error: null,
         });
+        break;
       case "connect":
+      case "eth_requestAccounts":
         Browser.runtime.sendMessage(data);
+        break;
+      case "eth_sendTransaction":
+        if (
+          data.message.method !== "eth_sendTransaction" ||
+          data.message?.params.length < 0
+        ) {
+          contentStream.write({
+            id: data.id,
+            error: "Invalid Transaction Request",
+          });
+        } else {
+          Browser.runtime.sendMessage(data);
+        }
+        break;
       case "keepAlive":
         setTimeout(() => {
           contentStream.write({
             method: "keepAlive",
           });
         }, 1000 * 30);
-
+        break;
       default:
+        contentStream.write({
+          id: data.id,
+          error: "Invalid request method",
+        });
     }
   } catch (err) {
     console.log("Error under content script", err);
