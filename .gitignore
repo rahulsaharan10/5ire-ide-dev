@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/src/Scripts/5ire
 /.pnp
 .pnp.js
 

@@ -62,7 +62,7 @@ export function loadStore(sendStoreMessage = true) {
 export async function initScript() {
   try {
     await Browser.scripting.registerContentScripts([
-      {
+      { 
         id: "inpage",
         matches: ["file://*/*", "http://*/*", "https://*/*"],
         js: ["./static/js/injected.js"],

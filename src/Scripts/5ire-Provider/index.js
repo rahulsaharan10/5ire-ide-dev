@@ -1,0 +1,16 @@
+Object.defineProperty(module.exports, "__esModule", { value: true });
+module.exports.StreamProvider = module.exports.shimWeb3 = module.exports.setGlobalProvider = module.exports.MetaMaskInpageProvider = module.exports.MetaMaskInpageProviderStreamName = module.exports.initializeProvider = module.exports.createExternalExtensionProvider = module.exports.BaseProvider = void 0;
+const BaseProvider_1 = require("./BaseProvider");
+Object.defineProperty(module.exports, "BaseProvider", { enumerable: true, get: function () { return BaseProvider_1.BaseProvider; } });
+const createExternalExtensionProvider_1 = require("./extension-provider/createExternalExtensionProvider");
+Object.defineProperty(module.exports, "createExternalExtensionProvider", { enumerable: true, get: function () { return createExternalExtensionProvider_1.createExternalExtensionProvider; } });
+const initializeInpageProvider_1 = require("./initializeInpageProvider");
+Object.defineProperty(module.exports, "initializeProvider", { enumerable: true, get: function () { return initializeInpageProvider_1.initializeProvider; } });
+Object.defineProperty(module.exports, "setGlobalProvider", { enumerable: true, get: function () { return initializeInpageProvider_1.setGlobalProvider; } });
+const MetaMaskInpageProvider_1 = require("./MetaMaskInpageProvider");
+Object.defineProperty(module.exports, "MetaMaskInpageProvider", { enumerable: true, get: function () { return MetaMaskInpageProvider_1.MetaMaskInpageProvider; } });
+Object.defineProperty(module.exports, "MetaMaskInpageProviderStreamName", { enumerable: true, get: function () { return MetaMaskInpageProvider_1.MetaMaskInpageProviderStreamName; } });
+const shimWeb3_1 = require("./shimWeb3");
+Object.defineProperty(module.exports, "shimWeb3", { enumerable: true, get: function () { return shimWeb3_1.shimWeb3; } });
+const StreamProvider_1 = require("./StreamProvider");
+Object.defineProperty(module.exports, "StreamProvider", { enumerable: true, get: function () { return StreamProvider_1.StreamProvider; } });

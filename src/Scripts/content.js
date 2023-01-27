@@ -7,6 +7,8 @@ const contentStream = new WindowPostMessageStream({
   target: INPAGE,
 });
 
+
+
 contentStream.on("data", async (data) => {
   try {
     switch (data.method) {

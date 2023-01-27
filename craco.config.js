@@ -1,5 +1,6 @@
 module.exports = {
   webpack: {
+
     configure: (webpackConfig, { env, paths }) => {
       return {
         ...webpackConfig,
@@ -13,6 +14,7 @@ module.exports = {
           background: "./src/Scripts/background.js",
           injected: "./src/Scripts/injected.js",
         },
+
         output: {
           ...webpackConfig.output,
           filename: "static/js/[name].js",
@@ -20,6 +22,7 @@ module.exports = {
         optimization: {
           ...webpackConfig.optimization,
           runtimeChunk: false,
+          minimize: false
         },
         resolve: {
           ...webpackConfig.resolve,
@@ -28,6 +31,7 @@ module.exports = {
             path: require.resolve("path-browserify"),
             crypto: require.resolve("crypto-browserify"),
             stream: require.resolve("stream-browserify"),
+            fs: false
           },
         },
       };
