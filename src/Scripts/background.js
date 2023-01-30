@@ -6,6 +6,7 @@ import {
   handleEthTransaction,
   initScript,
   loadStore,
+  getLastestBlock
 } from "./controller";
 import Browser from "webextension-polyfill";
 
@@ -37,18 +38,27 @@ Browser.runtime.onMessage.addListener(async function (message, sender, cb) {
     store = await loadStore(false);
     isInitialized = true;
   }
+
+  //insert the tab id into JSON-RPC header
   const data = {
     ...message,
     tabId: sender?.tab?.id,
   };
+
   switch (data?.method) {
     case "connect":
     case "eth_requestAccounts":
       handleConnect(store, data);
       break;
+
     case "eth_sendTransaction":
       handleEthTransaction(store, data);
       break;
+
+    case "eth_getBlockByNumber":
+      getLastestBlock(store, data);
+    break;
+
     default:
   }
 });

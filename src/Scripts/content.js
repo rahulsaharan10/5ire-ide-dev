@@ -1,6 +1,7 @@
 import Browser from "webextension-polyfill";
 import { WindowPostMessageStream } from "./stream";
 import { CONTENT_SCRIPT, INPAGE } from "./constants";
+import Web3 from "web3";
 
 const contentStream = new WindowPostMessageStream({
   name: CONTENT_SCRIPT,
@@ -10,6 +11,7 @@ const contentStream = new WindowPostMessageStream({
 
 
 contentStream.on("data", async (data) => {
+
   try {
     switch (data.method) {
       case "request":
@@ -43,6 +45,12 @@ contentStream.on("data", async (data) => {
           });
         }, 1000 * 30);
         break;
+
+
+        case "eth_getBlockByNumber":
+          Browser.runtime.sendMessage(data);
+        break;
+
       default:
         contentStream.write({
           id: data.id,
@@ -54,12 +62,15 @@ contentStream.on("data", async (data) => {
   }
 });
 
-const messageFromExtensionUI = (message, sender, cb) => {
+const messageFromExtensionUI = async (message, sender, cb) => {
   if (message?.id) {
-    console.log("[content.js]. Message received", JSON.stringify(message));
+    console.log("Message received in content.js: ", message);
 
-    contentStream.write(message);
-    cb("I Recevie and ack");
+    if(message.response !== undefined && message.method === "eth_getBlockByNumber") {
+      const res = await getLastestBlockNumber(message)
+      contentStream.write(res);
+    } else contentStream.write(message);
+      cb("I Recevie and ack");
   }
 };
 
@@ -67,3 +78,14 @@ const messageFromExtensionUI = (message, sender, cb) => {
  * Fired when a message is sent from either an extension process or a content script.
  */
 Browser.runtime.onMessage.addListener(messageFromExtensionUI);
+
+//get the lastest block from chain
+const getLastestBlockNumber = async (data) => {
+  try {
+    const web3 = new Web3(new Web3.providers.WebsocketProvider(data.response))
+    const res = await web3.eth.getBlockNumber();
+    return data.response = res;
+  } catch (err) {
+    console.log("Error while creating getting lastest block number: ", err);
+  }
+}

@@ -9,6 +9,7 @@ import authReducer, {
   setLogin,
 } from "../Store/reducer/auth";
 
+
 // Initializes the Redux store
 function init(preloadedState) {
   return new Promise((resolve, reject) => {
@@ -39,8 +40,8 @@ function init(preloadedState) {
   });
 }
 
-// let ports = {};
 
+//load the redux store
 export function loadStore(sendStoreMessage = true) {
   return new Promise(async (resolve) => {
     try {
@@ -59,6 +60,7 @@ export function loadStore(sendStoreMessage = true) {
   });
 }
 
+//inject the content script into current webpage
 export async function initScript() {
   try {
     await Browser.scripting.registerContentScripts([
@@ -82,6 +84,7 @@ export async function initScript() {
   }
 }
 
+//create an extension video
 export function createFireWindow(route = "") {
   const extensionURL = Browser.runtime.getURL("index.html");
 
@@ -96,6 +99,8 @@ export function createFireWindow(route = "") {
   });
 }
 
+
+//create an 5ire extension notification
 export function showNotification(
   message = "",
   title = "Fire Notification",
@@ -109,18 +114,23 @@ export function showNotification(
   });
 }
 
+//account connection handler
 export function handleConnect(store, data) {
+
   const state = store.getState();
 
-  const isEthReq = data?.message?.method === "eth_requestAccounts";
+
+  const isEthReq = data?.method === "eth_requestAccounts";
   const isExist = state.auth.connectedSites.find(
-    (st) => st.origin === data.message.origin
+    (st) => st.origin === data.payload.origin
   );
 
   if (isExist?.isConnected) {
     Browser.tabs.sendMessage(data.tabId, {
       id: data.id,
+      method: data.method,
       response: isEthReq
+
         ? [state.auth.currentAccount.evmAddress]
         : {
             evmAddress: state.auth.currentAccount.evmAddress,
@@ -135,6 +145,8 @@ export function handleConnect(store, data) {
   }
 }
 
+
+//transfer handler
 export function handleEthTransaction(store, data) {
   store.dispatch(
     setUIdata({
@@ -144,3 +156,17 @@ export function handleEthTransaction(store, data) {
   );
   createFireWindow("rejectnotification");
 }
+
+//get lastest block from chain handler
+export async function getLastestBlock(store, data) {
+  const state = store.getState().auth;
+
+  Browser.tabs.sendMessage(data.tabId, {
+    id: data.id,
+    method: data.method,
+    response: state.availableNetworks[state.currentNetwork],
+    error: null,
+  });
+}
+
+

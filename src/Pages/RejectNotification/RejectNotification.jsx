@@ -24,48 +24,54 @@ function RejectNotification() {
   };
 
   function handleClick(isApproved) {
-    dispatch(toggleLoader(true));
 
-    if (isApproved) {
-      const siteIndex = auth?.connectedSites.findIndex(
-        (st) => (st.origin = auth.uiData.message.origin)
-      );
+      // dispatch(toggleLoader(true));
 
-      //if not connected but exists in state we will set connected property true
-      if (siteIndex > -1) {
-        dispatch(toggleSite(auth.uiData.message.origin));
-      } else {
-        //if use connect same origin again and again we give response back in background script
-        dispatch(
-          setSite({ origin: auth.uiData.message.origin, isConnected: true })
+      if (isApproved) {
+        const siteIndex = auth?.connectedSites.findIndex(
+          (st) => (st.origin = auth.uiData.payload.origin)
         );
+  
+        console.log("here is redux data: ", auth.uiData);
+  
+        //if not connected but exists in state we will set connected property true
+        if (siteIndex > -1) {
+          dispatch(toggleSite(auth.uiData.payload.origin));
+        } else {
+          //if use connect same origin again and again we give response back in background script
+          dispatch(
+            setSite({ origin: auth.uiData.payload.origin, isConnected: true })
+          );
+        }
+        const isEthReq = auth.uiData?.method === "eth_requestAccounts";
+  
+        browser.tabs.sendMessage(auth.uiData.tabId, {
+          id: auth.uiData.id,
+          method: isEthReq ? "eth_requestAccounts" : null,
+          response: isEthReq
+            ? [auth.currentAccount.evmAddress]
+            : {
+                evmAddress: auth.currentAccount.evmAddress,
+                nativeAddress: auth.currentAccount.nativeAddress,
+              },
+          error: null,
+        });
+      } else {
+        browser.tabs.sendMessage(auth.uiData.tabId, {
+          id: auth.uiData.id,
+          response: null,
+          error: "User rejected connect permission.",
+        });
       }
-      const isEthReq = auth.uiData?.message?.method === "eth_requestAccounts";
+      dispatch(setUIdata({}));
+      // dispatch(toggleLoader(false));
+  
+      window.close();
 
-      browser.tabs.sendMessage(auth.uiData.tabId, {
-        id: auth.uiData.id,
-        response: isEthReq
-          ? [auth.currentAccount.evmAddress]
-          : {
-              evmAddress: auth.currentAccount.evmAddress,
-              nativeAddress: auth.currentAccount.nativeAddress,
-            },
-        error: null,
-      });
-    } else {
-      browser.tabs.sendMessage(auth.uiData.tabId, {
-        id: auth.uiData.id,
-        response: null,
-        error: "User rejected connect permission.",
-      });
-    }
-
-    dispatch(setUIdata({}));
-    dispatch(toggleLoader(false));
-
-    window.close();
   }
 
+
+  
   function handleTx(isApproved) {
     if (isApproved) {
       dispatch(toggleLoader(true));
